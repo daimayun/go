@@ -45,3 +45,11 @@ func TimeStrToTime(str string) (timestamp int64, Time time.Time) {
 	timestamp = Time.Unix()
 	return
 }
+
+// AddSecondToTime 在当前时间戳的基础上加上秒数，重新生成时间日期
+func AddSecondToTime(second int64) (timestamp int64, Time time.Time, timeStr string) {
+	timestamp = time.Now().Unix() + second
+	Time = time.Unix(timestamp, 0)
+	timeStr = Time.Format(TimeLayout)
+	return
+}
