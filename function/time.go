@@ -32,7 +32,7 @@ func TodayDataTimeStart() (timestamp int64, Time time.Time, timeStr string) {
 // TodayDataTimeEnd 今日23:59:59时间
 func TodayDataTimeEnd() (timestamp int64, Time time.Time, timeStr string) {
 	currentTime := time.Now()
-	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 58, 0, currentTime.Location())
+	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 59, 0, currentTime.Location())
 	timestamp = Time.Unix()
 	timeStr = Time.Format(TimeLayout)
 	return
