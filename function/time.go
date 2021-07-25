@@ -53,3 +53,18 @@ func AddSecondToTime(second int64) (timestamp int64, Time time.Time, timeStr str
 	timeStr = Time.Format(TimeLayout)
 	return
 }
+
+// TimestampToTime 时间戳转日期格式
+func TimestampToTime(timestamp int64) (Time time.Time, timeStr string) {
+	Time = time.Unix(timestamp, 0)
+	timeStr = Time.Format(TimeLayout)
+	return
+}
+
+// NowTime 当前时间
+func NowTime() (timestamp int64, Time time.Time, timeStr string) {
+	timestamp = time.Now().Unix()
+	Time = time.Unix(timestamp, 0)
+	timeStr = Time.Format(TimeLayout)
+	return
+}
