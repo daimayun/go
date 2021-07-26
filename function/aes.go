@@ -8,7 +8,7 @@ import (
 	"errors"
 )
 
-var password = []byte("")
+var password = []byte("6D05CDFD6288ADE9")
 
 // PKCS7Padding PKCS7 填充模式
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
