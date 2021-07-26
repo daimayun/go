@@ -8,7 +8,8 @@ import (
 	"errors"
 )
 
-var password = []byte("6D05CDFD6288ADE9")
+// 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
+var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
 // PKCS7Padding PKCS7 填充模式
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
