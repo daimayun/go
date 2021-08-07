@@ -2,6 +2,8 @@ package qrcode
 
 import (
 	"errors"
+	"github.com/boombuler/barcode"
+	"github.com/boombuler/barcode/qr"
 	"github.com/nfnt/resize"
 	"github.com/skip2/go-qrcode"
 	"image"
@@ -17,10 +19,10 @@ var err error
 // CreateContainLogoQrCode 生成带有logo图片的二维码
 func CreateContainLogoQrCode(content, logoFilePath string, size, logoWidth, logoHeight int) (image.Image, error) {
 	if logoWidth == 0 {
-		logoWidth = 40
+		logoWidth = 80
 	}
 	if logoHeight == 0 {
-		logoHeight = 40
+		logoHeight = 80
 	}
 	if size == 0 {
 		size = 430
@@ -59,6 +61,22 @@ func CreateContainLogoQrCode(content, logoFilePath string, size, logoWidth, logo
 	draw.Draw(m, b, bgImg, image.Point{X: 0, Y: 0}, draw.Src)
 	draw.Draw(m, avatarImg.Bounds().Add(offset), avatarImg, image.Point{X: 0, Y: 0}, draw.Over)
 	return m, err
+}
+
+// CreateQrCode 创建普通二维码
+func CreateQrCode(content string, width, height int) (image barcode.Barcode, err error) {
+	if width == 0 {
+		width = 430
+	}
+	if height == 0 {
+		height = 430
+	}
+	image, err = qr.Encode(content, qr.M, qr.Auto)
+	if err != nil {
+		return
+	}
+	image, err = barcode.Scale(image, width, height)
+	return
 }
 
 // createQrCode 创建二维码
