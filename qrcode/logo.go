@@ -6,14 +6,16 @@ import (
 	"github.com/skip2/go-qrcode"
 	"image"
 	"image/draw"
+	"image/jpeg"
 	"image/png"
 	"os"
+	"path"
 )
 
 var err error
 
-// CreateLogoQrCode 生成带logo的二维码
-func CreateLogoQrCode(content, logoFilePath string, size, logoWidth, logoHeight int) (image.Image, error) {
+// CreateContainLogoQrCode 生成带有logo图片的二维码
+func CreateContainLogoQrCode(content, logoFilePath string, size, logoWidth, logoHeight int) (image.Image, error) {
 	if logoWidth == 0 {
 		logoWidth = 40
 	}
@@ -37,9 +39,17 @@ func CreateLogoQrCode(content, logoFilePath string, size, logoWidth, logoHeight 
 	if err != nil {
 		return nil, errors.New("创建二维码失败[2]: " + err.Error())
 	}
-	avatarImg, err = png.Decode(avatarFile)
+	logoFileNameAndSuffix := path.Base(logoFilePath)
+	logoFileType := path.Ext(logoFileNameAndSuffix)
+	if logoFileType == ".png" {
+		avatarImg, err = png.Decode(avatarFile)
+	} else if logoFileType == ".jpg" || logoFileType == ".jpeg" {
+		avatarImg, err = jpeg.Decode(avatarFile)
+	} else {
+		return nil, errors.New("创建二维码失败[3]: logo图片的后缀不是png|jpg|jpeg")
+	}
 	if err != nil {
-		return nil, errors.New("创建二维码失败[3]: " + err.Error())
+		return nil, errors.New("创建二维码失败[4]: " + err.Error())
 	}
 	avatarImg = imageResize(avatarImg, logoWidth, logoHeight)
 	b := bgImg.Bounds()
@@ -56,7 +66,7 @@ func createQrCode(content string, size int) (img image.Image, err error) {
 	var qrCode *qrcode.QRCode
 	qrCode, err = qrcode.New(content, qrcode.Highest)
 	if err != nil {
-		return nil, errors.New("创建二维码失败[4]: " + err.Error())
+		return nil, errors.New("创建二维码失败[5]: " + err.Error())
 	}
 	qrCode.DisableBorder = true
 	img = qrCode.Image(size)
