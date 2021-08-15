@@ -2,7 +2,11 @@ package function
 
 import "time"
 
-var TimeLayout string = "2006-01-02 15:04:05"
+var (
+	TimeLayout string = "2006-01-02 15:04:05"
+	TimeLayoutYMD string = "2006-01-02"
+	TimeLayoutHMS string = "15:04:05"
+)
 
 func NowDataTime() time.Time {
 	return time.Now()
@@ -66,5 +70,21 @@ func NowTime() (timestamp int64, Time time.Time, timeStr string) {
 	timestamp = time.Now().Unix()
 	Time = time.Unix(timestamp, 0)
 	timeStr = Time.Format(TimeLayout)
+	return
+}
+
+// TimeSplit 时间格式拆分
+func TimeSplit(t time.Time) (ymd, hms string) {
+	ymd = t.Format(TimeLayoutYMD)
+	hms = t.Format(TimeLayoutHMS)
+	return
+}
+
+// NowTimeSplit 当前时间格式拆分
+func NowTimeSplit() (ymd, hms string) {
+	var Time time.Time
+	Time = time.Unix(time.Now().Unix(), 0)
+	ymd = Time.Format(TimeLayoutYMD)
+	hms = Time.Format(TimeLayoutHMS)
 	return
 }
