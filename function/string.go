@@ -2,8 +2,8 @@ package function
 
 import "unicode/utf8"
 
-// strLengthCutAndSplitJoint 字符串长度截取并拼接处理
-func strLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...string) string {
+// StrLengthCutAndSplitJoint 字符串长度截取并拼接处理
+func StrLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...string) string {
 	if cutLength == 0 {
 		return str
 	}
