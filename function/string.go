@@ -17,3 +17,11 @@ func StrLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...strin
 	}
 	return s
 }
+
+// CheckStringLength 判断字符串长度是否在规定范围内
+func CheckStringLength(str string, length int) bool {
+	if utf8.RuneCountInString(str) <= length {
+		return true
+	}
+	return false
+}
