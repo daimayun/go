@@ -10,6 +10,7 @@ import (
 	"image/draw"
 	"image/jpeg"
 	"image/png"
+	"net/http"
 	"os"
 	"path"
 )
@@ -17,7 +18,7 @@ import (
 var err error
 
 // CreateContainLogoQrCode 生成带有logo图片的二维码
-func CreateContainLogoQrCode(content, logoFilePath string, size, logoWidth, logoHeight int) (image.Image, error) {
+func CreateContainLogoQrCode(content, logoFilePathOrLogoRemoteUrl string, size, logoWidth, logoHeight int) (image.Image, error) {
 	if logoWidth == 0 {
 		logoWidth = 80
 	}
@@ -32,24 +33,44 @@ func CreateContainLogoQrCode(content, logoFilePath string, size, logoWidth, logo
 		offset     image.Point
 		avatarFile *os.File
 		avatarImg  image.Image
+		logoFileType string
 	)
 	bgImg, err = createQrCode(content, size)
 	if err != nil {
 		return nil, errors.New("创建二维码失败[1]: " + err.Error())
 	}
-	avatarFile, err = os.Open(logoFilePath)
-	if err != nil {
-		return nil, errors.New("创建二维码失败[2]: " + err.Error())
-	}
-	logoFileNameAndSuffix := path.Base(logoFilePath)
-	logoFileType := path.Ext(logoFileNameAndSuffix)
-	if logoFileType == ".png" {
-		avatarImg, err = png.Decode(avatarFile)
-	} else if logoFileType == ".jpg" || logoFileType == ".jpeg" {
-		avatarImg, err = jpeg.Decode(avatarFile)
+
+	if logoFilePathOrLogoRemoteUrl[0:4] == "http" {
+		var response *http.Response
+		response, err = http.Get(logoFilePathOrLogoRemoteUrl)
+		if err != nil || response.StatusCode != 200 {
+			return nil, errors.New("创建二维码失败[2]: 远程图片链接打开失败")
+		}
+		defer response.Body.Close()
+		logoFileType = path.Ext(logoFilePathOrLogoRemoteUrl)
+		if logoFileType == ".png" {
+			avatarImg, err = png.Decode(response.Body)
+		} else if logoFileType == ".jpg" || logoFileType == ".jpeg" {
+			avatarImg, err = jpeg.Decode(response.Body)
+		} else {
+			return nil, errors.New("创建二维码失败[3]: logo图片的后缀不是png|jpg|jpeg")
+		}
 	} else {
-		return nil, errors.New("创建二维码失败[3]: logo图片的后缀不是png|jpg|jpeg")
+		avatarFile, err = os.Open(logoFilePathOrLogoRemoteUrl)
+		if err != nil {
+			return nil, errors.New("创建二维码失败[2]: " + err.Error())
+		}
+		logoFileNameAndSuffix := path.Base(logoFilePathOrLogoRemoteUrl)
+		logoFileType = path.Ext(logoFileNameAndSuffix)
+		if logoFileType == ".png" {
+			avatarImg, err = png.Decode(avatarFile)
+		} else if logoFileType == ".jpg" || logoFileType == ".jpeg" {
+			avatarImg, err = jpeg.Decode(avatarFile)
+		} else {
+			return nil, errors.New("创建二维码失败[3]: logo图片的后缀不是png|jpg|jpeg")
+		}
 	}
+
 	if err != nil {
 		return nil, errors.New("创建二维码失败[4]: " + err.Error())
 	}
