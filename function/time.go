@@ -88,3 +88,12 @@ func NowTimeSplit() (ymd, hms string) {
 	hms = Time.Format(TimeLayoutHMS)
 	return
 }
+
+// BeforeDayTime N天前的时间
+func BeforeDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
+	currentTime := time.Now()
+	Time = currentTime.AddDate(0, 0, -day)
+	timeStr = Time.Format(TimeLayout)
+	timestamp = Time.Unix()
+	return
+}
