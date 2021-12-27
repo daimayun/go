@@ -98,6 +98,15 @@ func BeforeDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
 	return
 }
 
+// AfterDayTime N天后的时间
+func AfterDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
+	currentTime := time.Now()
+	Time = currentTime.AddDate(0, 0, day)
+	timeStr = Time.Format(TimeLayout)
+	timestamp = Time.Unix()
+	return
+}
+
 // DiyTimeFmtStr Diy时间格式
 func DiyTimeFmtStr (format string, timestamps ...int64) string {
 	var timestamp int64
