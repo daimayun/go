@@ -10,7 +10,7 @@ import (
 // CreateOrderNo 生成平台32位订单号
 func CreateOrderNo() (sn string) {
 	unixNano := time.Now().UnixNano()
-	sn = NowDataTimeStr()
+	sn = NowDateTimeStr()
 	timeStr := Int64ToString(unixNano)
 	rand.Seed(unixNano)
 	sn += timeStr[10:]
