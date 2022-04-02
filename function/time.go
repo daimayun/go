@@ -3,7 +3,7 @@ package function
 import "time"
 
 var (
-	TimeLayout string = "2006-01-02 15:04:05"
+	TimeLayout    string = "2006-01-02 15:04:05"
 	TimeLayoutYMD string = "2006-01-02"
 	TimeLayoutHMS string = "15:04:05"
 )
@@ -108,7 +108,7 @@ func AfterDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
 }
 
 // DiyTimeFmtStr Diy时间格式
-func DiyTimeFmtStr (format string, timestamps ...int64) string {
+func DiyTimeFmtStr(format string, timestamps ...int64) string {
 	var timestamp int64
 	if len(timestamps) == 0 {
 		timestamp = time.Now().Unix()
