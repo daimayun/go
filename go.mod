@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/boombuler/barcode v1.0.1
 	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/mojocn/base64Captcha v1.3.5 // indirect
 	github.com/mozillazg/go-httpheader v0.3.0 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/shopspring/decimal v1.3.1
