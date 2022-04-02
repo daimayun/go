@@ -62,8 +62,16 @@ func GetCaptcha(driverData NewCaptchaDrivers) (id, b64s string, err error) {
 }
 
 // VerifyCaptcha 校验图形验证码
-func VerifyCaptcha(id, value string) bool {
-	return captchaStore.Verify(id, value, true)
+func VerifyCaptcha(id, value string, clears ...bool) (res bool) {
+	clear := false
+	if clears != nil {
+		clear = clears[0]
+	}
+	res = captchaStore.Verify(id, value, clear)
+	if res == true && clear == false {
+		go captchaStore.Verify(id, value, true)
+	}
+	return
 }
 
 func captchaDriverAudio(data NewCaptchaDrivers) *base64Captcha.DriverAudio {
