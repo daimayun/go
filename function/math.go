@@ -2,20 +2,17 @@ package function
 
 import (
 	"fmt"
-	"github.com/shopspring/decimal"
 	"math"
 	"strconv"
 )
 
-// Round 四舍五入 [num为保留的小数点位数]
-func Round(val float64, num int32) (res float64, exact bool) {
-	res, exact = decimal.NewFromFloat(val).Round(num).Float64()
-	return
-}
-
-// Intercept 截取小数点 [retain为保留的小数点数]
-func Intercept(val float64, retain int32) (res float64) {
-	return
+// InterceptDecimal 不四舍五入截取小数点 [n为保留的小数点数]
+func InterceptDecimal(f float64, n int) float64 {
+	d := float64(1)
+	if n > 0 {
+		d = math.Pow10(n)
+	}
+	return math.Trunc(f*d)/d
 }
 
 // FloatRound 四舍五入 [n为保留的小数点位数]
