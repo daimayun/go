@@ -32,7 +32,7 @@ func PKCS7UnPadding(origData []byte) ([]byte, error) {
 	}
 }
 
-// AesEncrypt 实现加密
+// AesEncrypt AES加密
 func AesEncrypt(origData []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
 	block, err := aes.NewCipher(key)
@@ -51,7 +51,7 @@ func AesEncrypt(origData []byte, key []byte) ([]byte, error) {
 	return encrypted, nil
 }
 
-// AesDecrypt 实现解密
+// AesDecrypt AES解密
 func AesDecrypt(encrypted []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
 	block, err := aes.NewCipher(key)
@@ -73,7 +73,7 @@ func AesDecrypt(encrypted []byte, key []byte) ([]byte, error) {
 	return origData, err
 }
 
-// AesEncryptBase64 加密为base64
+// AesEncryptBase64 加密后为Base64格式的字符串
 func AesEncryptBase64(str, key string) (string, error) {
 	if key != "" {
 		password = []byte(key)
@@ -85,7 +85,7 @@ func AesEncryptBase64(str, key string) (string, error) {
 	return base64.StdEncoding.EncodeToString(result), err
 }
 
-// AesDecryptBase64 base64解密
+// AesDecryptBase64 对Base64格式的字符串解密
 func AesDecryptBase64(str, key string) (string, error) {
 	if key != "" {
 		password = []byte(key)
