@@ -3,6 +3,7 @@ package function
 import (
 	"fmt"
 	"github.com/shopspring/decimal"
+	"math"
 	"strconv"
 )
 
@@ -28,4 +29,14 @@ func FloatRound(f float64, n int) (res float64, err error) {
 func RoundFloat(f float64, n int) (res float64, err error) {
 	res, err = strconv.ParseFloat(strconv.FormatFloat(f, 'f', n, 64), 64)
 	return
+}
+
+// UpInt 向上取整
+func UpInt(f float64) float64 {
+	return math.Ceil(f)
+}
+
+// DownInt 向下取整
+func DownInt(f float64) float64 {
+	return math.Floor(f)
 }
