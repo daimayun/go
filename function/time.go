@@ -27,7 +27,7 @@ func NowDateTimeStr() string {
 	return tm.Format("20060102150405")
 }
 
-// TodayDateTimeStart 今日凌晨时间
+// TodayDateTimeStart 今日00:00:00时间
 func TodayDateTimeStart() (timestamp int64, Time time.Time, timeStr string) {
 	currentTime := time.Now()
 	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location())
