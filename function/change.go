@@ -26,7 +26,7 @@ func Float32ToString(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 32)
 }
 
-// StrToInt64 string转int6
+// StrToInt64 string转int64
 func StrToInt64(str string) (int64, error) {
 	return strconv.ParseInt(str, 10, 64)
 }
