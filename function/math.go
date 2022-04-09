@@ -17,8 +17,7 @@ func InterceptDecimal(f float64, n int) float64 {
 
 // FloatRound 四舍五入 [n为保留的小数点位数]
 func FloatRound(f float64, n int) (res float64, err error) {
-	format := "%." + strconv.Itoa(n) + "f"
-	res, err = strconv.ParseFloat(fmt.Sprintf(format, f), 64)
+	res, err = strconv.ParseFloat(fmt.Sprintf("%." + strconv.Itoa(n) + "f", f), 64)
 	return
 }
 
