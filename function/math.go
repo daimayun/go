@@ -23,3 +23,9 @@ func FloatRound(f float64, n int) (res float64, err error) {
 	res, err = strconv.ParseFloat(fmt.Sprintf(format, f), 64)
 	return
 }
+
+// RoundFloat 四舍五入 [n为保留的小数点位数]
+func RoundFloat(f float64, n int) (res float64, err error) {
+	res, err = strconv.ParseFloat(strconv.FormatFloat(f, 'f', n, 64), 64)
+	return
+}
