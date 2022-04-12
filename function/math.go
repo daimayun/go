@@ -27,6 +27,16 @@ func RoundFloat(f float64, n int) (res float64, err error) {
 	return
 }
 
+// InterceptDecimalToString 不四舍五入截取小数点后为字符串格式 [n为保留的小数点数]
+func InterceptDecimalToString(f float64, n int) string {
+	return Float64ToString(InterceptDecimal(f, n))
+}
+
+// RoundToString 四舍五入后为字符串格式 [n为保留的小数点位数]
+func RoundToString(f float64, n int) string {
+	return strconv.FormatFloat(f, 'f', n, 64)
+}
+
 // UpInt 向上取整
 func UpInt(f float64) float64 {
 	return math.Ceil(f)
