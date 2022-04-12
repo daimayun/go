@@ -15,15 +15,15 @@ func InterceptDecimal(f float64, n int) float64 {
 	return math.Trunc(f*d)/d
 }
 
-// FloatRound 四舍五入 [n为保留的小数点位数]
+// FloatRound 四舍五入 [n为保留的小数点位数] [不优先使用]
 func FloatRound(f float64, n int) (res float64, err error) {
 	res, err = strconv.ParseFloat(fmt.Sprintf("%." + strconv.Itoa(n) + "f", f), 64)
 	return
 }
 
-// RoundFloat 四舍五入 [n为保留的小数点位数]
+// RoundFloat 四舍五入 [n为保留的小数点位数] [优先使用]
 func RoundFloat(f float64, n int) (res float64, err error) {
-	res, err = strconv.ParseFloat(strconv.FormatFloat(f, 'f', n, 64), 64)
+	res, err = strconv.ParseFloat(RoundToString(f, n), 64)
 	return
 }
 
