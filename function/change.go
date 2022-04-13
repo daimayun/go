@@ -13,7 +13,7 @@ func Int64ToInt(i64 int64) int {
 
 // Int64ToString int64转string
 func Int64ToString(i64 int64) string {
-	return strconv.Itoa(Int64ToInt(i64))
+	return strconv.FormatInt(i64, 10)
 }
 
 // Float64ToString float64转string
@@ -29,4 +29,9 @@ func Float32ToString(f float64) string {
 // StrToInt64 string转int64
 func StrToInt64(str string) (int64, error) {
 	return strconv.ParseInt(str, 10, 64)
+}
+
+// StringToFloat64 string转float64
+func StringToFloat64(s string) (float64, error) {
+	return strconv.ParseFloat(s, 64)
 }
