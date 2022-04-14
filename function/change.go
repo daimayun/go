@@ -1,6 +1,7 @@
 package function
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -26,8 +27,8 @@ func Float32ToString(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 32)
 }
 
-// StrToInt64 string转int64
-func StrToInt64(str string) (int64, error) {
+// StringToInt64 string转int64
+func StringToInt64(str string) (int64, error) {
 	return strconv.ParseInt(str, 10, 64)
 }
 
@@ -44,4 +45,15 @@ func Float64ToInt64(f float64) int64 {
 // Int64ToFloat64 int64转float64
 func Int64ToFloat64(i64 int64) float64 {
 	return float64(i64)
+}
+
+// RemoveInvalid0 去掉无效的0
+func RemoveInvalid0(f float64) float64 {
+	f64, _ := StringToFloat64(RemoveInvalid0ToString(f))
+	return f64
+}
+
+// RemoveInvalid0ToString 去掉无效的0并转为字符串格式
+func RemoveInvalid0ToString(f float64) string {
+	return fmt.Sprintf("%g", f)
 }
