@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/hex"
+	"golang.org/x/crypto/ripemd160"
 )
 
 // Md5 md5加密
@@ -56,8 +57,8 @@ func Sha512(str string) string {
 }
 
 // Ripemd160 RIPEMD-160加密[40位16进制数字]
-//func Ripemd160(str string) string {
-//	o := ripemd160.New()
-//	o.Write([]byte(str))
-//	return hex.EncodeToString(o.Sum(nil))
-//}
+func Ripemd160(str string) string {
+	o := ripemd160.New()
+	o.Write([]byte(str))
+	return hex.EncodeToString(o.Sum(nil))
+}
