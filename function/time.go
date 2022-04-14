@@ -120,3 +120,47 @@ func DiyTimeFmtStr(format string, timestamps ...int64) string {
 	}
 	return time.Unix(timestamp, 0).Format(format)
 }
+
+// SubMonths 两个时间相隔多少个月 [t1 - t2]
+func SubMonths(t1, t2 time.Time) (month int) {
+	y1 := t1.Year()
+	y2 := t2.Year()
+	m1 := int(t1.Month())
+	m2 := int(t2.Month())
+	d1 := t1.Day()
+	d2 := t2.Day()
+
+	yearInterval := y1 - y2
+	// 如果 d1的 月-日 小于 d2的 月-日 那么 yearInterval-- 这样就得到了相差的年数
+	if m1 < m2 || m1 == m2 && d1 < d2 {
+		yearInterval--
+	}
+	// 获取月数差值
+	monthInterval := (m1 + 12) - m2
+	if d1 < d2 {
+		monthInterval--
+	}
+	monthInterval %= 12
+	month = yearInterval*12 + monthInterval
+	return
+}
+
+// SubDays 两个时间相隔多少天 [t1 - t2]
+func SubDays(t1, t2 time.Time) (day int) {
+	swap := false
+	if t1.Unix() < t2.Unix() {
+		t_ := t1
+		t1 = t2
+		t2 = t_
+		swap = true
+	}
+	day = int(t1.Sub(t2).Hours() / 24)
+	// 计算在被24整除外的时间是否存在跨自然日
+	if int(t1.Sub(t2).Milliseconds())%86400000 > int(86400000-t2.Unix()%86400000) {
+		day += 1
+	}
+	if swap {
+		day = -day
+	}
+	return
+}
