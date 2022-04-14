@@ -35,3 +35,13 @@ func StrToInt64(str string) (int64, error) {
 func StringToFloat64(s string) (float64, error) {
 	return strconv.ParseFloat(s, 64)
 }
+
+// Float64ToInt64 float64转int64
+func Float64ToInt64(f float64) int64 {
+	return int64(f)
+}
+
+// Int64ToFloat64 int64转float64
+func Int64ToFloat64(i64 int64) float64 {
+	return float64(i64)
+}
