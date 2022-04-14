@@ -12,6 +12,11 @@ func Int64ToInt(i64 int64) int {
 	return i
 }
 
+// IntToInt64 int转int64
+func IntToInt64(i int) int64 {
+	return int64(i)
+}
+
 // Int64ToString int64转string
 func Int64ToString(i64 int64) string {
 	return strconv.FormatInt(i64, 10)
