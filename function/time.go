@@ -127,6 +127,18 @@ func SubMonths(t1, t2 time.Time) (month int) {
 	y2 := t2.Year()
 	m1 := int(t1.Month())
 	m2 := int(t2.Month())
+	chaY := y1 - y2
+	chaM := 12 - m2 + m1
+	month = chaM + ((chaY - 1) * 12)
+	return
+}
+
+// SubMonth 两个时间相隔多少个月 [t1 - t2]
+func SubMonth(t1, t2 time.Time) (month int) {
+	y1 := t1.Year()
+	y2 := t2.Year()
+	m1 := int(t1.Month())
+	m2 := int(t2.Month())
 	d1 := t1.Day()
 	d2 := t2.Day()
 
