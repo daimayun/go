@@ -2,7 +2,7 @@ package function
 
 import "math"
 
-// EarthDistance 两点之间的距离[单位:米]
+// EarthDistance 两点之间的距离,不分前后[单位:米]
 func EarthDistance(lat1, lng1, lat2, lng2 float64) float64 {
 	var radius float64 = 6371000 // 6378137
 	rad := math.Pi / 180.0
