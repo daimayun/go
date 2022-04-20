@@ -58,3 +58,19 @@ func GetQuarterDay() (string, string) {
 	}
 	return firstOfQuarter, lastOfQuarter
 }
+
+// GetYearDay 获取当年的初始和结束日期
+func GetYearDay() (string, string) {
+	year := time.Now().Format("2006")
+	firstOfYear := year + "-01-01 00:00:00"
+	lastOfYear := year + "-12-31 23:59:59"
+	return firstOfYear, lastOfYear
+}
+
+// GetDay 获取当天的初始和结束日期
+func GetDay() (string, string) {
+	day := time.Now().Format("2006-01-02")
+	firstOfDay := day + " 00:00:00"
+	lastOfDay := day + " 23:59:59"
+	return firstOfDay, lastOfDay
+}
