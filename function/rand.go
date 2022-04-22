@@ -12,6 +12,7 @@ import (
 
 // RandString 32位随机字符串
 func RandString() string {
+	rand.Seed(time.Now().UnixNano())
 	return Md5(fmt.Sprintf("%s%s", strconv.FormatInt(time.Now().UnixNano(), 10), strconv.Itoa(rand.Intn(1000000))))
 }
 
