@@ -6,7 +6,11 @@ import (
 	"unicode/utf8"
 )
 
-var strNum map[string]string = map[string]string{
+// SpellDigitalFormat 拼读格式
+type SpellDigitalFormat map[string]string
+
+// defaultSpellDigitalFormat 系统默认拼读格式
+var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	"0": "0",
 	"1": "1",
 	"2": "2",
@@ -26,19 +30,19 @@ var strNum map[string]string = map[string]string{
 }
 
 //读小数或者整数
-func spellReadFloatAndInt(s string) (str string, err error) {
+func spellReadFloatAndInt(s string, format SpellDigitalFormat) (str string, err error) {
 	arr := strings.Split(s, ".")
 	la := len(arr)
 	if la == 2 || la == 1 {
 		if la == 2 {
 			pStr := arr[1]
 			lPStr := len(pStr)
-			var zs = strNum["."]
+			var zs = format["."]
 			for j := 0; j < lPStr; j++ {
 				if string(pStr[j]) == "0" {
-					zs += strNum[string(pStr[j])]
+					zs += format[string(pStr[j])]
 				} else {
-					str += zs + strNum[string(pStr[j])]
+					str += zs + format[string(pStr[j])]
 					zs = ""
 				}
 			}
@@ -49,7 +53,7 @@ func spellReadFloatAndInt(s string) (str string, err error) {
 		return
 	}
 	var zs string
-	zs, err = spellReadInt(s)
+	zs, err = spellReadInt(s, format)
 	if err != nil {
 		return
 	}
@@ -58,13 +62,13 @@ func spellReadFloatAndInt(s string) (str string, err error) {
 }
 
 // 读整数
-func spellReadInt(s string) (str string, err error) {
+func spellReadInt(s string, format SpellDigitalFormat) (str string, err error) {
 	l := len(s)
 	if l > 1 && string(s[0]) == "0" {
 		err = errors.New("最高位不能为0")
 		return
 	} else if l == 1 {
-		str = strNum[s]
+		str = format[s]
 		return
 	}
 	xw := ""
@@ -75,46 +79,46 @@ func spellReadInt(s string) (str string, err error) {
 		if i == 0 {
 			//个
 			if thenS != "0" {
-				str = strNum[thenS] + str
+				str = format[thenS] + str
 				xy = true
 			}
 		} else if i == 1 {
 			//十
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["s"] + str
+				str = format[thenS] + format["s"] + str
 			} else {
-				xw = strNum["0"]
+				xw = format["0"]
 			}
 		} else if i == 2 {
 			//百
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["b"] + xw + str
+				str = format[thenS] + format["b"] + xw + str
 				xw = ""
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 3 {
 			//千
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["q"] + xw + str
+				str = format[thenS] + format["q"] + xw + str
 				xw = ""
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 4 {
 			//万
-			str = strNum["w"] + xw + str
+			str = format["w"] + xw + str
 			xw = ""
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + str
+				str = format[thenS] + str
 				w = true
 			} else {
 				xy = false
@@ -123,45 +127,45 @@ func spellReadInt(s string) (str string, err error) {
 			//十万
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["s"] + xw + str
+				str = format[thenS] + format["s"] + xw + str
 				xw = ""
 				w = true
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 6 {
 			//百万
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["b"] + xw + str
+				str = format[thenS] + format["b"] + xw + str
 				xw = ""
 				w = true
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 7 {
 			//千万
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["q"] + xw + str
+				str = format[thenS] + format["q"] + xw + str
 				xw = ""
 				w = true
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 8 {
 			//亿
-			str = strNum["y"] + xw + str
+			str = format["y"] + xw + str
 			xw = ""
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + str
+				str = format[thenS] + str
 			} else {
 				xy = false
 			}
@@ -169,28 +173,28 @@ func spellReadInt(s string) (str string, err error) {
 			//十亿
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["s"] + xw + str
+				str = format[thenS] + format["s"] + xw + str
 				xw = ""
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 10 {
 			//百亿
 			if thenS != "0" {
 				xy = true
-				str = strNum[thenS] + strNum["b"] + xw + str
+				str = format[thenS] + format["b"] + xw + str
 				xw = ""
 			} else {
 				if xw == "" && xy == true {
-					xw = strNum["0"]
+					xw = format["0"]
 				}
 			}
 		} else if i == 11 {
 			//千亿
 			if thenS != "0" {
-				str = strNum[thenS] + strNum["q"] + str
+				str = format[thenS] + format["q"] + str
 			}
 		} else {
 			err = errors.New("位数超过限制")
@@ -198,15 +202,15 @@ func spellReadInt(s string) (str string, err error) {
 		}
 	}
 	if w == false {
-		str = strings.Replace(str, strNum["w"], "", 1)
+		str = strings.Replace(str, format["w"], "", 1)
 	}
 	if len(str) > 1 {
 		strRune := []rune(str)
-		if string(strRune[utf8.RuneCountInString(str)-1]) == strNum["0"] {
+		if string(strRune[utf8.RuneCountInString(str)-1]) == format["0"] {
 			str = string(strRune[:utf8.RuneCountInString(str)-1])
 		}
 		strRune = []rune(str)
-		if string(strRune[0])+string(strRune[1]) == strNum["1"]+strNum["s"] {
+		if string(strRune[0])+string(strRune[1]) == format["1"]+format["s"] {
 			str = string(strRune[1:])
 		}
 	}
@@ -214,9 +218,15 @@ func spellReadInt(s string) (str string, err error) {
 }
 
 // SpellReadNum 拼读数
-func SpellReadNum(str string) (slice []string, err error) {
+func SpellReadNum(str string, formats ...SpellDigitalFormat) (slice []string, err error) {
+	var format SpellDigitalFormat
+	if len(formats) > 0 {
+		format = MapMerge(formats[0], defaultSpellDigitalFormat)
+	} else {
+		format = defaultSpellDigitalFormat
+	}
 	var s string
-	s, err = spellReadFloatAndInt(str)
+	s, err = spellReadFloatAndInt(str, format)
 	if err != nil {
 		return
 	}
