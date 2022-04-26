@@ -17,10 +17,14 @@ func RandString() string {
 }
 
 // UniqueId 生成Guid字串
-func UniqueId() string {
+func UniqueId(v ...interface{}) string {
+	s := ""
+	if len(v) > 0 {
+		s = fmt.Sprintf("%s", v[0])
+	}
 	b := make([]byte, 48)
 	if _, err := io.ReadFull(cr.Reader, b); err != nil {
 		return ""
 	}
-	return Md5(base64.URLEncoding.EncodeToString(b))
+	return Md5(base64.URLEncoding.EncodeToString(b) + s)
 }
