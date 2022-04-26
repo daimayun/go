@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// CreateOrderNo 生成平台32位订单号
+// CreateOrderNo 生成平台32位订单号 [不推荐使用]
 func CreateOrderNo() (sn string) {
 	unixNano := time.Now().UnixNano()
 	sn = NowDateTimeStr()
