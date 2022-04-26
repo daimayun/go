@@ -29,6 +29,26 @@ var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	".": "d",
 }
 
+// CapitalSpellDigitalFormat 数字大写拼读格式
+var CapitalSpellDigitalFormat SpellDigitalFormat = map[string]string{
+	"0": "零",
+	"1": "一",
+	"2": "二",
+	"3": "三",
+	"4": "四",
+	"5": "五",
+	"6": "六",
+	"7": "七",
+	"8": "八",
+	"9": "九",
+	"s": "十",
+	"b": "百",
+	"q": "千",
+	"w": "万",
+	"y": "亿",
+	".": "点",
+}
+
 //读小数或者整数
 func spellReadFloatAndInt(s string, format SpellDigitalFormat) (str string, err error) {
 	arr := strings.Split(s, ".")
@@ -221,7 +241,7 @@ func spellReadInt(s string, format SpellDigitalFormat) (str string, err error) {
 func SpellReadNum(str string, formats ...SpellDigitalFormat) (slice []string, err error) {
 	format := defaultSpellDigitalFormat
 	if len(formats) > 0 {
-		format = MapMerge(formats[0], defaultSpellDigitalFormat)
+		format = MapMerge(defaultSpellDigitalFormat, formats[0])
 	}
 	var s string
 	s, err = spellReadFloatAndInt(str, format)
