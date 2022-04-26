@@ -24,7 +24,7 @@ func UniqueId(v ...interface{}) string {
 	}
 	b := make([]byte, 48)
 	if _, err := io.ReadFull(cr.Reader, b); err != nil {
-		return ""
+		return RandString()
 	}
 	return Md5(base64.URLEncoding.EncodeToString(b) + s)
 }
