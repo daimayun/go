@@ -3,9 +3,10 @@ package function
 import "time"
 
 var (
-	TimeLayout    string = "2006-01-02 15:04:05"
-	TimeLayoutYMD string = "2006-01-02"
-	TimeLayoutHMS string = "15:04:05"
+	TimeLayoutYMDHIS string = "20060102150405"
+	TimeLayout       string = "2006-01-02 15:04:05"
+	TimeLayoutYMD    string = "2006-01-02"
+	TimeLayoutHMS    string = "15:04:05"
 )
 
 // NowDateTime 当前时间戳
