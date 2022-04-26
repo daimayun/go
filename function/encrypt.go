@@ -21,7 +21,7 @@ func Md516(str string) string {
 	o := md5.New()
 	o.Write([]byte(str))
 	s := hex.EncodeToString(o.Sum(nil))
-	return s[8:23]
+	return s[8:24]
 }
 
 // Sha1 sha1加密
