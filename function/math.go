@@ -12,12 +12,12 @@ func InterceptDecimal(f float64, n int) float64 {
 	if n > 0 {
 		d = math.Pow10(n)
 	}
-	return math.Trunc(f*d)/d
+	return math.Trunc(f*d) / d
 }
 
 // FloatRound 四舍五入 [n为保留的小数点位数] [不优先使用]
 func FloatRound(f float64, n int) (res float64, err error) {
-	res, err = strconv.ParseFloat(fmt.Sprintf("%." + strconv.Itoa(n) + "f", f), 64)
+	res, err = strconv.ParseFloat(fmt.Sprintf("%."+strconv.Itoa(n)+"f", f), 64)
 	return
 }
 
@@ -37,12 +37,12 @@ func RoundToString(f float64, n int) string {
 	return strconv.FormatFloat(f, 'f', n, 64)
 }
 
-// UpInt 向上取整
-func UpInt(f float64) float64 {
+// UpInteger 向上取整
+func UpInteger(f float64) float64 {
 	return math.Ceil(f)
 }
 
-// DownInt 向下取整
-func DownInt(f float64) float64 {
+// DownInteger 向下取整
+func DownInteger(f float64) float64 {
 	return math.Floor(f)
 }
