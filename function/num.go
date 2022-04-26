@@ -219,11 +219,9 @@ func spellReadInt(s string, format SpellDigitalFormat) (str string, err error) {
 
 // SpellReadNum 拼读数
 func SpellReadNum(str string, formats ...SpellDigitalFormat) (slice []string, err error) {
-	var format SpellDigitalFormat
+	format := defaultSpellDigitalFormat
 	if len(formats) > 0 {
 		format = MapMerge(formats[0], defaultSpellDigitalFormat)
-	} else {
-		format = defaultSpellDigitalFormat
 	}
 	var s string
 	s, err = spellReadFloatAndInt(str, format)
