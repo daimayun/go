@@ -49,10 +49,10 @@ func DownInteger(f float64) float64 {
 
 // UpIntegerToInt64 向上取整返回int64
 func UpIntegerToInt64(f float64) int64 {
-	return Float64ToInt64(math.Ceil(f))
+	return Float64ToInt64(UpInteger(f))
 }
 
 // DownIntegerToInt64 向下取整返回int64
 func DownIntegerToInt64(f float64) int64 {
-	return Float64ToInt64(math.Floor(f))
+	return Float64ToInt64(DownInteger(f))
 }
