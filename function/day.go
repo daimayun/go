@@ -75,7 +75,7 @@ func GetDay() (string, string) {
 	return firstOfDay, lastOfDay
 }
 
-// GetBetweenDates 根据开始日期和结束日期计算出时间段内所有日期
+// GetBetweenDates 根据开始日期和结束日期计算出时间段内所有日期[两个日期内所有天数]
 func GetBetweenDates(startDate, endDate string, layouts ...string) (d []string) {
 	layout := TimeLayoutYMD
 	if len(layouts) > 0 {
@@ -103,6 +103,46 @@ func GetBetweenDates(startDate, endDate string, layouts ...string) (d []string) 
 	d = append(d, date.Format(layout))
 	for {
 		date = date.AddDate(0, 0, 1)
+		dateStr := date.Format(layout)
+		d = append(d, dateStr)
+		if dateStr == date2Str {
+			break
+		}
+	}
+	return
+}
+
+// GetBetweenMonths 根据开始日期和结束日期计算出时间段内所有月份
+func GetBetweenMonths(startDate, endDate string, layouts ...string) (d []string) {
+	layout := TimeLayoutYMD
+	if len(layouts) > 0 {
+		layout = layouts[0]
+	}
+	timeFormatTpl := TimeLayout
+	if len(layouts) > 1 {
+		timeFormatTpl = layouts[1]
+	}
+	if len(timeFormatTpl) != len(startDate) {
+		timeFormatTpl = timeFormatTpl[0:len(startDate)]
+	}
+	date, err := time.Parse(timeFormatTpl, startDate)
+	if err != nil {
+		// 时间解析，异常
+		return
+	}
+	date2, err := time.Parse(timeFormatTpl, endDate)
+	if err != nil {
+		// 时间解析，异常
+		return
+	}
+	if date2.Before(date) {
+		// 如果结束时间小于开始时间，异常
+		return
+	}
+	date2Str := date2.Format(layout)
+	d = append(d, date.Format(layout))
+	for {
+		date = date.AddDate(0, 1, 0)
 		dateStr := date.Format(layout)
 		d = append(d, dateStr)
 		if dateStr == date2Str {
