@@ -111,6 +111,24 @@ func AfterDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
 	return
 }
 
+// BeforeMonthTime N月前的时间
+func BeforeMonthTime(month int) (timestamp int64, Time time.Time, timeStr string) {
+	currentTime := time.Now()
+	Time = currentTime.AddDate(0, -month, 0)
+	timeStr = Time.Format(TimeLayout)
+	timestamp = Time.Unix()
+	return
+}
+
+// AfterMonthTime N月后的时间
+func AfterMonthTime(month int) (timestamp int64, Time time.Time, timeStr string) {
+	currentTime := time.Now()
+	Time = currentTime.AddDate(0, month, 0)
+	timeStr = Time.Format(TimeLayout)
+	timestamp = Time.Unix()
+	return
+}
+
 // DiyTimeFmtStr Diy时间格式
 func DiyTimeFmtStr(format string, timestamps ...int64) string {
 	var timestamp int64
