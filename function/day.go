@@ -95,6 +95,11 @@ func GetBetweenDates(startDate, endDate string, layouts ...string) (d []string) 
 		// 时间解析，异常
 		return
 	}
+	// 日期相等直接返回
+	if startDate == endDate {
+		d = []string{startDate}
+		return
+	}
 	if date2.Before(date) {
 		// 如果结束时间小于开始时间，异常
 		return
@@ -133,6 +138,11 @@ func GetBetweenMonths(startDate, endDate string, layouts ...string) (d []string)
 	date2, err := time.Parse(timeFormatTpl, endDate)
 	if err != nil {
 		// 时间解析，异常
+		return
+	}
+	// 日期相等直接返回
+	if startDate == endDate {
+		d = []string{startDate}
 		return
 	}
 	if date2.Before(date) {
