@@ -26,5 +26,5 @@ func UniqueId(v ...interface{}) string {
 	if _, err := io.ReadFull(cr.Reader, b); err != nil {
 		return RandString()
 	}
-	return Md5(base64.URLEncoding.EncodeToString(b) + s)
+	return Md5(strconv.FormatInt(time.Now().UnixNano(), 10) + base64.URLEncoding.EncodeToString(b) + s)
 }
