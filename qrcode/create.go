@@ -15,8 +15,6 @@ import (
 	"path"
 )
 
-var err error
-
 // CreateContainLogoQrCode 生成带有logo图片的二维码
 func CreateContainLogoQrCode(content, logoFilePathOrLogoRemoteUrl string, size, logoWidth, logoHeight int) (image.Image, error) {
 	if logoWidth == 0 {
@@ -29,11 +27,12 @@ func CreateContainLogoQrCode(content, logoFilePathOrLogoRemoteUrl string, size, 
 		size = 430
 	}
 	var (
-		bgImg      image.Image
-		offset     image.Point
-		avatarFile *os.File
-		avatarImg  image.Image
+		bgImg        image.Image
+		offset       image.Point
+		avatarFile   *os.File
+		avatarImg    image.Image
 		logoFileType string
+		err          error
 	)
 	bgImg, err = createQrCode(content, size)
 	if err != nil {
@@ -100,6 +99,7 @@ func createContainLogoQrCode(content, logoFilePath string, size, logoWidth, logo
 		offset     image.Point
 		avatarFile *os.File
 		avatarImg  image.Image
+		err        error
 	)
 	bgImg, err = createQrCode(content, size)
 	if err != nil {
