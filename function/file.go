@@ -18,8 +18,8 @@ func FilePutContents(filename string, data string) error {
 	return ioutil.WriteFile(filename, []byte(data), 0644)
 }
 
-// FilePutContentByAppend 把一个字符串写入文件中[追加至原文件]
-func FilePutContentByAppend(filename string, data string) (err error) {
+// FilePutContentToAppend 把一个字符串写入文件中[追加至原文件]
+func FilePutContentToAppend(filename string, data string) (err error) {
 	var f *os.File
 	f, err = os.OpenFile(filename, os.O_APPEND|os.O_CREATE, 0644)
 	if err != nil {
