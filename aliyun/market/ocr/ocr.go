@@ -59,8 +59,8 @@ type AliOCRResponseData struct {
 	PersonIdSideEntity aliOCRResponsePersonIdSideEntityData `json:"PERSON_ID_SIDE_ENTITY"`
 }
 
-// GetIdImageData 获取身份证图片数据信息
-func GetIdImageData(appCode, fileBase64EncodeData string, imageType ...string) (data AliOCRResponseData, err error) {
+// GetIdCardImageData 获取身份证图片数据信息
+func GetIdCardImageData(appCode, fileBase64EncodeData string, imageType ...string) (data AliOCRResponseData, err error) {
 	if appCode == "" {
 		err = errors.New("缺少APPCODE")
 		return
