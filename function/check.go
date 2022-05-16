@@ -5,6 +5,11 @@ import (
 	"strconv"
 )
 
+// IsChinese 是否全部为中文
+func IsChinese(str string) bool {
+	return regexp.MustCompile("^[\u4e00-\u9fa5]+$").MatchString(str)
+}
+
 // CheckMobileNumRule 验证手机号码
 func CheckMobileNumRule(mobile string) bool {
 	re := regexp.MustCompile(`^1[3456789]\d{9}$`)
@@ -30,7 +35,7 @@ func CheckIdNumRule(idNum string) bool {
 		return false
 	}
 	var (
-		idNumByte [18]byte
+		idNumByte   [18]byte
 		idNumByte17 [17]byte
 	)
 	for k, v := range []byte(idNum) {
@@ -51,7 +56,7 @@ func byte2int(x byte) byte {
 
 func checkId(id [17]byte) int {
 	array := make([]int, 17)
-	for index , value := range id {
+	for index, value := range id {
 		array[index], _ = strconv.Atoi(string(value))
 	}
 	var wi [17]int = [...]int{7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2}
