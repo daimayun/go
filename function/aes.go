@@ -73,10 +73,10 @@ func AesDecrypt(encrypted []byte, key []byte) ([]byte, error) {
 	return origData, err
 }
 
-// AesEncryptBase64 加密后为Base64格式的字符串
-func AesEncryptBase64(str, key string) (string, error) {
-	if key != "" {
-		password = []byte(key)
+// AesEncryptToBase64 加密后为Base64格式的字符串
+func AesEncryptToBase64(str string, key ...string) (string, error) {
+	if len(key) > 0 {
+		password = []byte(key[0])
 	}
 	result, err := AesEncrypt([]byte(str), password)
 	if err != nil {
@@ -85,10 +85,10 @@ func AesEncryptBase64(str, key string) (string, error) {
 	return base64.StdEncoding.EncodeToString(result), err
 }
 
-// AesDecryptBase64 对Base64格式的字符串解密
-func AesDecryptBase64(str, key string) (string, error) {
-	if key != "" {
-		password = []byte(key)
+// AesDecryptByBase64 对Base64格式的字符串解密
+func AesDecryptByBase64(str string, key ...string) (string, error) {
+	if len(key) > 0 {
+		password = []byte(key[0])
 	}
 	//解密base64字符串
 	pwdByte, err := base64.StdEncoding.DecodeString(str)
