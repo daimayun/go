@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// IdCardBirthHandle 身份证出生日期处理[2020年1月1日]
+// IdCardBirthHandle 身份证出生日期处理,统一格式:[2020年1月1日]
 func IdCardBirthHandle(birth string, layouts ...string) (time.Time, error) {
 	layout := "2006年1月2日"
 	if len(layouts) > 0 {
@@ -15,8 +15,8 @@ func IdCardBirthHandle(birth string, layouts ...string) (time.Time, error) {
 	return time.Parse(layout, birth)
 }
 
-// IdCardHandle 身份证有效期处理[2018.04.23-2028.04.23]
-func IdCardHandle(date string, layouts ...string) (starTime, endTime time.Time, err error) {
+// IdCardDeadlineHandle 身份证有效期处理,统一格式:[2018.08.01-2028.08.01]
+func IdCardDeadlineHandle(date string, layouts ...string) (starTime, endTime time.Time, err error) {
 	layout := "2006.01.02"
 	if len(layouts) > 0 {
 		layout = layouts[0]
