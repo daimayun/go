@@ -9,8 +9,8 @@ import (
 // SpellDigitalFormat 拼读格式
 type SpellDigitalFormat map[string]string
 
-// defaultSpellDigitalFormat 系统默认拼读格式
-var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
+// replaceStringSpellDigitalFormat 替换字符串拼读格式
+var replaceStringSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	"0": "0",
 	"1": "1",
 	"2": "2",
@@ -29,8 +29,8 @@ var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	".": "d",
 }
 
-// CapitalSpellDigitalFormat 数字大写拼读格式
-var CapitalSpellDigitalFormat SpellDigitalFormat = map[string]string{
+// defaultSpellDigitalFormat 系统默认数字大写拼读格式
+var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	"0": "零",
 	"1": "一",
 	"2": "二",
