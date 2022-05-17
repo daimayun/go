@@ -51,7 +51,7 @@ func ToSmallCamelCase(str string, signs ...string) (res string) {
 	strArr := strings.Split(str, sign)
 	for k, v := range strArr {
 		if k == 0 {
-			res += v
+			res += strings.ToLower(string(v[0])) + v[1:]
 		} else {
 			res += strings.ToUpper(string(v[0])) + v[1:]
 		}
