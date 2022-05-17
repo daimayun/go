@@ -29,3 +29,30 @@ func FilePutContentToAppend(filename string, data string) (err error) {
 	_, err = f.Write([]byte(data))
 	return
 }
+
+// FileExists 判断文件或目录是否存在
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	if err != nil {
+		return os.IsExist(err)
+	}
+	return true
+}
+
+// IsDir 判断所给路径是否为文件夹
+func IsDir(path string) bool {
+	f, err := os.Stat(path)
+	if err == nil {
+		return f.IsDir()
+	}
+	return false
+}
+
+// IsFile 判断所给路径是否为文件
+func IsFile(path string) bool {
+	f, err := os.Stat(path)
+	if err == nil {
+		return !f.IsDir()
+	}
+	return false
+}
