@@ -48,20 +48,6 @@ func NowYearDateTimeEnd() time.Time {
 	return time.Date(currentTime.Year(), 12, 31, 23, 59, 59, 0, currentTime.Location())
 }
 
-//StringToTime 将字符串转为时间（例如：2021-08-08 08:08:08）
-func StringToTime(str string, layouts ...string) (time.Time, error) {
-	layout := TimeLayout
-	if len(layouts) > 0 {
-		layout = layouts[0]
-	}
-	return time.Parse(layout, str)
-}
-
-// TimestampToTime 时间戳转日期
-func TimestampToTime(timestamp int64) time.Time {
-	return time.Unix(timestamp, 0)
-}
-
 // BeforeSecondTime N秒前的时间
 func BeforeSecondTime(second int64) time.Time {
 	return time.Unix(time.Now().Unix()-second, 0)
@@ -92,13 +78,16 @@ func AfterMonthTime(month int) time.Time {
 	return time.Now().AddDate(0, month, 0)
 }
 
-// DiyTimeFmtStr Diy时间格式
-func DiyTimeFmtStr(format string, timestamps ...int64) string {
-	var timestamp int64
-	if len(timestamps) == 0 {
-		timestamp = time.Now().Unix()
-	} else {
-		timestamp = timestamps[0]
+//StringToTime 将字符串转为时间（例如：2021-08-08 08:08:08）
+func StringToTime(str string, layouts ...string) (time.Time, error) {
+	layout := TimeLayout
+	if len(layouts) > 0 {
+		layout = layouts[0]
 	}
-	return time.Unix(timestamp, 0).Format(format)
+	return time.Parse(layout, str)
+}
+
+// TimestampToTime 时间戳转日期
+func TimestampToTime(timestamp int64) time.Time {
+	return time.Unix(timestamp, 0)
 }
