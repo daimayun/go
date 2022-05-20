@@ -7,13 +7,12 @@ import (
 	"io"
 	"math/rand"
 	"strconv"
-	"time"
 )
 
 // RandString 32位随机字符串 [不推荐使用]
 func RandString() string {
-	rand.Seed(time.Now().UnixNano())
-	return Md5(fmt.Sprintf("%s%s", strconv.FormatInt(time.Now().UnixNano(), 10), strconv.Itoa(rand.Intn(1000000))))
+	rand.Seed(now.UnixNano())
+	return Md5(fmt.Sprintf("%s%s", strconv.FormatInt(now.UnixNano(), 10), strconv.Itoa(rand.Intn(1000000))))
 }
 
 // UniqueId 生成Guid字串
@@ -26,5 +25,5 @@ func UniqueId(v ...interface{}) string {
 	if _, err := io.ReadFull(cr.Reader, b); err != nil {
 		return RandString()
 	}
-	return Md5(strconv.FormatInt(time.Now().UnixNano(), 10) + base64.URLEncoding.EncodeToString(b) + s)
+	return Md5(strconv.FormatInt(now.UnixNano(), 10) + base64.URLEncoding.EncodeToString(b) + s)
 }
