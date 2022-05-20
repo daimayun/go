@@ -6,7 +6,6 @@ var (
 	TimeLayoutYMDHIS string = "20060102150405"
 	TimeLayout       string = "2006-01-02 15:04:05"
 	TimeLayoutYMD    string = "2006-01-02"
-	TimeLayoutHMS    string = "15:04:05"
 )
 
 // TodayDateTimeStart 今日00:00:00时间
@@ -37,99 +36,60 @@ func NowMonthDateTimeEnd() time.Time {
 	return time.Date(currentYear, currentMonth, nowDate.Day(), 23, 59, 59, 0, currentLocation)
 }
 
-// NowYearDateTimeStart 当前年1月1号00:00:00时间
+// NowYearDateTimeStart 当年1月1号00:00:00时间
 func NowYearDateTimeStart() time.Time {
 	currentTime := time.Now()
 	return time.Date(currentTime.Year(), 1, 1, 0, 0, 0, 0, currentTime.Location())
 }
 
-// NowYearDateTimeEnd 当前年12月31号的23:59:59时间
+// NowYearDateTimeEnd 当年12月31号的23:59:59时间
 func NowYearDateTimeEnd() time.Time {
 	currentTime := time.Now()
 	return time.Date(currentTime.Year(), 12, 31, 23, 59, 59, 0, currentTime.Location())
 }
 
-//TimeStrToTime 将时间字符串转为时间戳和time.Time（例如：2021-08-08 08:08:08）
-func TimeStrToTime(str string) (timestamp int64, Time time.Time) {
-	loc, _ := time.LoadLocation("Local")
-	Time, _ = time.ParseInLocation(TimeLayout, str, loc)
-	timestamp = Time.Unix()
-	return
+//StringToTime 将字符串转为时间（例如：2021-08-08 08:08:08）
+func StringToTime(str string, layouts ...string) (time.Time, error) {
+	layout := TimeLayout
+	if len(layouts) > 0 {
+		layout = layouts[0]
+	}
+	return time.Parse(layout, str)
 }
 
-// AddSecondToTime 在当前时间戳的基础上加上秒数，重新生成时间日期
-func AddSecondToTime(second int64) (timestamp int64, Time time.Time, timeStr string) {
-	timestamp = time.Now().Unix() + second
-	Time = time.Unix(timestamp, 0)
-	timeStr = Time.Format(TimeLayout)
-	return
+// TimestampToTime 时间戳转日期
+func TimestampToTime(timestamp int64) time.Time {
+	return time.Unix(timestamp, 0)
 }
 
-// TimestampToTime 时间戳转日期格式
-func TimestampToTime(timestamp int64) (Time time.Time, timeStr string) {
-	Time = time.Unix(timestamp, 0)
-	timeStr = Time.Format(TimeLayout)
-	return
+// BeforeSecondTime N秒前的时间
+func BeforeSecondTime(second int64) time.Time {
+	return time.Unix(time.Now().Unix()-second, 0)
 }
 
-// NowTime 当前时间
-func NowTime() (timestamp int64, Time time.Time, timeStr string) {
-	timestamp = time.Now().Unix()
-	Time = time.Unix(timestamp, 0)
-	timeStr = Time.Format(TimeLayout)
-	return
-}
-
-// TimeSplit 时间格式拆分
-func TimeSplit(t time.Time) (ymd, hms string) {
-	ymd = t.Format(TimeLayoutYMD)
-	hms = t.Format(TimeLayoutHMS)
-	return
-}
-
-// NowTimeSplit 当前时间格式拆分
-func NowTimeSplit() (ymd, hms string) {
-	var Time time.Time
-	Time = time.Unix(time.Now().Unix(), 0)
-	ymd = Time.Format(TimeLayoutYMD)
-	hms = Time.Format(TimeLayoutHMS)
-	return
+// AfterSecondTime N秒后的时间
+func AfterSecondTime(second int64) time.Time {
+	return time.Unix(time.Now().Unix()+second, 0)
 }
 
 // BeforeDayTime N天前的时间
-func BeforeDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
-	currentTime := time.Now()
-	Time = currentTime.AddDate(0, 0, -day)
-	timeStr = Time.Format(TimeLayout)
-	timestamp = Time.Unix()
-	return
+func BeforeDayTime(day int) time.Time {
+	return time.Now().AddDate(0, 0, -day)
 }
 
 // AfterDayTime N天后的时间
-func AfterDayTime(day int) (timestamp int64, Time time.Time, timeStr string) {
-	currentTime := time.Now()
-	Time = currentTime.AddDate(0, 0, day)
-	timeStr = Time.Format(TimeLayout)
-	timestamp = Time.Unix()
-	return
+func AfterDayTime(day int) time.Time {
+	return time.Now().AddDate(0, 0, day)
 }
 
 // BeforeMonthTime N月前的时间
-func BeforeMonthTime(month int) (timestamp int64, Time time.Time, timeStr string) {
-	currentTime := time.Now()
-	Time = currentTime.AddDate(0, -month, 0)
-	timeStr = Time.Format(TimeLayout)
-	timestamp = Time.Unix()
-	return
+func BeforeMonthTime(month int) time.Time {
+	return time.Now().AddDate(0, -month, 0)
 }
 
 // AfterMonthTime N月后的时间
-func AfterMonthTime(month int) (timestamp int64, Time time.Time, timeStr string) {
-	currentTime := time.Now()
-	Time = currentTime.AddDate(0, month, 0)
-	timeStr = Time.Format(TimeLayout)
-	timestamp = Time.Unix()
-	return
+func AfterMonthTime(month int) time.Time {
+	return time.Now().AddDate(0, month, 0)
 }
 
 // DiyTimeFmtStr Diy时间格式
