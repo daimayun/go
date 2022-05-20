@@ -72,7 +72,8 @@ func GetBetweenDates(startDate, endDate string, layouts ...string) (d []string) 
 		// 时间解析，异常
 		return
 	}
-	date2, err := time.Parse(timeFormatTpl, endDate)
+	var date2 time.Time
+	date2, err = time.Parse(timeFormatTpl, endDate)
 	if err != nil {
 		// 时间解析，异常
 		return
@@ -117,7 +118,8 @@ func GetBetweenMonths(startDate, endDate string, layouts ...string) (d []string)
 		// 时间解析，异常
 		return
 	}
-	date2, err := time.Parse(timeFormatTpl, endDate)
+	var date2 time.Time
+	date2, err = time.Parse(timeFormatTpl, endDate)
 	if err != nil {
 		// 时间解析，异常
 		return
