@@ -57,8 +57,8 @@ func SubDays(t1, t2 time.Time) (day int) {
 	return
 }
 
-// GetBetweenDates 根据开始日期和结束日期计算出时间段内所有日期[两个日期内所有天数]
-func GetBetweenDates(startDate, endDate string, layouts ...string) (d []string) {
+// GetBetweenDays 根据开始日期和结束日期计算出时间段内所有日期[两个日期内所有天数]
+func GetBetweenDays(startDate, endDate string, layouts ...string) (d []string) {
 	layout := TimeLayoutYMD
 	if len(layouts) > 0 {
 		layout = layouts[0]
