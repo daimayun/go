@@ -46,6 +46,21 @@ func TodayDateTimeEnd() (timestamp int64, Time time.Time, timeStr string) {
 	return
 }
 
+// NowMonthDateTimeStart 当前月1号00:00:00时间
+func NowMonthDateTimeStart() (Time time.Time) {
+	currentTime := time.Now()
+	Time = time.Date(currentTime.Year(), currentTime.Month(), 1, 0, 0, 0, 0, currentTime.Location())
+	return
+}
+
+// NowMonthDateTimeEnd 当前月最后一天的23:59:59时间
+func NowMonthDateTimeEnd() (Time time.Time) {
+	currentTime := time.Now()
+	currentTime = currentTime.AddDate(0, 1, -1)
+	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 59, 0, currentTime.Location())
+	return
+}
+
 //TimeStrToTime 将时间字符串转为时间戳和time.Time（例如：2021-08-08 08:08:08）
 func TimeStrToTime(str string) (timestamp int64, Time time.Time) {
 	loc, _ := time.LoadLocation("Local")
