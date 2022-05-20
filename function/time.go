@@ -9,41 +9,16 @@ var (
 	TimeLayoutHMS    string = "15:04:05"
 )
 
-// NowDateTime 当前时间戳
-func NowDateTime() time.Time {
-	return time.Now()
-}
-
-// NowDateTimeFmtStr 当前时间格式
-func NowDateTimeFmtStr() string {
-	timestamp := time.Now().Unix()
-	tm := time.Unix(timestamp, 0)
-	return tm.Format(TimeLayout)
-}
-
-// NowDateTimeStr 当前时间字符串
-func NowDateTimeStr() string {
-	timestamp := time.Now().Unix()
-	tm := time.Unix(timestamp, 0)
-	return tm.Format("20060102150405")
-}
-
 // TodayDateTimeStart 今日00:00:00时间
-func TodayDateTimeStart() (timestamp int64, Time time.Time, timeStr string) {
+func TodayDateTimeStart() time.Time {
 	currentTime := time.Now()
-	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location())
-	timestamp = Time.Unix()
-	timeStr = Time.Format(TimeLayout)
-	return
+	return time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location())
 }
 
 // TodayDateTimeEnd 今日23:59:59时间
-func TodayDateTimeEnd() (timestamp int64, Time time.Time, timeStr string) {
+func TodayDateTimeEnd() time.Time {
 	currentTime := time.Now()
-	Time = time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 59, 0, currentTime.Location())
-	timestamp = Time.Unix()
-	timeStr = Time.Format(TimeLayout)
-	return
+	return time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 59, 0, currentTime.Location())
 }
 
 // NowMonthDateTimeStart 当前月1号00:00:00时间
