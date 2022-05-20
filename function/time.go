@@ -78,6 +78,16 @@ func AfterMonthTime(month int) time.Time {
 	return time.Now().AddDate(0, month, 0)
 }
 
+// BeforeYearTime N年前的时间
+func BeforeYearTime(year int) time.Time {
+	return time.Now().AddDate(-year, 0, 0)
+}
+
+// AfterYearTime N年后的时间
+func AfterYearTime(year int) time.Time {
+	return time.Now().AddDate(year, 0, 0)
+}
+
 //StringToTime 将字符串转为时间（例如：2021-08-08 08:08:08）
 func StringToTime(str string, layouts ...string) (time.Time, error) {
 	layout := TimeLayout
