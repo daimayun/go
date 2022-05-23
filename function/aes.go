@@ -82,7 +82,7 @@ func AesEncryptToBase64(str string, key ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return base64.StdEncoding.EncodeToString(result), err
+	return Base64Encode(string(result)), err
 }
 
 // AesDecryptByBase64 对Base64格式的字符串解密
