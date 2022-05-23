@@ -39,8 +39,8 @@ func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	if len(ts) > 0 {
 		t = ts[0]
 	}
-	startTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
-	endTime = time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, t.Location())
+	startTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local)
+	endTime = time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, time.Local)
 	return
 }
 
@@ -60,8 +60,8 @@ func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	if lastOffset == 6 {
 		lastOffset = -1
 	}
-	startTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location()).AddDate(0, 0, offset)
-	endTime = time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, t.Location()).AddDate(0, 0, lastOffset+1)
+	startTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
+	endTime = time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, time.Local).AddDate(0, 0, lastOffset+1)
 	return
 }
 
@@ -71,8 +71,8 @@ func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	if len(ts) > 0 {
 		t = ts[0]
 	}
-	startTime = time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
-	endTime = time.Date(t.Year(), t.Month(), startTime.AddDate(0, 1, -1).Day(), 23, 59, 59, 0, t.Location())
+	startTime = time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, time.Local)
+	endTime = time.Date(t.Year(), t.Month(), startTime.AddDate(0, 1, -1).Day(), 23, 59, 59, 0, time.Local)
 	return
 }
 
@@ -84,17 +84,17 @@ func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	}
 	month := int(t.Month())
 	if month >= 1 && month <= 3 {
-		startTime = time.Date(t.Year(), 1, 1, 0, 0, 0, 0, t.Location())
-		endTime = time.Date(t.Year(), 3, 31, 23, 59, 59, 0, t.Location())
+		startTime = time.Date(t.Year(), 1, 1, 0, 0, 0, 0, time.Local)
+		endTime = time.Date(t.Year(), 3, 31, 23, 59, 59, 0, time.Local)
 	} else if month >= 4 && month <= 6 {
-		startTime = time.Date(t.Year(), 4, 1, 0, 0, 0, 0, t.Location())
-		endTime = time.Date(t.Year(), 6, 30, 23, 59, 59, 0, t.Location())
+		startTime = time.Date(t.Year(), 4, 1, 0, 0, 0, 0, time.Local)
+		endTime = time.Date(t.Year(), 6, 30, 23, 59, 59, 0, time.Local)
 	} else if month >= 7 && month <= 9 {
-		startTime = time.Date(t.Year(), 7, 1, 0, 0, 0, 0, t.Location())
-		endTime = time.Date(t.Year(), 9, 30, 23, 59, 59, 0, t.Location())
+		startTime = time.Date(t.Year(), 7, 1, 0, 0, 0, 0, time.Local)
+		endTime = time.Date(t.Year(), 9, 30, 23, 59, 59, 0, time.Local)
 	} else {
-		startTime = time.Date(t.Year(), 10, 1, 0, 0, 0, 0, t.Location())
-		endTime = time.Date(t.Year(), 12, 31, 23, 59, 59, 0, t.Location())
+		startTime = time.Date(t.Year(), 10, 1, 0, 0, 0, 0, time.Local)
+		endTime = time.Date(t.Year(), 12, 31, 23, 59, 59, 0, time.Local)
 	}
 	return
 }
@@ -105,8 +105,8 @@ func YearStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	if len(ts) > 0 {
 		t = ts[0]
 	}
-	startTime = time.Date(t.Year(), 1, 1, 0, 0, 0, 0, t.Location())
-	endTime = time.Date(t.Year(), 12, 31, 23, 59, 59, 0, t.Location())
+	startTime = time.Date(t.Year(), 1, 1, 0, 0, 0, 0, time.Local)
+	endTime = time.Date(t.Year(), 12, 31, 23, 59, 59, 0, time.Local)
 	return
 }
 
