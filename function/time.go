@@ -8,9 +8,6 @@ var (
 	TimeLayoutYMD    string = "2006-01-02"
 )
 
-// TimeLocation 时间时区格式
-var TimeLocation, _ = time.LoadLocation("Asia/Shanghai")
-
 // TodayStartAndEndTime 今天00:00:00时间和今天23:59:59时间
 func TodayStartAndEndTime() (startTime, endTime time.Time) {
 	return DayStartAndEndTime()
@@ -191,7 +188,7 @@ func StringToTime(str string, layouts ...string) (time.Time, error) {
 	if len(layouts) > 0 {
 		layout = layouts[0]
 	}
-	return time.ParseInLocation(layout, str, TimeLocation)
+	return time.ParseInLocation(layout, str, time.Local)
 }
 
 // TimestampToTime 时间戳转时间
