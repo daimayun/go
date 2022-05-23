@@ -8,9 +8,6 @@ var (
 	TimeLayoutYMD    string = "2006-01-02"
 )
 
-// 当前时间
-var now = time.Now()
-
 // TodayStartAndEndTime 今天00:00:00时间和今天23:59:59时间
 func TodayStartAndEndTime() (startTime, endTime time.Time) {
 	return DayStartAndEndTime()
@@ -38,7 +35,7 @@ func NowYearStartAndEndTime() (startTime, endTime time.Time) {
 
 // DayStartAndEndTime 该天00:00:00时间和该天23:59:59时间
 func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := now
+	t := time.Now()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -49,7 +46,7 @@ func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // WeekStartAndEndTime 该周一00:00:00时间和该周日23:59:59时间
 func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := now
+	t := time.Now()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -70,7 +67,7 @@ func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // MonthStartAndEndTime 该月1号00:00:00时间和该月末23:59:59时间
 func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := now
+	t := time.Now()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -81,7 +78,7 @@ func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // QuarterStartAndEndTime 该季度1号00:00:00时间和该季度末23:59:59时间
 func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := now
+	t := time.Now()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -104,7 +101,7 @@ func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // YearStartAndEndTime 该年1月1号00:00:00时间和该年12月31号23:59:59时间
 func YearStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := now
+	t := time.Now()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
