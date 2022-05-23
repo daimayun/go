@@ -78,32 +78,32 @@ func AfterSecondTime(second int64) time.Time {
 	return time.Unix(time.Now().Unix()+second, 0)
 }
 
-// BeforeDayTime N天前的时间
+// BeforeDayTime N天前的当前时间
 func BeforeDayTime(day int) time.Time {
 	return time.Now().AddDate(0, 0, -day)
 }
 
-// AfterDayTime N天后的时间
+// AfterDayTime N天后的当前时间
 func AfterDayTime(day int) time.Time {
 	return time.Now().AddDate(0, 0, day)
 }
 
-// BeforeMonthTime N月前的时间
+// BeforeMonthTime N月前的当前时间
 func BeforeMonthTime(month int) time.Time {
 	return time.Now().AddDate(0, -month, 0)
 }
 
-// AfterMonthTime N月后的时间
+// AfterMonthTime N月后的当前时间
 func AfterMonthTime(month int) time.Time {
 	return time.Now().AddDate(0, month, 0)
 }
 
-// BeforeYearTime N年前的时间
+// BeforeYearTime N年前的当前时间
 func BeforeYearTime(year int) time.Time {
 	return time.Now().AddDate(-year, 0, 0)
 }
 
-// AfterYearTime N年后的时间
+// AfterYearTime N年后的当前时间
 func AfterYearTime(year int) time.Time {
 	return time.Now().AddDate(year, 0, 0)
 }
