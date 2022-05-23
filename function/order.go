@@ -11,6 +11,7 @@ import (
 
 // CreateOrderNo 生成平台32位订单号 [不推荐使用]
 func CreateOrderNo() (sn string) {
+	now := time.Now()
 	unixNano := now.UnixNano()
 	sn = now.Format(TimeLayoutYMDHIS)
 	timeStr := Int64ToString(unixNano)
