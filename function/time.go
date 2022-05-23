@@ -111,42 +111,74 @@ func YearStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 }
 
 // BeforeSecondTime N秒前的时间
-func BeforeSecondTime(second int64) time.Time {
+func BeforeSecondTime(seconds ...int64) time.Time {
+	var second int64 = 1
+	if len(seconds) > 0 {
+		second = seconds[0]
+	}
 	return time.Unix(time.Now().Unix()-second, 0)
 }
 
 // AfterSecondTime N秒后的时间
-func AfterSecondTime(second int64) time.Time {
+func AfterSecondTime(seconds ...int64) time.Time {
+	var second int64 = 1
+	if len(seconds) > 0 {
+		second = seconds[0]
+	}
 	return time.Unix(time.Now().Unix()+second, 0)
 }
 
 // BeforeDayTime N天前的当前时间
-func BeforeDayTime(day int) time.Time {
+func BeforeDayTime(days ...int) time.Time {
+	day := 1
+	if len(days) > 0 {
+		day = days[0]
+	}
 	return time.Now().AddDate(0, 0, -day)
 }
 
 // AfterDayTime N天后的当前时间
-func AfterDayTime(day int) time.Time {
+func AfterDayTime(days ...int) time.Time {
+	day := 1
+	if len(days) > 0 {
+		day = days[0]
+	}
 	return time.Now().AddDate(0, 0, day)
 }
 
 // BeforeMonthTime N月前的当前时间
-func BeforeMonthTime(month int) time.Time {
+func BeforeMonthTime(months ...int) time.Time {
+	month := 1
+	if len(months) > 0 {
+		month = months[0]
+	}
 	return time.Now().AddDate(0, -month, 0)
 }
 
 // AfterMonthTime N月后的当前时间
-func AfterMonthTime(month int) time.Time {
+func AfterMonthTime(months ...int) time.Time {
+	month := 1
+	if len(months) > 0 {
+		month = months[0]
+	}
 	return time.Now().AddDate(0, month, 0)
 }
 
 // BeforeYearTime N年前的当前时间
-func BeforeYearTime(year int) time.Time {
+func BeforeYearTime(years ...int) time.Time {
+	year := 1
+	if len(years) > 0 {
+		year = years[0]
+	}
 	return time.Now().AddDate(-year, 0, 0)
 }
 
 // AfterYearTime N年后的当前时间
-func AfterYearTime(year int) time.Time {
+func AfterYearTime(years ...int) time.Time {
+	year := 1
+	if len(years) > 0 {
+		year = years[0]
+	}
 	return time.Now().AddDate(year, 0, 0)
 }
 
