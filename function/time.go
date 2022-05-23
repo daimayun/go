@@ -16,6 +16,26 @@ func TodayStartAndEndTime() (startTime, endTime time.Time) {
 	return DayStartAndEndTime()
 }
 
+// NowWeekStartAndEndTime 本周一00:00:00时间和本周日23:59:59时间
+func NowWeekStartAndEndTime() (startTime, endTime time.Time) {
+	return WeekStartAndEndTime()
+}
+
+// NowMonthStartAndEndTime 本月1号00:00:00时间和本月末23:59:59时间
+func NowMonthStartAndEndTime() (startTime, endTime time.Time) {
+	return MonthStartAndEndTime()
+}
+
+// NowQuarterStartAndEndTime 本季度1号00:00:00时间和本季度末23:59:59时间
+func NowQuarterStartAndEndTime() (startTime, endTime time.Time) {
+	return QuarterStartAndEndTime()
+}
+
+// NowYearStartAndEndTime 本年1月1号00:00:00时间和本年12月31号23:59:59时间
+func NowYearStartAndEndTime() (startTime, endTime time.Time) {
+	return YearStartAndEndTime()
+}
+
 // DayStartAndEndTime 该天00:00:00时间和该天23:59:59时间
 func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	t := now
@@ -25,11 +45,6 @@ func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	startTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	endTime = time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, t.Location())
 	return
-}
-
-// NowWeekStartAndEndTime 本周一00:00:00时间和本周日23:59:59时间
-func NowWeekStartAndEndTime() (startTime, endTime time.Time) {
-	return WeekStartAndEndTime()
 }
 
 // WeekStartAndEndTime 该周一00:00:00时间和该周日23:59:59时间
@@ -53,11 +68,6 @@ func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	return
 }
 
-// NowMonthStartAndEndTime 本月1号00:00:00时间和本月末23:59:59时间
-func NowMonthStartAndEndTime() (startTime, endTime time.Time) {
-	return MonthStartAndEndTime()
-}
-
 // MonthStartAndEndTime 该月1号00:00:00时间和该月末23:59:59时间
 func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	t := now
@@ -67,11 +77,6 @@ func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 	startTime = time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
 	endTime = time.Date(t.Year(), t.Month(), startTime.AddDate(0, 1, -1).Day(), 23, 59, 59, 0, t.Location())
 	return
-}
-
-// NowQuarterStartAndEndTime 本季度1号00:00:00时间和本季度末23:59:59时间
-func NowQuarterStartAndEndTime() (startTime, endTime time.Time) {
-	return QuarterStartAndEndTime()
 }
 
 // QuarterStartAndEndTime 该季度1号00:00:00时间和该季度末23:59:59时间
@@ -95,11 +100,6 @@ func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 		endTime = time.Date(t.Year(), 12, 31, 23, 59, 59, 0, t.Location())
 	}
 	return
-}
-
-// NowYearStartAndEndTime 本年1月1号00:00:00时间和本年12月31号23:59:59时间
-func NowYearStartAndEndTime() (startTime, endTime time.Time) {
-	return YearStartAndEndTime()
 }
 
 // YearStartAndEndTime 该年1月1号00:00:00时间和该年12月31号23:59:59时间
