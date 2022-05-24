@@ -19,3 +19,5 @@
 
 # Test file
 test.go
+
+.DS_Store
