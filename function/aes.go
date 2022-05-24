@@ -4,7 +4,10 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/rand"
+	"encoding/hex"
 	"errors"
+	"io"
 )
 
 // 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
@@ -81,6 +84,47 @@ func AesDecryptByECB(encrypted []byte, key []byte) (decrypted []byte) {
 		trim = len(decrypted) - int(decrypted[len(decrypted)-1])
 	}
 	return decrypted[:trim]
+}
+
+// AesEncryptByCFB AES加密[CFB模式]
+func AesEncryptByCFB(origData []byte, key []byte) (encrypted []byte, err error) {
+	key, _ = hex.DecodeString(string(key))
+	var block cipher.Block
+	block, err = aes.NewCipher(key)
+	if err != nil {
+		return
+	}
+	encrypted = make([]byte, aes.BlockSize+len(origData))
+	iv := encrypted[:aes.BlockSize]
+	if _, err = io.ReadFull(rand.Reader, iv); err != nil {
+		return
+	}
+	stream := cipher.NewCFBEncrypter(block, iv)
+	stream.XORKeyStream(encrypted[aes.BlockSize:], origData)
+	return
+}
+
+// AesDecryptByCFB AES解密[CFB模式]
+func AesDecryptByCFB(encrypted []byte, key []byte) (decrypted []byte, err error) {
+	key, err = hex.DecodeString(string(key))
+	if err != nil {
+		return
+	}
+	decrypted, err = hex.DecodeString(string(encrypted))
+	var block cipher.Block
+	block, err = aes.NewCipher(key)
+	if err != nil {
+		return
+	}
+	if len(decrypted) < aes.BlockSize {
+		err = errors.New("ciphertext too short")
+		return
+	}
+	iv := decrypted[:aes.BlockSize]
+	decrypted = decrypted[aes.BlockSize:]
+	stream := cipher.NewCFBDecrypter(block, iv)
+	stream.XORKeyStream(decrypted, decrypted)
+	return
 }
 
 func generateKey(key []byte) (genKey []byte) {
