@@ -14,11 +14,12 @@ import (
 var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
 // AesEncryptByCBC AES加密[CBC模式]
-func AesEncryptByCBC(origData []byte, key []byte) ([]byte, error) {
+func AesEncryptByCBC(origData []byte, key []byte) (encrypted []byte, err error) {
 	//创建加密算法实例
-	block, err := aes.NewCipher(key)
+	var block cipher.Block
+	block, err = aes.NewCipher(key)
 	if err != nil {
-		return nil, err
+		return
 	}
 	//获取块的大小
 	blockSize := block.BlockSize()
@@ -26,32 +27,30 @@ func AesEncryptByCBC(origData []byte, key []byte) ([]byte, error) {
 	origData = PKCS7Padding(origData, blockSize)
 	//采用AES加密方法中CBC加密模式
 	blocMode := cipher.NewCBCEncrypter(block, key[:blockSize])
-	encrypted := make([]byte, len(origData))
+	encrypted = make([]byte, len(origData))
 	//执行加密
 	blocMode.CryptBlocks(encrypted, origData)
-	return encrypted, nil
+	return
 }
 
 // AesDecryptByCBC AES解密[CBC模式]
-func AesDecryptByCBC(encrypted []byte, key []byte) ([]byte, error) {
+func AesDecryptByCBC(encrypted []byte, key []byte) (decrypted []byte, err error) {
 	//创建加密算法实例
-	block, err := aes.NewCipher(key)
+	var block cipher.Block
+	block, err = aes.NewCipher(key)
 	if err != nil {
-		return nil, err
+		return
 	}
 	//获取块大小
 	blockSize := block.BlockSize()
 	//创建加密客户端实例
 	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
-	origData := make([]byte, len(encrypted))
+	decrypted = make([]byte, len(encrypted))
 	//这个函数也可以用来解密
-	blockMode.CryptBlocks(origData, encrypted)
+	blockMode.CryptBlocks(decrypted, encrypted)
 	//去除填充字符串
-	origData, err = PKCS7UnPadding(origData)
-	if err != nil {
-		return nil, err
-	}
-	return origData, err
+	decrypted, err = PKCS7UnPadding(decrypted)
+	return
 }
 
 // AesEncryptByECB AES加密[ECB模式]
