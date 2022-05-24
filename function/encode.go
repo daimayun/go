@@ -2,6 +2,7 @@ package function
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"math/big"
 	"net/url"
 )
@@ -14,6 +15,15 @@ func UrlEncode(str string) string {
 // Base64Encode base64_encode
 func Base64Encode(str string) string {
 	return base64.StdEncoding.EncodeToString([]byte(str))
+}
+
+// JsonEncode json_encode
+func JsonEncode(v interface{}) (string, error) {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
 }
 
 // 标准BTC base58字符顺序[标准base58字符顺序为:123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]
