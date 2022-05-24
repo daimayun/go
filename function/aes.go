@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"encoding/base64"
 	"errors"
 )
 
@@ -32,8 +31,8 @@ func PKCS7UnPadding(origData []byte) ([]byte, error) {
 	}
 }
 
-// AesEncrypt AES加密
-func AesEncrypt(origData []byte, key []byte) ([]byte, error) {
+// AesEncryptByCBC AES加密[CBC模式]
+func AesEncryptByCBC(origData []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -51,8 +50,8 @@ func AesEncrypt(origData []byte, key []byte) ([]byte, error) {
 	return encrypted, nil
 }
 
-// AesDecrypt AES解密
-func AesDecrypt(encrypted []byte, key []byte) ([]byte, error) {
+// AesDecryptByCBC AES解密[CBC模式]
+func AesDecryptByCBC(encrypted []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -73,33 +72,33 @@ func AesDecrypt(encrypted []byte, key []byte) ([]byte, error) {
 	return origData, err
 }
 
-// AesEncryptToBase64 加密后为Base64格式的字符串
-func AesEncryptToBase64(str string, key ...string) (string, error) {
-	if len(key) > 0 {
-		password = []byte(key[0])
-	}
-	result, err := AesEncrypt([]byte(str), password)
-	if err != nil {
-		return "", err
-	}
-	return Base64Encode(string(result)), err
-}
-
-// AesDecryptByBase64 对Base64格式的字符串解密
-func AesDecryptByBase64(str string, key ...string) (string, error) {
-	if len(key) > 0 {
-		password = []byte(key[0])
-	}
-	//解密base64字符串
-	pwdByte, err := base64.StdEncoding.DecodeString(str)
-	if err != nil {
-		return "", err
-	}
-	var b []byte
-	//执行AES解密
-	b, err = AesDecrypt(pwdByte, password)
-	if err == nil {
-		return string(b), nil
-	}
-	return "", err
-}
+//// AesEncryptToBase64 加密后为Base64格式的字符串
+//func AesEncryptToBase64(str string, key ...string) (string, error) {
+//	if len(key) > 0 {
+//		password = []byte(key[0])
+//	}
+//	result, err := AesEncrypt([]byte(str), password)
+//	if err != nil {
+//		return "", err
+//	}
+//	return Base64Encode(string(result)), err
+//}
+//
+//// AesDecryptByBase64 对Base64格式的字符串解密
+//func AesDecryptByBase64(str string, key ...string) (string, error) {
+//	if len(key) > 0 {
+//		password = []byte(key[0])
+//	}
+//	//解密base64字符串
+//	pwdByte, err := base64.StdEncoding.DecodeString(str)
+//	if err != nil {
+//		return "", err
+//	}
+//	var b []byte
+//	//执行AES解密
+//	b, err = AesDecrypt(pwdByte, password)
+//	if err == nil {
+//		return string(b), nil
+//	}
+//	return "", err
+//}
