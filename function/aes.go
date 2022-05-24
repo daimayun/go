@@ -56,6 +56,8 @@ func AesEncrypt(str string, opts ...string) (string, error) {
 		encrypted = AesEncryptByECB([]byte(str), key)
 	} else if mode == "cfb" {
 		encrypted, err = AesEncryptByCFB([]byte(str), key)
+	} else if mode == "ofb" {
+		encrypted, err = AesEncryptByOFB([]byte(str), key)
 	} else {
 		encrypted, err = AesEncryptByCBC([]byte(str), key)
 	}
@@ -86,6 +88,8 @@ func AesDecrypt(str string, opts ...string) (string, error) {
 		decrypted = AesDecryptByECB([]byte(str), key)
 	} else if mode == "cfb" {
 		decrypted, err = AesDecryptByCFB([]byte(str), key)
+	} else if mode == "ofb" {
+		decrypted, err = AesDecryptByOFB([]byte(str), key)
 	} else {
 		decrypted, err = AesDecryptByCBC([]byte(str), key)
 	}
