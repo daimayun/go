@@ -11,7 +11,7 @@ import (
 // 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
 var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
-// PKCS7Padding PKCS7 填充模式
+// PKCS7Padding PKCS7 填充模式[AES加密数据块分组长度必须为128bit(byte[16])，密钥长度可以是128bit(byte[16])、192bit(byte[24])、256bit(byte[32])中的任意一个]
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padText := bytes.Repeat([]byte{byte(padding)}, padding)
