@@ -21,7 +21,8 @@ var base58DefaultByte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnop
 
 // Base58Encode base58_encode
 func Base58Encode(str string, bytes ...[]byte) string {
-	base58 := base58DefaultByte
+	var base58 []byte
+	base58 = base58DefaultByte
 	if len(bytes) > 0 {
 		base58 = bytes[0]
 	}
