@@ -16,11 +16,11 @@ func Base64Encode(str string) string {
 	return base64.StdEncoding.EncodeToString([]byte(str))
 }
 
-var defaultBase58Byte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+var base58DefaultByte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 
 // Base58Encode base58_encode
 func Base58Encode(str string, bytes ...[]byte) string {
-	base58 := defaultBase58Byte
+	base58 := base58DefaultByte
 	if len(bytes) > 0 {
 		base58 = bytes[0]
 	}
