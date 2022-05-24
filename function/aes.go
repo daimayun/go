@@ -208,6 +208,44 @@ func AesDecryptByCFB(encrypted []byte, key []byte) (decrypted []byte, err error)
 	return
 }
 
+// AesEncryptByOFB AES加密[OFB模式]
+func AesEncryptByOFB(origData []byte, key []byte) (encrypted []byte, err error) {
+	origData = PKCS7Padding(origData, aes.BlockSize)
+	var block cipher.Block
+	block, err = aes.NewCipher([]byte(key))
+	if err != nil {
+		return
+	}
+	encrypted = make([]byte, aes.BlockSize+len(origData))
+	iv := encrypted[:aes.BlockSize]
+	if _, err = io.ReadFull(rand.Reader, iv); err != nil {
+		return
+	}
+	stream := cipher.NewOFB(block, iv)
+	stream.XORKeyStream(encrypted[aes.BlockSize:], origData)
+	return
+}
+
+// AesDecryptByOFB AES解密[OFB模式]
+func AesDecryptByOFB(data []byte, key []byte) (decrypted []byte, err error) {
+	var block cipher.Block
+	block, err = aes.NewCipher([]byte(key))
+	if err != nil {
+		return
+	}
+	iv := data[:aes.BlockSize]
+	data = data[aes.BlockSize:]
+	if len(data)%aes.BlockSize != 0 {
+		err = errors.New("data is not a multiple of the block size")
+		return
+	}
+	decrypted = make([]byte, len(data))
+	mode := cipher.NewOFB(block, iv)
+	mode.XORKeyStream(decrypted, data)
+	decrypted, err = PKCS7UnPadding(decrypted)
+	return
+}
+
 func generateKey(key []byte) (genKey []byte) {
 	genKey = make([]byte, 16)
 	copy(genKey, key)
