@@ -16,10 +16,14 @@ func Base64Encode(str string) string {
 	return base64.StdEncoding.EncodeToString([]byte(str))
 }
 
-var base58 = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+var defaultBase58Byte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 
 // Base58Encode base58_encode
-func Base58Encode(str string) string {
+func Base58Encode(str string, bytes ...[]byte) string {
+	base58 := defaultBase58Byte
+	if len(bytes) > 0 {
+		base58 = bytes[0]
+	}
 	//1. 转换成ascii码对应的值
 	strByte := []byte(str)
 	//2. 转换十进制
