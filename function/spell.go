@@ -241,7 +241,7 @@ func spellReadInt(s string, format SpellDigitalFormat) (str string, err error) {
 func SpellReadNum(str string, formats ...SpellDigitalFormat) (slice []string, err error) {
 	format := defaultSpellDigitalFormat
 	if len(formats) > 0 {
-		format = MapMerge(defaultSpellDigitalFormat, formats[0])
+		format = MapMerge(defaultSpellDigitalFormat, formats[0], true)
 	}
 	var s string
 	s, err = spellReadFloatAndInt(str, format)
