@@ -13,7 +13,29 @@ import (
 // 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
 var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
-// AesEncrypt 加密后为Base64格式的字符串
+// AesEncryptToBase64 加密后为Base64格式的字符串
+func AesEncryptToBase64(str string, opts ...string) (string, error) {
+	res, err := AesEncrypt(str, opts...)
+	if err != nil {
+		return "", err
+	}
+	return Base64Encode(res), nil
+}
+
+// AesDecryptByBase64 对Base64格式的字符串AES解密
+func AesDecryptByBase64(str string, opts ...string) (string, error) {
+	str = Base64Decode(str)
+	if str == "" {
+		return "", errors.New("解密字符串格式不正确")
+	}
+	res, err := AesDecrypt(str, opts...)
+	if err != nil {
+		return "", err
+	}
+	return res, nil
+}
+
+// AesEncrypt AES加密
 func AesEncrypt(str string, opts ...string) (string, error) {
 	mode := "cbc"
 	key := password
@@ -43,7 +65,7 @@ func AesEncrypt(str string, opts ...string) (string, error) {
 	return Base64Encode(string(encrypted)), err
 }
 
-// AesDecrypt 对Base64格式的字符串解密
+// AesDecrypt AES解密
 func AesDecrypt(str string, opts ...string) (string, error) {
 	mode := "cbc"
 	key := password
