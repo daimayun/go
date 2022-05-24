@@ -72,6 +72,49 @@ func AesDecryptByCBC(encrypted []byte, key []byte) ([]byte, error) {
 	return origData, err
 }
 
+// AesEncryptByECB AES加密[ECB模式]
+func AesEncryptByECB(origData []byte, key []byte) (encrypted []byte) {
+	ciphers, _ := aes.NewCipher(generateKey(key))
+	length := (len(origData) + aes.BlockSize) / aes.BlockSize
+	plain := make([]byte, length*aes.BlockSize)
+	copy(plain, origData)
+	pad := byte(len(plain) - len(origData))
+	for i := len(origData); i < len(plain); i++ {
+		plain[i] = pad
+	}
+	encrypted = make([]byte, len(plain))
+	// 分组分块加密
+	for bs, be := 0, ciphers.BlockSize(); bs <= len(origData); bs, be = bs+ciphers.BlockSize(), be+ciphers.BlockSize() {
+		ciphers.Encrypt(encrypted[bs:be], plain[bs:be])
+	}
+	return
+}
+
+// AesDecryptByECB AES解密[ECB模式]
+func AesDecryptByECB(encrypted []byte, key []byte) (decrypted []byte) {
+	ciphers, _ := aes.NewCipher(generateKey(key))
+	decrypted = make([]byte, len(encrypted))
+	for bs, be := 0, ciphers.BlockSize(); bs < len(encrypted); bs, be = bs+ciphers.BlockSize(), be+ciphers.BlockSize() {
+		ciphers.Decrypt(decrypted[bs:be], encrypted[bs:be])
+	}
+	trim := 0
+	if len(decrypted) > 0 {
+		trim = len(decrypted) - int(decrypted[len(decrypted)-1])
+	}
+	return decrypted[:trim]
+}
+
+func generateKey(key []byte) (genKey []byte) {
+	genKey = make([]byte, 16)
+	copy(genKey, key)
+	for i := 16; i < len(key); {
+		for j := 0; j < 16 && i < len(key); j, i = j+1, i+1 {
+			genKey[j] ^= key[i]
+		}
+	}
+	return genKey
+}
+
 //// AesEncryptToBase64 加密后为Base64格式的字符串
 //func AesEncryptToBase64(str string, key ...string) (string, error) {
 //	if len(key) > 0 {
