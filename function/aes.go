@@ -13,6 +13,66 @@ import (
 // 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
 var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
+// AesEncrypt 加密后为Base64格式的字符串
+func AesEncrypt(str string, opts ...string) (string, error) {
+	mode := "cbc"
+	key := password
+	lens := len(opts)
+	if lens > 0 {
+		key = []byte(opts[0])
+		if lens > 1 {
+			mode = opts[1]
+		}
+	}
+	var (
+		err       error
+		encrypted []byte
+	)
+	if mode == "cbc" {
+		encrypted, err = AesEncryptByCBC([]byte(str), key)
+	} else if mode == "ecb" {
+		encrypted = AesEncryptByECB([]byte(str), key)
+	} else if mode == "cfb" {
+		encrypted, err = AesEncryptByCFB([]byte(str), key)
+	} else {
+		encrypted, err = AesEncryptByCBC([]byte(str), key)
+	}
+	if err != nil {
+		return "", err
+	}
+	return Base64Encode(string(encrypted)), err
+}
+
+// AesDecrypt 对Base64格式的字符串解密
+func AesDecrypt(str string, opts ...string) (string, error) {
+	mode := "cbc"
+	key := password
+	lens := len(opts)
+	if lens > 0 {
+		key = []byte(opts[0])
+		if lens > 1 {
+			mode = opts[1]
+		}
+	}
+	var (
+		err       error
+		decrypted []byte
+	)
+	if mode == "cbc" {
+		decrypted, err = AesDecryptByCBC([]byte(str), key)
+	} else if mode == "ecb" {
+		decrypted = AesDecryptByECB([]byte(str), key)
+	} else if mode == "cfb" {
+		decrypted, err = AesDecryptByCFB([]byte(str), key)
+	} else {
+		decrypted, err = AesDecryptByCBC([]byte(str), key)
+	}
+	if err != nil {
+		return "", err
+	}
+	return Base64Encode(string(decrypted)), err
+}
+
 // AesEncryptByCBC AES加密[CBC模式]
 func AesEncryptByCBC(origData []byte, key []byte) (encrypted []byte, err error) {
 	//创建加密算法实例
@@ -157,34 +217,3 @@ func PKCS7UnPadding(origData []byte) ([]byte, error) {
 		return origData[:(length - unPadding)], nil
 	}
 }
-
-//// AesEncryptToBase64 加密后为Base64格式的字符串
-//func AesEncryptToBase64(str string, key ...string) (string, error) {
-//	if len(key) > 0 {
-//		password = []byte(key[0])
-//	}
-//	result, err := AesEncrypt([]byte(str), password)
-//	if err != nil {
-//		return "", err
-//	}
-//	return Base64Encode(string(result)), err
-//}
-//
-//// AesDecryptByBase64 对Base64格式的字符串解密
-//func AesDecryptByBase64(str string, key ...string) (string, error) {
-//	if len(key) > 0 {
-//		password = []byte(key[0])
-//	}
-//	//解密base64字符串
-//	pwdByte, err := base64.StdEncoding.DecodeString(str)
-//	if err != nil {
-//		return "", err
-//	}
-//	var b []byte
-//	//执行AES解密
-//	b, err = AesDecrypt(pwdByte, password)
-//	if err == nil {
-//		return string(b), nil
-//	}
-//	return "", err
-//}
