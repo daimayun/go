@@ -10,27 +10,6 @@ import (
 // 只支持16、24、32位，分别对应AES-128，AES-192，AES-256 加密方法
 var password = []byte("774D58AB5192D2556F5C1D39C6E049E5")
 
-// PKCS7Padding PKCS7 填充模式[AES加密数据块分组长度必须为128bit(byte[16])，密钥长度可以是128bit(byte[16])、192bit(byte[24])、256bit(byte[32])中的任意一个]
-func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext)%blockSize
-	padText := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(ciphertext, padText...)
-}
-
-// PKCS7UnPadding 填充的反向操作，删除填充字符串
-func PKCS7UnPadding(origData []byte) ([]byte, error) {
-	//获取数据长度
-	length := len(origData)
-	if length == 0 {
-		return nil, errors.New("加密字符串错误！")
-	} else {
-		//获取填充字符串长度
-		unPadding := int(origData[length-1])
-		//截取切片，删除填充字节，并且返回明文
-		return origData[:(length - unPadding)], nil
-	}
-}
-
 // AesEncryptByCBC AES加密[CBC模式]
 func AesEncryptByCBC(origData []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
@@ -113,6 +92,27 @@ func generateKey(key []byte) (genKey []byte) {
 		}
 	}
 	return genKey
+}
+
+// PKCS7Padding PKCS7 填充模式[AES加密数据块分组长度必须为128bit(byte[16])，密钥长度可以是128bit(byte[16])、192bit(byte[24])、256bit(byte[32])中的任意一个]
+func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, padText...)
+}
+
+// PKCS7UnPadding 填充的反向操作，删除填充字符串
+func PKCS7UnPadding(origData []byte) ([]byte, error) {
+	//获取数据长度
+	length := len(origData)
+	if length == 0 {
+		return nil, errors.New("加密字符串错误！")
+	} else {
+		//获取填充字符串长度
+		unPadding := int(origData[length-1])
+		//截取切片，删除填充字节，并且返回明文
+		return origData[:(length - unPadding)], nil
+	}
 }
 
 //// AesEncryptToBase64 加密后为Base64格式的字符串
