@@ -17,15 +17,10 @@ func Base64Encode(str string) string {
 }
 
 // 标准BTC base58字符顺序[标准base58字符顺序为:123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]
-var base58DefaultByte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+var base58 = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 
 // Base58Encode base58_encode
-func Base58Encode(str string, bytes ...[]byte) string {
-	var base58 []byte
-	base58 = base58DefaultByte
-	if len(bytes) > 0 {
-		base58 = bytes[0]
-	}
+func Base58Encode(str string) string {
 	//1. 转换成ascii码对应的值
 	strByte := []byte(str)
 	//2. 转换十进制
