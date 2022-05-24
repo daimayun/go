@@ -16,6 +16,7 @@ func Base64Encode(str string) string {
 	return base64.StdEncoding.EncodeToString([]byte(str))
 }
 
+// 标准BTC base58字符顺序[标准base58字符顺序为:123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ]
 var base58DefaultByte = []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 
 // Base58Encode base58_encode
@@ -36,7 +37,7 @@ func Base58Encode(str string, bytes ...[]byte) string {
 		strTen.DivMod(strTen, strTen58, mod)             //取余运算
 		modSlice = append(modSlice, base58[mod.Int64()]) //存储余数,并将对应值放入其中
 	}
-	//  处理0就是1的情况 0使用字节'1'代替
+	// 处理0就是1的情况 0使用字节'1'代替
 	for _, elem := range strByte {
 		if elem != 0 {
 			break
@@ -44,8 +45,7 @@ func Base58Encode(str string, bytes ...[]byte) string {
 			modSlice = append(modSlice, byte('1'))
 		}
 	}
-	ReverseModSlice := reverseByteArr(modSlice)
-	return string(ReverseModSlice)
+	return string(reverseByteArr(modSlice))
 }
 
 // reverseByteArr 将字节的数组反转
