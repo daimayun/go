@@ -5,7 +5,7 @@ import (
 	"github.com/daimayun/go/openssl"
 )
 
-// ECBEncrypt AES的ECB模式加密
+// ECBEncrypt DES的ECB模式加密
 func ECBEncrypt(data, key []byte, padding openssl.PaddingType) ([]byte, error) {
 	block, err := des.NewCipher(key)
 	if err != nil {
@@ -14,7 +14,7 @@ func ECBEncrypt(data, key []byte, padding openssl.PaddingType) ([]byte, error) {
 	return openssl.ECBEncrypt(block, data, padding)
 }
 
-// ECBDecrypt AES的ECB模式解密
+// ECBDecrypt DES的ECB模式解密
 func ECBDecrypt(data, key []byte, padding openssl.PaddingType) ([]byte, error) {
 	block, err := des.NewCipher(key)
 	if err != nil {
