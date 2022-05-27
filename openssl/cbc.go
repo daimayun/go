@@ -11,7 +11,7 @@ func CBCEncrypt(block cipher.Block, data, iv []byte, padding PaddingType) ([]byt
 	data = Padding(padding, data, blockSize)
 	encryptData := make([]byte, len(data))
 	if len(iv) != block.BlockSize() {
-		return nil, errors.New("CBCEncrypt: IV length must equal block size")
+		return nil, errors.New("CBCEncrypt error: IV length must equal block size")
 	}
 	cipher.NewCBCEncrypter(block, iv).CryptBlocks(encryptData, data)
 	return encryptData, nil
@@ -21,7 +21,7 @@ func CBCEncrypt(block cipher.Block, data, iv []byte, padding PaddingType) ([]byt
 func CBCDecrypt(block cipher.Block, data, iv []byte, padding PaddingType) ([]byte, error) {
 	dst := make([]byte, len(data))
 	if len(iv) != block.BlockSize() {
-		return nil, errors.New("CBCDecrypt: IV length must equal block size")
+		return nil, errors.New("CBCDecrypt error: IV length must equal block size")
 	}
 	cipher.NewCBCDecrypter(block, iv).CryptBlocks(dst, data)
 	return UnPadding(padding, dst)
