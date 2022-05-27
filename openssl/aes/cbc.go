@@ -5,15 +5,20 @@ import (
 	"github.com/daimayun/go/openssl"
 )
 
-// CBCEncrypt CBC模式的加密
-func CBCEncrypt(src, key, iv []byte, padding openssl.PaddingType) {
+// CBCEncrypt AES的CBC模式加密
+func CBCEncrypt(data, key, iv []byte, padding openssl.PaddingType) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		return
+		return nil, err
 	}
+	return openssl.CBCEncrypt(block, data, iv, padding)
 }
 
-// CBCDecrypt CBC模式的解密
-func CBCDecrypt(src, key, iv []byte, padding openssl.PaddingType) {
-	//
+// CBCDecrypt AES的CBC模式解密
+func CBCDecrypt(data, key, iv []byte, padding openssl.PaddingType) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	return openssl.CBCDecrypt(block, data, iv, padding)
 }

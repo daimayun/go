@@ -6,23 +6,23 @@ import (
 )
 
 // CBCEncrypt CBC模式的加密
-func CBCEncrypt(block cipher.Block, src, iv []byte, padding PaddingType) ([]byte, error) {
+func CBCEncrypt(block cipher.Block, data, iv []byte, padding PaddingType) ([]byte, error) {
 	blockSize := block.BlockSize()
-	src = Padding(padding, src, blockSize)
-	encryptData := make([]byte, len(src))
+	data = Padding(padding, data, blockSize)
+	encryptData := make([]byte, len(data))
 	if len(iv) != block.BlockSize() {
 		return nil, errors.New("CBCEncrypt: IV length must equal block size")
 	}
-	cipher.NewCBCEncrypter(block, iv).CryptBlocks(encryptData, src)
+	cipher.NewCBCEncrypter(block, iv).CryptBlocks(encryptData, data)
 	return encryptData, nil
 }
 
 // CBCDecrypt CBC模式的解密
-func CBCDecrypt(block cipher.Block, src, iv []byte, padding PaddingType) ([]byte, error) {
-	dst := make([]byte, len(src))
+func CBCDecrypt(block cipher.Block, data, iv []byte, padding PaddingType) ([]byte, error) {
+	dst := make([]byte, len(data))
 	if len(iv) != block.BlockSize() {
 		return nil, errors.New("CBCDecrypt: IV length must equal block size")
 	}
-	cipher.NewCBCDecrypter(block, iv).CryptBlocks(dst, src)
+	cipher.NewCBCDecrypter(block, iv).CryptBlocks(dst, data)
 	return UnPadding(padding, dst)
 }
