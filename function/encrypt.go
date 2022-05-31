@@ -16,7 +16,7 @@ func Md5(str string) string {
 	return hex.EncodeToString(o.Sum(nil))
 }
 
-// Md516 16位MD5加密字符串
+// Md516 返回16位MD5加密字符串
 func Md516(str string) string {
 	o := md5.New()
 	o.Write([]byte(str))
