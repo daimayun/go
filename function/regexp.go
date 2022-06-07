@@ -3,11 +3,39 @@ package function
 import (
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 // IsChinese 是否全部为中文
 func IsChinese(str string) bool {
 	return regexp.MustCompile("^[\u4e00-\u9fa5]+$").MatchString(str)
+}
+
+// IsCCBCardNo 是否为建设银行卡号 [2020.09.30新增62153403][2019.11.28新增621673][普通高中学生资助卡:623094]
+func IsCCBCardNo(cardNo string) bool {
+	if regexp.MustCompile(`^\d$`).MatchString(cardNo) == false {
+		return false
+	}
+	list := []string{"621284", "436742", "589970", "620060", "621081", "621467", "621598", "621621", "621700", "622280",
+		"622700", "623211", "623668", "621673", "623094", "421349", "434061", "434062", "524094", "526410", "552245",
+		"621080", "621082", "621466", "621488", "621499", "622966", "622988", "622382", "621487", "621083", "621084",
+		"620107", "62153403", "436742193", "622280193", "5453242", "5491031", "5544033", "622725", "622728", "436728",
+		"453242", "491031", "544033", "622707", "625955", "625956", "625362", "625363", "628316", "628317", "356896",
+		"356899", "356895", "436718", "436738", "436745", "436748", "489592", "531693", "532450", "532458", "544887",
+		"552801", "557080", "558895", "559051", "622166", "622168", "622708", "625964", "625965", "625966", "628266",
+		"628366", "622381", "622675", "622676", "622677", "53242", "53243", "553242", "623251", "623669", "624329",
+		"623350", "624412", "623644", "62844800", "624458"}
+	for _, v := range list {
+		if v == "" || v == " " {
+			continue
+		}
+		if strings.Index(cardNo, v) == 0 {
+			if len(cardNo) > len(v) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // CheckMobileNumRule 验证手机号码
@@ -30,8 +58,7 @@ func CheckIdNumRuleSimple(idNum string) bool {
 
 // CheckIdNumRule 验证身份证号码的合法性
 func CheckIdNumRule(idNum string) bool {
-	re := regexp.MustCompile(`^((\d{18})|([0-9x]{18})|([0-9X]{18}))$`)
-	if re.MatchString(idNum) == false {
+	if CheckIdNumRuleSimple(idNum) == false {
 		return false
 	}
 	var (
