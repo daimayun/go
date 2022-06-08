@@ -40,20 +40,17 @@ func IsCCBCardNo(cardNo string) bool {
 
 // CheckMobileNumRule 验证手机号码
 func CheckMobileNumRule(mobile string) bool {
-	re := regexp.MustCompile(`^1[3456789]\d{9}$`)
-	return re.MatchString(mobile)
+	return regexp.MustCompile(`^1[3456789]\d{9}$`).MatchString(mobile)
 }
 
 // CheckEmailRule 验证电子邮箱
 func CheckEmailRule(email string) bool {
-	re := regexp.MustCompile(`^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`)
-	return re.MatchString(email)
+	return regexp.MustCompile(`^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`).MatchString(email)
 }
 
 // CheckIdNumRuleSimple 简单校验身份证号码的位数+组成字符
 func CheckIdNumRuleSimple(idNum string) bool {
-	re := regexp.MustCompile(`^((\d{18})|([0-9x]{18})|([0-9X]{18}))$`)
-	return re.MatchString(idNum)
+	return regexp.MustCompile(`^((\d{18})|([0-9x]{18})|([0-9X]{18}))$`).MatchString(idNum)
 }
 
 // CheckIdNumRule 验证身份证号码的合法性
