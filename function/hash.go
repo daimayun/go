@@ -8,6 +8,8 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"hash"
+	"io"
+	"os"
 )
 
 // HashHmac 使用HMAC方法生成键控哈希值[hash_hmac]
@@ -26,4 +28,19 @@ func HashHmac(algo, msg, key string) string {
 	}
 	m.Write([]byte(msg))
 	return hex.EncodeToString(m.Sum(nil))
+}
+
+// HashFile 文件哈希
+func HashFile(path string) (string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	hob := sha256.New()
+	_, err = io.Copy(hob, file)
+	if err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(hob.Sum(nil)), nil
 }
