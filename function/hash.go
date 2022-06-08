@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"hash"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -30,8 +31,18 @@ func HashHmac(algo, msg, key string) string {
 	return hex.EncodeToString(m.Sum(nil))
 }
 
-// HashFile 文件哈希
+// HashFile 文件哈希[优先使用]
 func HashFile(path string) (string, error) {
+	buf, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	h := sha256.Sum256(buf)
+	return hex.EncodeToString(h[:]), nil
+}
+
+// hashFile 文件哈希[不推荐使用]
+func hashFile(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err
