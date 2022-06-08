@@ -41,6 +41,16 @@ func HashFile(path string) (string, error) {
 	return hex.EncodeToString(h[:]), nil
 }
 
+// HashFileToMd5 文件哈希[MD5]
+func HashFileToMd5(path string) (string, error) {
+	buf, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	h := md5.Sum(buf)
+	return hex.EncodeToString(h[:]), nil
+}
+
 // hashFile 文件哈希[不推荐使用]
 func hashFile(path string) (string, error) {
 	file, err := os.Open(path)
