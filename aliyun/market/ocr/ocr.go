@@ -15,6 +15,7 @@ const (
 	AliOCRImageTypeByFIleContents = "0"                                         // 图片内容类型
 	AliOCRImageTypeByFileLink     = "1"                                         // 图片链接地址类型
 	AliOCRIdCardSide              = "FRONT"                                     // 无需指定正反面，填写默认值FRONT即可，系统后台自动识别正反面
+	AliOCRIdCardImageIsOk         = "1"                                         // 身份证照片信息读取成功
 )
 
 // AliOCRResponsePersonIdSideEntityData 正反面图片及个数信息
