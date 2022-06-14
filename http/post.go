@@ -11,7 +11,7 @@ import (
 const POST = "POST"
 
 // PostJson post_json
-func PostJson(url string, jsonStrReader io.Reader) (b []byte, err error) {
+func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string) (b []byte, err error) {
 	var (
 		req *httpRequest.Request
 		res *httpRequest.Response
@@ -21,6 +21,11 @@ func PostJson(url string, jsonStrReader io.Reader) (b []byte, err error) {
 		return
 	}
 	req.Header.Add("Content-Type", "application/json")
+	if len(headers) > 0 {
+		for key, value := range headers[0] {
+			req.Header.Add(key, value)
+		}
+	}
 	res, err = httpRequest.DefaultClient.Do(req)
 	if err != nil {
 		return
