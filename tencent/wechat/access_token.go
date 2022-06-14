@@ -5,7 +5,7 @@ import (
 	"github.com/daimayun/go/http"
 )
 
-// GetAccessToken 获取AccessToken
+// GetAccessToken 获取AccessToken[包含小程序和微信公众号]
 func GetAccessToken(appId, appSecret string) (data ResponseAccessTokenData, errData ResponseErrorData, err error) {
 	url := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret
 	var b []byte
