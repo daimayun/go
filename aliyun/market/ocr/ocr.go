@@ -27,7 +27,7 @@ type aliOCRResponsePersonIdSideEntityData struct {
 }
 
 // AliOCRResponsePersonIdEntityData 图片文字信息
-type aliOCRResponsePersonIdEntityData struct {
+type AliOCRResponsePersonIdEntityData struct {
 	PersonName            string `json:"PERSON_NAME"`   // 姓名
 	PersonSex             string `json:"PERSON_SEX"`    // 性别
 	PersonNation          string `json:"PERSON_NATION"` // 民族
@@ -56,7 +56,7 @@ type aliOCRResponsePersonIdEntityData struct {
 // AliOCRResponseData 阿里云OCR返回数据
 type AliOCRResponseData struct {
 	PersonIdStatus     string                               `json:"PERSON_ID_STATUS"`
-	PersonIdEntity     aliOCRResponsePersonIdEntityData     `json:"PERSON_ID_ENTITY"`
+	PersonIdEntity     AliOCRResponsePersonIdEntityData     `json:"PERSON_ID_ENTITY"`
 	PersonIdSideEntity aliOCRResponsePersonIdSideEntityData `json:"PERSON_ID_SIDE_ENTITY"`
 }
 
