@@ -2,13 +2,13 @@ package http
 
 import (
 	"io/ioutil"
-	httpRequest "net/http"
+	nh "net/http"
 )
 
 // Get get请求
 func Get(url string) (b []byte, err error) {
-	var res *httpRequest.Response
-	res, err = httpRequest.Get(url)
+	var res *nh.Response
+	res, err = nh.Get(url)
 	if err != nil {
 		return
 	}

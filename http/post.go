@@ -3,7 +3,7 @@ package http
 import (
 	"io"
 	"io/ioutil"
-	httpRequest "net/http"
+	nh "net/http"
 	"net/url"
 )
 
@@ -13,10 +13,10 @@ const POST = "POST"
 // PostJson post_json
 func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string) (b []byte, err error) {
 	var (
-		req *httpRequest.Request
-		res *httpRequest.Response
+		req *nh.Request
+		res *nh.Response
 	)
-	req, err = httpRequest.NewRequest(POST, url, jsonStrReader)
+	req, err = nh.NewRequest(POST, url, jsonStrReader)
 	if err != nil {
 		return
 	}
@@ -26,7 +26,7 @@ func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string)
 			req.Header.Add(key, value)
 		}
 	}
-	res, err = httpRequest.DefaultClient.Do(req)
+	res, err = nh.DefaultClient.Do(req)
 	if err != nil {
 		return
 	}
@@ -37,8 +37,8 @@ func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string)
 
 // PostForm post_form
 func PostForm(url string, data url.Values) (b []byte, err error) {
-	var res *httpRequest.Response
-	res, err = httpRequest.PostForm(url, data)
+	var res *nh.Response
+	res, err = nh.PostForm(url, data)
 	if err != nil {
 		return
 	}
