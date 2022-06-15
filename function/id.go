@@ -40,3 +40,15 @@ func IdCardDeadlineHandle(date string, layouts ...string) (starTime, endTime tim
 	}
 	return
 }
+
+// CheckIdCardFrontAndBackInfoIsFit 判断身份证住址和签发机关是否一致
+func CheckIdCardFrontAndBackInfoIsFit(address, organization string, seps ...string) bool {
+	sep := "公安局"
+	if len(seps) > 0 {
+		sep = seps[0]
+	}
+	if strings.Index(address, strings.Split(organization, sep)[0]) >= 0 {
+		return true
+	}
+	return false
+}
