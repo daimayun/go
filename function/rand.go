@@ -29,3 +29,22 @@ func UniqueId(v ...interface{}) string {
 	}
 	return Md5(strconv.FormatInt(time.Now().UnixNano(), 10) + base64.URLEncoding.EncodeToString(b) + s)
 }
+
+// RandShortString 生成短字符串
+func RandShortString() (str string) {
+	slice := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "J", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
+	now := time.Now()
+	date := now.Format(TimeLayoutYMDHIS)[2:]
+	j := 0
+	for i := 1; i <= 6; i++ {
+		s := date[j:(j + 2)]
+		si, _ := strconv.Atoi(s)
+		if si > 61 {
+			str += s
+		} else {
+			str += slice[si]
+		}
+		j += 2
+	}
+	return
+}
