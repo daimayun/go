@@ -30,8 +30,8 @@ func UniqueId(v ...interface{}) string {
 	return Md5(strconv.FormatInt(time.Now().UnixNano(), 10) + base64.URLEncoding.EncodeToString(b) + s)
 }
 
-// RandShortString 生成短字符串[6位时间字符串]
-func RandShortString() (str string) {
+// RandShortStringByDate 根据当前日期生成6位短字符串[以秒为单位不重复]
+func RandShortStringByDate() (str string) {
 	slice := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "J", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 	now := time.Now()
 	date := now.Format(TimeLayoutYMDHIS)[2:]
@@ -47,4 +47,25 @@ func RandShortString() (str string) {
 		j += 2
 	}
 	return
+}
+
+// RandFixedString 根据[0-9]数字生成一位随机固定字符串
+func RandFixedString(i int) string {
+	if !(i >= 0 && i <= 9) {
+		return ""
+	}
+	slice := [][]string{
+		[]string{"0", "a", "k", "v", "F", "Q"},
+		[]string{"1", "b", "l", "w", "G", "R"},
+		[]string{"2", "c", "m", "x", "H", "S"},
+		[]string{"3", "d", "n", "y", "I", "T"},
+		[]string{"4", "e", "p", "z", "J", "U"},
+		[]string{"5", "f", "q", "A", "K", "V"},
+		[]string{"6", "g", "r", "B", "L", "W"},
+		[]string{"7", "h", "s", "C", "M", "X"},
+		[]string{"8", "i", "t", "D", "N", "Y"},
+		[]string{"9", "j", "u", "E", "P", "Z"},
+	}
+	rand.Seed(time.Now().UnixNano())
+	return slice[i][rand.Intn(6)]
 }
