@@ -49,7 +49,7 @@ func RandShortStringByDate() (str string) {
 	return
 }
 
-// RandFixedString 根据[0-9]数字生成一位随机固定字符串
+// RandFixedString 根据[0-9]数字生成一位随机固定字符串[没有大小写oO]
 func RandFixedString(i int) string {
 	if !(i >= 0 && i <= 9) {
 		return ""
