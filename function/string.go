@@ -24,9 +24,14 @@ func StrLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...strin
 	return s
 }
 
+// StringLength 获取字符串长度[包含中文字符串,一个中文字符串的长度为1]
+func StringLength(str string) int {
+	return utf8.RuneCountInString(str)
+}
+
 // CheckStringLength 判断字符串长度是否在规定范围内
 func CheckStringLength(str string, length int) bool {
-	if utf8.RuneCountInString(str) <= length {
+	if StringLength(str) <= length {
 		return true
 	}
 	return false
