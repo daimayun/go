@@ -8,12 +8,12 @@ import (
 	"unicode/utf8"
 )
 
-// StrLengthCutAndSplitJoint 字符串长度截取并拼接处理
-func StrLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...string) string {
+// StringLengthCutAndSplitJoint 字符串长度截取并拼接处理
+func StringLengthCutAndSplitJoint(str string, cutLength int, splitJointStr ...string) string {
 	if cutLength == 0 {
 		return str
 	}
-	if utf8.RuneCountInString(str) <= cutLength {
+	if StringLength(str) <= cutLength {
 		return str
 	}
 	strRune := []rune(str)
