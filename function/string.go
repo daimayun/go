@@ -114,3 +114,9 @@ func Int64LengthPadding(i64 int64, length int) string {
 func StringLengthPadding(str string, length int) string {
 	return fmt.Sprintf("%0"+strconv.Itoa(length)+"s", str)
 }
+
+// GetFirstAndEndString 获取第一个和最后一个字符串[不区分中英文]
+func GetFirstAndEndString(str string) (string, string) {
+	slice := []rune(str)
+	return string(slice[0]), string(slice[len(slice)-1])
+}
