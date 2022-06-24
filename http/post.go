@@ -7,16 +7,13 @@ import (
 	"net/url"
 )
 
-// POST method
-const POST = "POST"
-
 // PostJson post_json
 func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string) (b []byte, err error) {
 	var (
 		req *nh.Request
 		res *nh.Response
 	)
-	req, err = nh.NewRequest(POST, url, jsonStrReader)
+	req, err = nh.NewRequest(nh.MethodPost, url, jsonStrReader)
 	if err != nil {
 		return
 	}
