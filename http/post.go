@@ -9,27 +9,14 @@ import (
 
 // PostJson post_json
 func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string) (b []byte, err error) {
-	var (
-		req *nh.Request
-		res *nh.Response
-	)
-	req, err = nh.NewRequest(nh.MethodPost, url, jsonStrReader)
-	if err != nil {
-		return
-	}
-	req.Header.Add("Content-Type", "application/json")
 	if len(headers) > 0 {
-		for key, value := range headers[0] {
-			req.Header.Add(key, value)
+		if _, ok := headers[0]["Content-Type"]; !ok {
+			headers[0]["Content-Type"] = "application/json"
 		}
+	} else {
+		headers = append(headers, map[string]string{"Content-Type": "application/json"})
 	}
-	res, err = nh.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
-	b, err = ioutil.ReadAll(res.Body)
-	return
+	return Request(nh.MethodPost, url, jsonStrReader, headers...)
 }
 
 // PostForm post_form
