@@ -6,7 +6,7 @@ import (
 )
 
 // GetPaidUnionId 获取小程序的UnionID
-func GetPaidUnionId(openId, accessToken string) (data ResponsePaidUnionIdData, err error) {
+func GetPaidUnionId(openId, accessToken string) (data ResponsePluginPaidUnionIdData, err error) {
 	url := "https://api.weixin.qq.com/wxa/getpaidunionid?access_token=" + accessToken + "&openid=" + openId
 	var b []byte
 	b, err = http.Get(url)

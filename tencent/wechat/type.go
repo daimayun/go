@@ -19,8 +19,8 @@ type ResponsePluginOpenIdData struct {
 	OpenId  string `json:"openpid"`
 }
 
-// ResponsePaidUnionIdData 返回小程序UnionID
-type ResponsePaidUnionIdData struct {
+// ResponsePluginPaidUnionIdData 返回小程序UnionID
+type ResponsePluginPaidUnionIdData struct {
 	ErrCode int64  `json:"errcode"`
 	ErrMsg  string `json:"errmsg"`
 	UnionId string `json:"unionid"`
