@@ -10,10 +10,9 @@ import (
 func GetPhoneNumber(code, accessToken string) (data ResponsePluginPhoneNumberData, err error) {
 	url := "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=" + accessToken
 	var b, reqParam []byte
-	type requestBody struct {
+	reqParam, err = json.Marshal(struct {
 		Code string `json:"code"`
-	}
-	reqParam, err = json.Marshal(requestBody{Code: code})
+	}{Code: code})
 	if err != nil {
 		return
 	}
