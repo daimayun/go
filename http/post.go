@@ -14,7 +14,7 @@ func PostJson(url string, jsonStrReader io.Reader, headers ...map[string]string)
 			headers[0]["Content-Type"] = "application/json"
 		}
 	} else {
-		headers = append(headers, map[string]string{"Content-Type": "application/json"})
+		headers = []map[string]string{{"Content-Type": "application/json"}}
 	}
 	return Request(nh.MethodPost, url, jsonStrReader, headers...)
 }

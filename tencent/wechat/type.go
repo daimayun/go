@@ -26,7 +26,21 @@ type ResponsePaidUnionIdData struct {
 	UnionId string `json:"unionid"`
 }
 
-// RequestPluginOpenIdData 获取小程序OpenID
-type RequestPluginOpenIdData struct {
-	Code string `json:"code"`
+type WatermarkData struct {
+	Timestamp int64  `json:"timestamp"`
+	Appid     string `json:"appid"`
+}
+
+type PhoneInfoData struct {
+	PhoneNumber     string        `json:"phoneNumber"`
+	PurePhoneNumber string        `json:"purePhoneNumber"`
+	CountryCode     string        `json:"countryCode"`
+	Watermark       WatermarkData `json:"watermark"`
+}
+
+// ResponsePluginPhoneNumberData 返回小程序的用户手机号码
+type ResponsePluginPhoneNumberData struct {
+	ErrCode   int64         `json:"errcode"`
+	ErrMsg    string        `json:"errmsg"`
+	PhoneInfo PhoneInfoData `json:"phone_info"`
 }
