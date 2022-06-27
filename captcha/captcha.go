@@ -61,15 +61,15 @@ func GetCaptcha(driverData NewCaptchaDrivers) (id, b64s string, err error) {
 	return
 }
 
-// VerifyCaptcha 校验图形验证码
+// VerifyCaptcha 校验图形验证码[clears[true:验证通过后删除,false:永不删除]]
 func VerifyCaptcha(id, value string, clears ...bool) (res bool) {
-	clear := false
+	clear := true
 	if clears != nil {
 		clear = clears[0]
 	}
-	res = captchaStore.Verify(id, value, clear)
-	if res == true && clear == false {
-		go captchaStore.Verify(id, value, true)
+	res = captchaStore.Verify(id, value, false) // 只验证不删除
+	if res == true && clear == true {
+		go captchaStore.Verify(id, value, true) // 验证通过后且需要清理的则删除
 	}
 	return
 }
