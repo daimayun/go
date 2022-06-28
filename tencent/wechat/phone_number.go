@@ -1,9 +1,9 @@
 package wechat
 
 import (
+	"bytes"
 	"encoding/json"
 	"github.com/daimayun/go/http"
-	"strings"
 )
 
 // GetPhoneNumber 获取小程序的用户手机号
@@ -16,7 +16,7 @@ func GetPhoneNumber(code, accessToken string) (data ResponsePluginPhoneNumberDat
 	if err != nil {
 		return
 	}
-	b, err = http.PostJson(url, strings.NewReader(string(reqParam)))
+	b, err = http.PostJson(url, bytes.NewBuffer(reqParam))
 	if err != nil {
 		return
 	}
