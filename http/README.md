@@ -20,24 +20,24 @@ package main
 
 import (
     "encoding/json"
-	"fmt"
+    "fmt"
     "github.com/daimayun/go/http"
     "strings"
 )
 
 func main() {
-	type requestBody struct {
-		Code string `json:"code"`
-	}
-	reqParam, err := json.Marshal(struct {
+    type requestBody struct {
         Code string `json:"code"`
-	}{Code: "xxx"})
-	if err != nil {
-		return
-	}
-	url := "https://www.baidu.com"
-	b, err := http.PostJson(url, strings.NewReader(string(reqParam)))
-	fmt.Print(string(b))
+    }
+    reqParam, err := json.Marshal(struct {
+        Code string `json:"code"`
+    }{Code: "xxx"})
+    if err != nil {
+        return
+    }
+    url := "https://www.baidu.com"
+    b, err := http.PostJson(url, strings.NewReader(string(reqParam)))
+    fmt.Print(string(b))
 }
 ```
 
@@ -47,17 +47,17 @@ func main() {
 package main
 
 import (
-	"fmt"
-	"github.com/daimayun/go/http"
-	"net/url"
-	"strings"
+    "fmt"
+    "github.com/daimayun/go/http"
+    "net/url"
+    "strings"
 )
 
 func main() {
-	b, err := http.PostForm("https://www.baidu.com", url.Values{"captcha_id": []string{"DkgMECFm9mzXbdFCZnKx"}, "captcha_value": []string{"5027"}})
-	if err != nil {
-		return
-	}
-	fmt.Println(string(b))
+    b, err := http.PostForm("https://www.baidu.com", url.Values{"captcha_id": []string{"DkgMECFm9mzXbdFCZnKx"}, "captcha_value": []string{"5027"}})
+    if err != nil {
+        return
+    }
+    fmt.Println(string(b))
 }
 ```
