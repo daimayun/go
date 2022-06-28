@@ -3,6 +3,7 @@ package wechat
 import (
 	"encoding/json"
 	"github.com/daimayun/go/http"
+	"strings"
 )
 
 // GetPluginOpenId 获取小程序的OpenID
@@ -15,7 +16,7 @@ func GetPluginOpenId(code, accessToken string) (data ResponsePluginOpenIdData, e
 	if err != nil {
 		return
 	}
-	b, err = http.PostJson(url, reqParam)
+	b, err = http.PostJson(url, strings.NewReader(string(reqParam)))
 	if err != nil {
 		return
 	}
