@@ -1,7 +1,6 @@
 package wechat
 
 import (
-	"bytes"
 	"encoding/json"
 	"github.com/daimayun/go/http"
 )
@@ -16,7 +15,7 @@ func GetPhoneNumber(code, accessToken string) (data ResponsePluginPhoneNumberDat
 	if err != nil {
 		return
 	}
-	b, err = http.PostJson(url, bytes.NewBuffer(reqParam))
+	b, err = http.PostJson(url, reqParam)
 	if err != nil {
 		return
 	}
