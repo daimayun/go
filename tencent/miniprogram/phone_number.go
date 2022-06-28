@@ -1,4 +1,4 @@
-package wechat
+package miniprogram
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 )
 
 // GetPhoneNumber 获取小程序的用户手机号
-func GetPhoneNumber(code, accessToken string) (data ResponsePluginPhoneNumberData, err error) {
+func GetPhoneNumber(code, accessToken string) (data ResponsePhoneNumberData, err error) {
 	url := "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=" + accessToken
 	var b, reqParam []byte
 	reqParam, err = json.Marshal(struct {

@@ -1,4 +1,4 @@
-package wechat
+package miniprogram
 
 import (
 	"encoding/json"

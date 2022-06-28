@@ -1,12 +1,12 @@
-package wechat
+package miniprogram
 
 import (
 	"encoding/json"
 	"github.com/daimayun/go/http"
 )
 
-// GetPluginAuthCode2Session 登录凭证校验
-func GetPluginAuthCode2Session(appId, appSecret, jsCode string, grantTypes ...string) (data ResponsePluginCode2SessionData, err error) {
+// GetCode2Session 登录凭证校验
+func GetCode2Session(appId, appSecret, jsCode string, grantTypes ...string) (data ResponseCode2SessionData, err error) {
 	grantType := "authorization_code"
 	if len(grantTypes) > 0 {
 		grantType = grantTypes[0]
