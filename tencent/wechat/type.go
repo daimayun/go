@@ -44,3 +44,12 @@ type ResponsePluginPhoneNumberData struct {
 	ErrMsg    string        `json:"errmsg"`
 	PhoneInfo PhoneInfoData `json:"phone_info"`
 }
+
+// ResponsePluginCode2SessionData 返回小程序登录凭证校验
+type ResponsePluginCode2SessionData struct {
+	ErrCode    int64  `json:"errcode"`
+	ErrMsg     string `json:"errmsg"`
+	OpenId     string `json:"openid"`
+	UnionId    string `json:"unionid"`
+	SessionKey string `json:"session_key"`
+}
