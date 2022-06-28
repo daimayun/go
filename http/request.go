@@ -1,17 +1,17 @@
 package http
 
 import (
-	"io"
+	"bytes"
 	"io/ioutil"
 	nh "net/http"
 )
 
-func Request(method, url string, jsonStrReader io.Reader, headers ...map[string]string) (b []byte, err error) {
+func Request(method, url string, jsonByteBuffer *bytes.Buffer, headers ...map[string]string) (b []byte, err error) {
 	var (
 		req *nh.Request
 		res *nh.Response
 	)
-	req, err = nh.NewRequest(method, url, jsonStrReader)
+	req, err = nh.NewRequest(method, url, jsonByteBuffer)
 	if err != nil {
 		return
 	}
