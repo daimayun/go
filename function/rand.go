@@ -55,18 +55,18 @@ func RandFixedString(i int) string {
 		return ""
 	}
 	slice := [][]string{
-		[]string{"0", "a", "k", "v", "F", "Q"},
-		[]string{"1", "b", "l", "w", "G", "R"},
-		[]string{"2", "c", "m", "x", "H", "S"},
-		[]string{"3", "d", "n", "y", "I", "T"},
-		[]string{"4", "e", "p", "z", "J", "U"},
-		[]string{"5", "f", "q", "A", "K", "V"},
-		[]string{"6", "g", "r", "B", "L", "W"},
-		[]string{"7", "h", "s", "C", "M", "X"},
-		[]string{"8", "i", "t", "D", "N", "Y"},
-		[]string{"9", "j", "u", "E", "P", "Z"},
+		{"0", "a", "k", "v", "F", "Q"},
+		{"1", "b", "l", "w", "G", "R"},
+		{"2", "c", "m", "x", "H", "S"},
+		{"3", "d", "n", "y", "I", "T"},
+		{"4", "e", "p", "z", "J", "U"},
+		{"5", "f", "q", "A", "K", "V"},
+		{"6", "g", "r", "B", "L", "W"},
+		{"7", "h", "s", "C", "M", "X"},
+		{"8", "i", "t", "D", "N", "Y"},
+		{"9", "j", "u", "E", "P", "Z"},
 	}
-	rand.Seed(time.Now().UnixNano())
+	gRand := rand.New(rand.NewSource(time.Now().UnixNano()).(rand.Source64))
 	SliceShuffle(&slice[i])
-	return slice[i][rand.Intn(6)]
+	return slice[i][gRand.Intn(6)]
 }

@@ -1,6 +1,9 @@
 package function
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 // InSlice 判断切片中是否存在某值
 func InSlice(slice []string, target string) bool {
@@ -33,9 +36,10 @@ func SliceUnique(slice []string) []string {
 
 // SliceShuffle 打乱切片
 func SliceShuffle(slice *[]string) {
+	gRand := rand.New(rand.NewSource(time.Now().UnixNano()).(rand.Source64))
 	length := len(*slice) - 1
 	for i := length; i > 0; i-- {
-		n := rand.Intn(i + 1)
+		n := gRand.Intn(i + 1)
 		(*slice)[i], (*slice)[n] = (*slice)[n], (*slice)[i]
 	}
 }
