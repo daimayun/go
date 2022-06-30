@@ -71,6 +71,11 @@ func CheckIdNumRule(idNum string) bool {
 	return verifyId(checkId(idNumByte17), byte2int(idNumByte[17]))
 }
 
+// CheckWeChatOpenId 验证微信公众号和小程序的OpenID
+func CheckWeChatOpenId(openId string) bool {
+	return regexp.MustCompile(`^[0-9A-Za-z_-]{28}$`).MatchString(openId)
+}
+
 func byte2int(x byte) byte {
 	if x == 88 {
 		return 'X'
