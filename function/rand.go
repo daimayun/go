@@ -67,5 +67,6 @@ func RandFixedString(i int) string {
 		[]string{"9", "j", "u", "E", "P", "Z"},
 	}
 	rand.Seed(time.Now().UnixNano())
+	SliceShuffle(&slice[i])
 	return slice[i][rand.Intn(6)]
 }
