@@ -1,27 +1,19 @@
 package ocr
 
-import (
-	errs "errors"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
-	ocr "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ocr/v20181119"
-)
+import "fmt"
 
-// 公共请求参数
-func publicParam(secretId, secretKey string) (js string, err error) {
-	cpf := profile.NewClientProfile()
-	cpf.HttpProfile.Endpoint = "ocr.tencentcloudapi.com"
-	client, _ := ocr.NewClient(common.NewCredential(secretId, secretKey), "", cpf)
-	var response *ocr.IDCardOCRResponse
-	response, err = client.IDCardOCR(ocr.NewIDCardOCRRequest())
-	if _, ok := err.(*errors.TencentCloudSDKError); ok {
-		err = errs.New("An API error has returned: " + err.Error())
-		return
+// IdCard 身份证识别
+func IdCard(secretId, secretKey, imageLink string, cardSides ...string) (err error) {
+	cardSide := "FRONT"
+	if len(cardSides) > 0 {
+		cardSide = cardSides[0]
 	}
+	var param string
+	param, err = publicParam(secretId, secretKey)
 	if err != nil {
 		return
 	}
-	js = response.ToJsonString()
+	url := "https://ocr.tencentcloudapi.com/?Action=IDCardOCR&ImageUrl=" + imageLink + "&CardSide=" + cardSide + "&" + param
+	fmt.Println(url)
 	return
 }
