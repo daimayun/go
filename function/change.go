@@ -3,6 +3,7 @@ package function
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 // Int64ToInt int64转int
@@ -61,4 +62,19 @@ func RemoveInvalid0(f float64) float64 {
 // RemoveInvalid0ToString 去掉无效的0并转为字符串格式
 func RemoveInvalid0ToString(f float64) string {
 	return fmt.Sprintf("%g", f)
+}
+
+// ChineseToUnicode 中文转Unicode
+func ChineseToUnicode(str string) string {
+	textQuoted := strconv.QuoteToASCII(str)
+	return textQuoted[1 : len(textQuoted)-1]
+}
+
+// UnicodeToChinese Unicode转中文
+func UnicodeToChinese(s string) (string, error) {
+	str, err := strconv.Unquote(strings.Replace(strconv.Quote(s), `\\u`, `\u`, -1))
+	if err != nil {
+		return "", err
+	}
+	return str, nil
 }
