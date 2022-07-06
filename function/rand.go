@@ -70,3 +70,11 @@ func RandFixedString(i int) string {
 	SliceShuffle(&slice[i])
 	return slice[i][gRand.Intn(6)]
 }
+
+// RandNum 返回随机数字字符
+func RandNum(length int) (str string) {
+	for i := 0; i < length; i++ {
+		str += strconv.Itoa(rand.New(rand.NewSource(time.Now().UnixNano() + int64(i))).Intn(10))
+	}
+	return
+}
