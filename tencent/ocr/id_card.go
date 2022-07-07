@@ -7,7 +7,7 @@ import (
 )
 
 // IdCard 身份证识别
-func (c *Client) IdCard(request *v20181119.IDCardOCRRequest) (response *v20181119.IDCardOCRResponse, err error) {
+func (c *client) IdCard(request *v20181119.IDCardOCRRequest) (response *v20181119.IDCardOCRResponse, err error) {
 	if request == nil {
 		request = v20181119.NewIDCardOCRRequest()
 	}

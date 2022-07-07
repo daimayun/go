@@ -5,13 +5,13 @@ import (
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
-type Client struct {
+type client struct {
 	common.Client
 }
 
 // NewClient 初始化Client
-func NewClient(secretId, secretKey, region string) (client *Client, err error) {
-	client = &Client{}
-	client.Init(region).WithSecretId(secretId, secretKey).WithProfile(profile.NewClientProfile())
-	return
+func NewClient(secretId, secretKey, region string) *client {
+	c := &client{}
+	c.Init(region).WithSecretId(secretId, secretKey).WithProfile(profile.NewClientProfile())
+	return c
 }
