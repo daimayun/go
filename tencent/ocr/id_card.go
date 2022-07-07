@@ -3,6 +3,7 @@ package ocr
 import (
 	"context"
 	"errors"
+	"github.com/daimayun/go/function"
 	v20181119 "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ocr/v20181119"
 )
 
@@ -26,16 +27,51 @@ type IdCardResponseData struct {
 }
 
 // IdCard 身份证识别
-func (c *client) IdCard(request *v20181119.IDCardOCRRequest) (response *v20181119.IDCardOCRResponse, err error) {
-	if request == nil {
-		request = v20181119.NewIDCardOCRRequest()
+func (c *client) IdCard(request IdCardRequestData) (response IdCardResponseData, err error) {
+	if request.ImageUrl == "" && request.ImageBase64 == "" {
+		err = errors.New("missing ID card information")
+		return
 	}
 	if c.GetCredential() == nil {
 		err = errors.New("IDCardOCR require credential")
 		return
 	}
-	request.SetContext(context.Background())
-	response = v20181119.NewIDCardOCRResponse()
-	err = c.Send(request, response)
+	var (
+		req *v20181119.IDCardOCRRequest
+		res *v20181119.IDCardOCRResponse
+	)
+	req = v20181119.NewIDCardOCRRequest()
+	if request.ImageUrl != "" {
+		req.ImageUrl = function.GetStringPointer(request.ImageUrl)
+	}
+	if request.ImageBase64 != "" {
+		req.ImageBase64 = function.GetStringPointer(request.ImageBase64)
+	}
+	if request.CardSide != "" {
+		req.CardSide = function.GetStringPointer(request.CardSide)
+	}
+	req.SetContext(context.Background())
+	res = v20181119.NewIDCardOCRResponse()
+	err = c.Send(req, res)
+	if err == nil {
+		if res.Response.IdNum != nil && res.Response.Name != nil && res.Response.Sex != nil && res.Response.Nation != nil && res.Response.Birth != nil && res.Response.Address != nil {
+			response = IdCardResponseData{
+				Name:    function.GetStringPointerValue(res.Response.Name),
+				Sex:     function.GetStringPointerValue(res.Response.Sex),
+				Nation:  function.GetStringPointerValue(res.Response.Nation),
+				Birth:   function.GetStringPointerValue(res.Response.Birth),
+				Address: function.GetStringPointerValue(res.Response.Address),
+				IdNum:   function.GetStringPointerValue(res.Response.IdNum),
+			}
+		} else if res.Response.Authority != nil && res.Response.ValidDate != nil {
+			response = IdCardResponseData{
+				Authority: function.GetStringPointerValue(res.Response.Authority),
+				ValidDate: function.GetStringPointerValue(res.Response.ValidDate),
+			}
+		} else {
+			err = errors.New("ID card ocr fail")
+		}
+		return
+	}
 	return
 }
