@@ -5,6 +5,7 @@ import (
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
+// client OCR Client
 type client struct {
 	common.Client
 }
