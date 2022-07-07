@@ -1,19 +1,22 @@
 package ocr
 
-import "fmt"
+import (
+	"context"
+	"errors"
+	v20181119 "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ocr/v20181119"
+)
 
 // IdCard 身份证识别
-func IdCard(secretId, secretKey, imageLink string, cardSides ...string) (err error) {
-	cardSide := "FRONT"
-	if len(cardSides) > 0 {
-		cardSide = cardSides[0]
+func (c *Client) IdCard(request *v20181119.IDCardOCRRequest) (response *v20181119.IDCardOCRResponse, err error) {
+	if request == nil {
+		request = v20181119.NewIDCardOCRRequest()
 	}
-	var param string
-	param, err = publicParam(secretId, secretKey)
-	if err != nil {
+	if c.GetCredential() == nil {
+		err = errors.New("IDCardOCR require credential")
 		return
 	}
-	url := "https://ocr.tencentcloudapi.com/?Action=IDCardOCR&ImageUrl=" + imageLink + "&CardSide=" + cardSide + "&" + param
-	fmt.Println(url)
+	request.SetContext(context.Background())
+	response = v20181119.NewIDCardOCRResponse()
+	err = c.Send(request, response)
 	return
 }
