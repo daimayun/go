@@ -19,12 +19,28 @@ type ReceiveData struct {
 	NoLocal          bool       `json:"no_local"`
 }
 
-func (conn Connection) Receive() (err error) {
-	var ch *amqp.Channel
+func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery, err error) {
+	var (
+		ch *amqp.Channel
+		q  amqp.Queue
+	)
 	ch, err = conn.Conn.Channel()
 	if err != nil {
 		return
 	}
 	defer ch.Close()
+	err = ch.ExchangeDeclare(data.Exchange, data.Type, data.Durable, data.AutoDelete, data.Internal, data.NoWait, data.Args)
+	if err != nil {
+		return
+	}
+	q, err = ch.QueueDeclare(data.QueueName, data.Durable, data.DeleteWhenUnused, data.Exclusive, data.NoWait, data.Args)
+	if err != nil {
+		return
+	}
+	err = ch.QueueBind(q.Name, data.RoutingKey, data.Exchange, data.NoWait, data.Args)
+	if err != nil {
+		return
+	}
+	messages, err = ch.Consume(q.Name, data.Consumer, data.AutoAck, data.Exclusive, data.NoLocal, data.NoWait, data.Args)
 	return
 }
