@@ -2,10 +2,12 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
-func connection() (conn *amqp.Connection, err error) {
-	return
+// connection RabbitMQ连接
+func connection(url string) (conn *amqp.Connection, err error) {
+	return amqp.Dial(url)
 }
 
-func NewConnection() (conn *amqp.Connection, err error) {
-	return connection()
+// NewConnection RabbitMQ连接
+func NewConnection(url string) (conn *amqp.Connection, err error) {
+	return connection(url)
 }
