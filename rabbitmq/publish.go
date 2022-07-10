@@ -4,7 +4,7 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-// PublishData 发布所提交数据
+// PublishData 发布消息队列所提交数据
 type PublishData struct {
 	Exchange   string          `json:"exchange"`
 	Type       string          `json:"type"`
@@ -21,7 +21,7 @@ type PublishData struct {
 	Publishing amqp.Publishing `json:"publishing"`
 }
 
-// Publish 发布消息
+// Publish 发布消息队列
 func (conn Connection) Publish(data PublishData) (err error) {
 	var ch *amqp.Channel
 	ch, err = conn.Conn.Channel()
