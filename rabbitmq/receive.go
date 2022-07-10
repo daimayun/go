@@ -29,9 +29,11 @@ func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery,
 		return
 	}
 	defer ch.Close()
-	err = ch.ExchangeDeclare(data.Exchange, data.Type, data.Durable, data.AutoDelete, data.Internal, data.NoWait, data.Args)
-	if err != nil {
-		return
+	if data.Type != "" {
+		err = ch.ExchangeDeclare(data.Exchange, data.Type, data.Durable, data.AutoDelete, data.Internal, data.NoWait, data.Args)
+		if err != nil {
+			return
+		}
 	}
 	q, err = ch.QueueDeclare(data.QueueName, data.Durable, data.DeleteWhenUnused, data.Exclusive, data.NoWait, data.Args)
 	if err != nil {
