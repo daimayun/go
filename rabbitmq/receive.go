@@ -2,7 +2,6 @@ package rabbitmq
 
 import (
 	amqp "github.com/rabbitmq/amqp091-go"
-	"log"
 )
 
 // ReceiveData 接收处理队列所提交数据
@@ -51,12 +50,5 @@ func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery,
 		}
 	}
 	messages, err = ch.Consume(q.Name, data.Consumer, data.AutoAck, data.Exclusive, data.NoLocal, data.NoWait, data.Args)
-	///////////////////////////////////////
-	go func() {
-		for d := range messages {
-			log.Printf(" [x] %s", d.Body)
-		}
-	}()
-	///////////////////////////////////////
 	return
 }
