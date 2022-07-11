@@ -39,9 +39,11 @@ func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery,
 	if err != nil {
 		return
 	}
-	err = ch.QueueBind(q.Name, data.RoutingKey, data.Exchange, data.NoWait, data.Args)
-	if err != nil {
-		return
+	if data.Type != "" {
+		err = ch.QueueBind(q.Name, data.RoutingKey, data.Exchange, data.NoWait, data.Args)
+		if err != nil {
+			return
+		}
 	}
 	messages, err = ch.Consume(q.Name, data.Consumer, data.AutoAck, data.Exclusive, data.NoLocal, data.NoWait, data.Args)
 	return
