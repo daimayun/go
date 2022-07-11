@@ -30,7 +30,6 @@ func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
 func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
 	return conn.Receive(ReceiveData{
 		QueueName:        data.QueueName,
-		RoutingKey:       data.RoutingKey,
 		Durable:          true,
 		AutoAck:          data.AutoAck,
 		QosPrefetchCount: data.QosPrefetchCount,
