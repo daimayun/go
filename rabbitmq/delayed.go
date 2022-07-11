@@ -11,6 +11,12 @@ type DelayedTypePublishData struct {
 	Publishing amqp.Publishing `json:"publishing"`
 }
 
+type DelayedTypeReceiveData struct {
+	Exchange   string `json:"exchange"`
+	RoutingKey string `json:"routing_key"`
+	AutoAck    bool   `json:"auto_ack"`
+}
+
 func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err error) {
 	return conn.Publish(PublishData{
 		Exchange:   data.Exchange,
@@ -22,6 +28,12 @@ func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err erro
 	})
 }
 
-func (conn Connection) DelayedTypeReceive() (messages <-chan amqp.Delivery, err error) {
-	return
+func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+	return conn.Receive(ReceiveData{
+		Exchange:   data.Exchange,
+		Type:       ExchangeXDelayedMessage,
+		RoutingKey: data.RoutingKey,
+		Durable:    true,
+		AutoAck:    data.AutoAck,
+	})
 }
