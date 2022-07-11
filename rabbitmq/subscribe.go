@@ -27,6 +27,7 @@ func (conn Connection) SubscribeTypeReceive(data SubscribeTypeReceiveData) (mess
 		Exchange: data.Exchange,
 		Type:     amqp.ExchangeFanout,
 		Durable:  true,
+		Args:     nil,
 		AutoAck:  data.AutoAck,
 	})
 }

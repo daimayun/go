@@ -31,6 +31,7 @@ func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-cha
 	return conn.Receive(ReceiveData{
 		QueueName:        data.QueueName,
 		Durable:          true,
+		Args:             nil,
 		AutoAck:          data.AutoAck,
 		QosPrefetchCount: data.QosPrefetchCount,
 		QosPrefetchSize:  data.QosPrefetchSize,

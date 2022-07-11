@@ -31,6 +31,7 @@ func (conn Connection) RoutingTypeReceive(data RoutingTypeReceiveData) (messages
 		RoutingKey: data.RoutingKey,
 		Type:       amqp.ExchangeDirect,
 		Durable:    true,
+		Args:       nil,
 		AutoAck:    data.AutoAck,
 	})
 }

@@ -31,6 +31,7 @@ func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-c
 		RoutingKey: data.RoutingKey,
 		Type:       amqp.ExchangeTopic,
 		Durable:    true,
+		Args:       nil,
 		AutoAck:    data.AutoAck,
 	})
 }
