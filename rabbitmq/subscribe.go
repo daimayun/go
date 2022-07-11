@@ -17,6 +17,6 @@ func (conn Connection) SubscribeTypePublish(data SubscribeTypePublishData) (err 
 	})
 }
 
-func (conn Connection) SubscribeTypeReceive() (err error) {
+func (conn Connection) SubscribeTypeReceive() (messages <-chan amqp.Delivery, err error) {
 	return
 }

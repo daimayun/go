@@ -22,6 +22,6 @@ func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err erro
 	})
 }
 
-func (conn Connection) DelayedTypeReceive() (err error) {
+func (conn Connection) DelayedTypeReceive() (messages <-chan amqp.Delivery, err error) {
 	return
 }

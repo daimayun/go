@@ -19,6 +19,6 @@ func (conn Connection) TopicTypePublish(data TopicTypePublishData) (err error) {
 	})
 }
 
-func (conn Connection) TopicTypeReceive() (err error) {
+func (conn Connection) TopicTypeReceive() (messages <-chan amqp.Delivery, err error) {
 	return
 }

@@ -8,6 +8,11 @@ type WorkTypePublishData struct {
 	Publishing amqp.Publishing `json:"publishing"`
 }
 
+type WorkTypeReceiveData struct {
+	QueueName string `json:"queue_name"`
+	AutoAck   bool   `json:"auto_ack"`
+}
+
 func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
 	return conn.Publish(PublishData{
 		QueueName:  data.QueueName,
@@ -18,6 +23,8 @@ func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
 	})
 }
 
-func (conn Connection) WorkTypeReceive() (err error) {
-	return
+func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+	return conn.Receive(ReceiveData{
+		QueueName: data.QueueName,
+	})
 }

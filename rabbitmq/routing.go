@@ -19,6 +19,6 @@ func (conn Connection) RoutingTypePublish(data RoutingTypePublishData) (err erro
 	})
 }
 
-func (conn Connection) RoutingTypeReceive() (err error) {
+func (conn Connection) RoutingTypeReceive() (messages <-chan amqp.Delivery, err error) {
 	return
 }
