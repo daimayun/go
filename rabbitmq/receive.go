@@ -2,6 +2,7 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
+// ReceiveData 接收处理队列所提交数据
 type ReceiveData struct {
 	Exchange         string     `json:"exchange"`
 	Type             string     `json:"type"`
@@ -19,6 +20,7 @@ type ReceiveData struct {
 	NoLocal          bool       `json:"no_local"`
 }
 
+// Receive 接收消息队列
 func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery, err error) {
 	var (
 		ch *amqp.Channel
