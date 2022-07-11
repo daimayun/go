@@ -26,6 +26,7 @@ func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
 func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
 	return conn.Receive(ReceiveData{
 		QueueName: data.QueueName,
+		Durable:   true,
 		AutoAck:   data.AutoAck,
 	})
 }
