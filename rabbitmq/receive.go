@@ -6,25 +6,27 @@ import (
 
 // ReceiveData 接收处理队列所提交数据
 type ReceiveData struct {
-	Exchange            string     `json:"exchange"`
-	Type                string     `json:"type"`
-	Durable             bool       `json:"durable"`
-	AutoDelete          bool       `json:"auto_delete"`
-	Internal            bool       `json:"internal"`
-	NoWait              bool       `json:"no_wait"`
-	Exclusive           bool       `json:"exclusive"`
-	QueueName           string     `json:"queue_name"`
-	RoutingKey          string     `json:"routing_key"`
-	Consumer            string     `json:"consumer"`
-	AutoAck             bool       `json:"auto_ack"`
-	NoLocal             bool       `json:"no_local"`
-	QosPrefetchCount    int        `json:"qos_prefetch_count"`
-	QosPrefetchSize     int        `json:"qos_prefetch_size"`
-	QosGlobal           bool       `json:"qos_global"`
-	ExchangeDeclareArgs amqp.Table `json:"exchange_declare_args"`
-	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
-	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
-	ConsumeArgs         amqp.Table `json:"consume_args"`
+	Exchange                  string     `json:"exchange"`
+	Type                      string     `json:"type"`
+	ExchangeDeclareDurable    bool       `json:"exchange_declare_durable"`
+	QueueDeclareDurable       bool       `json:"queue_declare_durable"`
+	ExchangeDeclareAutoDelete bool       `json:"exchange_declare_auto_delete"`
+	QueueDeclareAutoDelete    bool       `json:"queue_declare_auto_delete"`
+	Internal                  bool       `json:"internal"`
+	NoWait                    bool       `json:"no_wait"`
+	Exclusive                 bool       `json:"exclusive"`
+	QueueName                 string     `json:"queue_name"`
+	RoutingKey                string     `json:"routing_key"`
+	Consumer                  string     `json:"consumer"`
+	AutoAck                   bool       `json:"auto_ack"`
+	NoLocal                   bool       `json:"no_local"`
+	QosPrefetchCount          int        `json:"qos_prefetch_count"`
+	QosPrefetchSize           int        `json:"qos_prefetch_size"`
+	QosGlobal                 bool       `json:"qos_global"`
+	ExchangeDeclareArgs       amqp.Table `json:"exchange_declare_args"`
+	QueueDeclareArgs          amqp.Table `json:"queue_declare_args"`
+	QueueBindArgs             amqp.Table `json:"queue_bind_args"`
+	ConsumeArgs               amqp.Table `json:"consume_args"`
 }
 
 // Receive 接收消息队列
@@ -39,12 +41,12 @@ func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery,
 	}
 	defer ch.Close()
 	if data.Type != "" {
-		err = ch.ExchangeDeclare(data.Exchange, data.Type, data.Durable, data.AutoDelete, data.Internal, data.NoWait, data.ExchangeDeclareArgs)
+		err = ch.ExchangeDeclare(data.Exchange, data.Type, data.ExchangeDeclareDurable, data.ExchangeDeclareAutoDelete, data.Internal, data.NoWait, data.ExchangeDeclareArgs)
 		if err != nil {
 			return
 		}
 	}
-	q, err = ch.QueueDeclare(data.QueueName, data.Durable, data.AutoDelete, data.Exclusive, data.NoWait, data.QueueDeclareArgs)
+	q, err = ch.QueueDeclare(data.QueueName, data.QueueDeclareDurable, data.QueueDeclareAutoDelete, data.Exclusive, data.NoWait, data.QueueDeclareArgs)
 	if err != nil {
 		return
 	}

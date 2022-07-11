@@ -13,12 +13,16 @@ type DelayedTypePublishData struct {
 }
 
 type DelayedTypeReceiveData struct {
-	Exchange            string     `json:"exchange"`
-	RoutingKey          string     `json:"routing_key"`
-	AutoAck             bool       `json:"auto_ack"`
-	ExchangeDeclareArgs amqp.Table `json:"exchange_declare_args"`
-	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
-	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
+	Exchange                  string     `json:"exchange"`
+	RoutingKey                string     `json:"routing_key"`
+	AutoAck                   bool       `json:"auto_ack"`
+	ExchangeDeclareArgs       amqp.Table `json:"exchange_declare_args"`
+	QueueDeclareArgs          amqp.Table `json:"queue_declare_args"`
+	QueueBindArgs             amqp.Table `json:"queue_bind_args"`
+	ExchangeDeclareAutoDelete bool       `json:"exchange_declare_auto_delete"`
+	ExchangeDeclareDurable    bool       `json:"exchange_declare_durable"`
+	QueueDeclareDurable       bool       `json:"queue_declare_durable"`
+	QueueDeclareAutoDelete    bool       `json:"queue_declare_auto_delete"`
 }
 
 func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err error) {
@@ -50,13 +54,16 @@ func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages
 		queueBindArgs = data.QueueBindArgs
 	}
 	return conn.Receive(ReceiveData{
-		Exchange:            data.Exchange,
-		Type:                ExchangeXDelayedMessage,
-		RoutingKey:          data.RoutingKey,
-		Durable:             true,
-		AutoAck:             data.AutoAck,
-		ExchangeDeclareArgs: exchangeDeclareArgs,
-		QueueDeclareArgs:    queueDeclareArgs,
-		QueueBindArgs:       queueBindArgs,
+		Exchange:                  data.Exchange,
+		Type:                      ExchangeXDelayedMessage,
+		RoutingKey:                data.RoutingKey,
+		ExchangeDeclareAutoDelete: false,
+		ExchangeDeclareDurable:    true,
+		QueueDeclareDurable:       true,
+		QueueDeclareAutoDelete:    true,
+		AutoAck:                   data.AutoAck,
+		ExchangeDeclareArgs:       exchangeDeclareArgs,
+		QueueDeclareArgs:          queueDeclareArgs,
+		QueueBindArgs:             queueBindArgs,
 	})
 }
