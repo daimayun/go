@@ -3,9 +3,11 @@ package rabbitmq
 import amqp "github.com/rabbitmq/amqp091-go"
 
 type WorkTypePublishData struct {
-	QueueName  string          `json:"queue_name"`
-	RoutingKey string          `json:"routing_key"`
-	Publishing amqp.Publishing `json:"publishing"`
+	QueueName           string          `json:"queue_name"`
+	RoutingKey          string          `json:"routing_key"`
+	QueueDeclareArgs    amqp.Table      `json:"queue_declare_args"`
+	QueueDeclareDurable bool            `json:"queue_declare_durable"`
+	Publishing          amqp.Publishing `json:"publishing"`
 }
 
 type WorkTypeReceiveData struct {
@@ -20,12 +22,16 @@ type WorkTypeReceiveData struct {
 }
 
 func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
+	var queueDeclareArgs amqp.Table = nil
+	if len(data.QueueDeclareArgs) > 0 {
+		queueDeclareArgs = data.QueueDeclareArgs
+	}
 	return conn.Publish(PublishData{
-		QueueName:  data.QueueName,
-		RoutingKey: data.RoutingKey,
-		Args:       nil,
-		Durable:    true,
-		Publishing: data.Publishing,
+		QueueName:           data.QueueName,
+		RoutingKey:          data.RoutingKey,
+		QueueDeclareArgs:    queueDeclareArgs,
+		QueueDeclareDurable: data.QueueDeclareDurable,
+		Publishing:          data.Publishing,
 	})
 }
 
