@@ -34,7 +34,7 @@ func (conn Connection) TopicTypePublish(data TopicTypePublishData) (err error) {
 	})
 }
 
-func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs

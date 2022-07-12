@@ -34,7 +34,7 @@ func (conn Connection) RoutingTypePublish(data RoutingTypePublishData) (err erro
 	})
 }
 
-func (conn Connection) RoutingTypeReceive(data RoutingTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+func (conn Connection) RoutingTypeReceive(data RoutingTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs

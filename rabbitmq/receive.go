@@ -30,16 +30,12 @@ type ReceiveData struct {
 }
 
 // Receive 接收消息队列
-func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery, err error) {
-	var (
-		ch *amqp.Channel
-		q  amqp.Queue
-	)
+func (conn Connection) Receive(data ReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
+	var q amqp.Queue
 	ch, err = conn.Conn.Channel()
 	if err != nil {
 		return
 	}
-	defer ch.Close()
 	if data.Type != "" {
 		err = ch.ExchangeDeclare(data.Exchange, data.Type, data.ExchangeDeclareDurable, data.ExchangeDeclareAutoDelete, data.Internal, data.NoWait, data.ExchangeDeclareArgs)
 		if err != nil {

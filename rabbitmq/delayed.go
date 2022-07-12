@@ -40,7 +40,7 @@ func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err erro
 	})
 }
 
-func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs

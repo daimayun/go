@@ -33,7 +33,7 @@ func (conn Connection) SubscribeTypePublish(data SubscribeTypePublishData) (err 
 	})
 }
 
-func (conn Connection) SubscribeTypeReceive(data SubscribeTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+func (conn Connection) SubscribeTypeReceive(data SubscribeTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs

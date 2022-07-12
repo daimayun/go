@@ -36,7 +36,7 @@ func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
 	})
 }
 
-func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, err error) {
+func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
 	var (
 		queueDeclareArgs amqp.Table = nil
 		consumeArgs      amqp.Table = nil
