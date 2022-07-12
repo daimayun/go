@@ -48,13 +48,15 @@ func (conn Connection) RoutingTypeReceive(data RoutingTypeReceiveData) (messages
 		queueBindArgs = data.QueueBindArgs
 	}
 	return conn.Receive(ReceiveData{
-		Exchange:            data.Exchange,
-		RoutingKey:          data.RoutingKey,
-		Type:                amqp.ExchangeDirect,
-		Durable:             true,
-		ExchangeDeclareArgs: exchangeDeclareArgs,
-		QueueDeclareArgs:    queueDeclareArgs,
-		QueueBindArgs:       queueBindArgs,
-		AutoAck:             data.AutoAck,
+		Exchange:               data.Exchange,
+		RoutingKey:             data.RoutingKey,
+		Type:                   amqp.ExchangeDirect,
+		ExchangeDeclareDurable: true,
+		QueueDeclareDurable:    false,
+		Exclusive:              true,
+		ExchangeDeclareArgs:    exchangeDeclareArgs,
+		QueueDeclareArgs:       queueDeclareArgs,
+		QueueBindArgs:          queueBindArgs,
+		AutoAck:                data.AutoAck,
 	})
 }

@@ -48,13 +48,15 @@ func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-c
 		queueBindArgs = data.QueueBindArgs
 	}
 	return conn.Receive(ReceiveData{
-		Exchange:            data.Exchange,
-		RoutingKey:          data.RoutingKey,
-		Type:                amqp.ExchangeTopic,
-		Durable:             true,
-		ExchangeDeclareArgs: exchangeDeclareArgs,
-		QueueDeclareArgs:    queueDeclareArgs,
-		QueueBindArgs:       queueBindArgs,
-		AutoAck:             data.AutoAck,
+		Exchange:               data.Exchange,
+		RoutingKey:             data.RoutingKey,
+		Type:                   amqp.ExchangeTopic,
+		ExchangeDeclareDurable: true,
+		QueueDeclareDurable:    false,
+		Exclusive:              true,
+		ExchangeDeclareArgs:    exchangeDeclareArgs,
+		QueueDeclareArgs:       queueDeclareArgs,
+		QueueBindArgs:          queueBindArgs,
+		AutoAck:                data.AutoAck,
 	})
 }

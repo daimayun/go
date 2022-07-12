@@ -10,11 +10,13 @@ type SubscribeTypePublishData struct {
 }
 
 type SubscribeTypeReceiveData struct {
-	Exchange            string     `json:"exchange"`
-	AutoAck             bool       `json:"auto_ack"`
-	ExchangeDeclareArgs amqp.Table `json:"exchange_declare_args"`
-	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
-	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
+	Exchange               string     `json:"exchange"`
+	AutoAck                bool       `json:"auto_ack"`
+	ExchangeDeclareArgs    amqp.Table `json:"exchange_declare_args"`
+	QueueDeclareArgs       amqp.Table `json:"queue_declare_args"`
+	QueueBindArgs          amqp.Table `json:"queue_bind_args"`
+	ExchangeDeclareDurable bool       `json:"exchange_declare_durable"`
+	QueueDeclareDurable    bool       `json:"queue_declare_durable"`
 }
 
 func (conn Connection) SubscribeTypePublish(data SubscribeTypePublishData) (err error) {
@@ -45,12 +47,13 @@ func (conn Connection) SubscribeTypeReceive(data SubscribeTypeReceiveData) (mess
 		queueBindArgs = data.QueueBindArgs
 	}
 	return conn.Receive(ReceiveData{
-		Exchange:            data.Exchange,
-		Type:                amqp.ExchangeFanout,
-		Durable:             true,
-		ExchangeDeclareArgs: exchangeDeclareArgs,
-		QueueDeclareArgs:    queueDeclareArgs,
-		QueueBindArgs:       queueBindArgs,
-		AutoAck:             data.AutoAck,
+		Exchange:               data.Exchange,
+		Type:                   amqp.ExchangeFanout,
+		ExchangeDeclareDurable: true,
+		QueueDeclareDurable:    false,
+		ExchangeDeclareArgs:    exchangeDeclareArgs,
+		QueueDeclareArgs:       queueDeclareArgs,
+		QueueBindArgs:          queueBindArgs,
+		AutoAck:                data.AutoAck,
 	})
 }
