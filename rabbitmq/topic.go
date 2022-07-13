@@ -2,7 +2,7 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
-type TopicTypePublishData struct {
+type TopicTypeSendData struct {
 	Exchange               string          `json:"exchange"`
 	RoutingKey             string          `json:"routing_key"`
 	Publishing             amqp.Publishing `json:"publishing"`
@@ -19,12 +19,12 @@ type TopicTypeReceiveData struct {
 	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
 }
 
-func (conn Connection) TopicTypePublish(data TopicTypePublishData) (err error) {
+func (conn Connection) TopicTypeSend(data TopicTypeSendData) (err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs
 	}
-	return conn.Publish(PublishData{
+	return conn.Send(SendData{
 		Exchange:               data.Exchange,
 		RoutingKey:             data.RoutingKey,
 		Type:                   amqp.ExchangeTopic,

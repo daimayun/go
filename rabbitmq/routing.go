@@ -2,7 +2,7 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
-type RoutingTypePublishData struct {
+type RoutingTypeSendData struct {
 	Exchange               string          `json:"exchange"`
 	RoutingKey             string          `json:"routing_key"`
 	Publishing             amqp.Publishing `json:"publishing"`
@@ -19,12 +19,12 @@ type RoutingTypeReceiveData struct {
 	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
 }
 
-func (conn Connection) RoutingTypePublish(data RoutingTypePublishData) (err error) {
+func (conn Connection) RoutingTypeSend(data RoutingTypeSendData) (err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs
 	}
-	return conn.Publish(PublishData{
+	return conn.Send(SendData{
 		Exchange:               data.Exchange,
 		RoutingKey:             data.RoutingKey,
 		Type:                   amqp.ExchangeDirect,

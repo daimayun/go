@@ -2,7 +2,7 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
-type SubscribeTypePublishData struct {
+type SubscribeTypeSendData struct {
 	Exchange               string          `json:"exchange"`
 	ExchangeDeclareDurable bool            `json:"exchange_declare_durable"`
 	Publishing             amqp.Publishing `json:"publishing"`
@@ -19,12 +19,12 @@ type SubscribeTypeReceiveData struct {
 	QueueDeclareDurable    bool       `json:"queue_declare_durable"`
 }
 
-func (conn Connection) SubscribeTypePublish(data SubscribeTypePublishData) (err error) {
+func (conn Connection) SubscribeTypeSend(data SubscribeTypeSendData) (err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs
 	}
-	return conn.Publish(PublishData{
+	return conn.Send(SendData{
 		Exchange:               data.Exchange,
 		Type:                   amqp.ExchangeFanout,
 		ExchangeDeclareArgs:    exchangeDeclareArgs,

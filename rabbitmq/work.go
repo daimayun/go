@@ -2,7 +2,7 @@ package rabbitmq
 
 import amqp "github.com/rabbitmq/amqp091-go"
 
-type WorkTypePublishData struct {
+type WorkTypeSendData struct {
 	QueueName           string          `json:"queue_name"`
 	RoutingKey          string          `json:"routing_key"`
 	QueueDeclareArgs    amqp.Table      `json:"queue_declare_args"`
@@ -22,12 +22,12 @@ type WorkTypeReceiveData struct {
 	QueueDeclareDurable bool       `json:"queue_declare_durable"`
 }
 
-func (conn Connection) WorkTypePublish(data WorkTypePublishData) (err error) {
+func (conn Connection) WorkTypeSend(data WorkTypeSendData) (err error) {
 	var queueDeclareArgs amqp.Table = nil
 	if len(data.QueueDeclareArgs) > 0 {
 		queueDeclareArgs = data.QueueDeclareArgs
 	}
-	return conn.Publish(PublishData{
+	return conn.Send(SendData{
 		QueueName:           data.QueueName,
 		RoutingKey:          data.RoutingKey,
 		QueueDeclareArgs:    queueDeclareArgs,

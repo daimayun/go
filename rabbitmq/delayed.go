@@ -4,7 +4,7 @@ import amqp "github.com/rabbitmq/amqp091-go"
 
 const ExchangeXDelayedMessage = "x-delayed-message"
 
-type DelayedTypePublishData struct {
+type DelayedTypeSendData struct {
 	Exchange               string          `json:"exchange"`
 	RoutingKey             string          `json:"routing_key"`
 	Publishing             amqp.Publishing `json:"publishing"`
@@ -25,12 +25,12 @@ type DelayedTypeReceiveData struct {
 	QueueDeclareAutoDelete    bool       `json:"queue_declare_auto_delete"`
 }
 
-func (conn Connection) DelayedTypePublish(data DelayedTypePublishData) (err error) {
+func (conn Connection) DelayedTypeSend(data DelayedTypeSendData) (err error) {
 	var exchangeDeclareArgs amqp.Table = nil
 	if len(data.ExchangeDeclareArgs) > 0 {
 		exchangeDeclareArgs = data.ExchangeDeclareArgs
 	}
-	return conn.Publish(PublishData{
+	return conn.Send(SendData{
 		Exchange:               data.Exchange,
 		Type:                   ExchangeXDelayedMessage,
 		RoutingKey:             data.RoutingKey,
