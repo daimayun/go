@@ -18,8 +18,8 @@ type TopicTypeReceiveData struct {
 	QueueDeclareArgs       amqp.Table `json:"queue_declare_args"`
 	QueueBindArgs          amqp.Table `json:"queue_bind_args"`
 	QueueDeclareDurable    bool       `json:"queue_declare_durable"`
-	ExchangeDeclareDurable bool       `json:"exchange_declare_durable"`
-	Exclusive              bool       `json:"exclusive"`
+	ExchangeDeclareDurable bool       `json:"exchange_declare_durable"` // true
+	Exclusive              bool       `json:"exclusive"`                // true
 }
 
 func (conn Connection) TopicTypeSend(data TopicTypeSendData) (err error) {
@@ -54,9 +54,9 @@ func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-c
 		Exchange:               data.Exchange,
 		RoutingKey:             data.RoutingKey,
 		Type:                   amqp.ExchangeTopic,
-		ExchangeDeclareDurable: true,
+		ExchangeDeclareDurable: data.ExchangeDeclareDurable,
 		QueueDeclareDurable:    data.QueueDeclareDurable,
-		Exclusive:              true,
+		Exclusive:              data.Exclusive,
 		ExchangeDeclareArgs:    exchangeDeclareArgs,
 		QueueDeclareArgs:       queueDeclareArgs,
 		QueueBindArgs:          queueBindArgs,
