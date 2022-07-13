@@ -37,13 +37,11 @@ func (conn Connection) WorkTypeSend(data WorkTypeSendData) (err error) {
 }
 
 func (conn Connection) WorkTypeReceive(data WorkTypeReceiveData) (messages <-chan amqp.Delivery, ch *amqp.Channel, err error) {
-	var (
-		queueDeclareArgs amqp.Table = nil
-		consumeArgs      amqp.Table = nil
-	)
+	var queueDeclareArgs amqp.Table = nil
 	if len(data.QueueDeclareArgs) > 0 {
 		queueDeclareArgs = data.QueueDeclareArgs
 	}
+	var consumeArgs amqp.Table = nil
 	if len(data.ConsumeArgs) > 0 {
 		consumeArgs = data.ConsumeArgs
 	}
