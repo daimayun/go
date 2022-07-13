@@ -4,7 +4,7 @@ import amqp "github.com/rabbitmq/amqp091-go"
 
 type SubscribeTypeSendData struct {
 	Exchange               string          `json:"exchange"`
-	ExchangeDeclareDurable bool            `json:"exchange_declare_durable"`
+	ExchangeDeclareDurable bool            `json:"exchange_declare_durable"` // true
 	Publishing             amqp.Publishing `json:"publishing"`
 	ExchangeDeclareArgs    amqp.Table      `json:"exchange_declare_args"`
 }

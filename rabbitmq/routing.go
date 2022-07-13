@@ -7,7 +7,7 @@ type RoutingTypeSendData struct {
 	RoutingKey             string          `json:"routing_key"`
 	Publishing             amqp.Publishing `json:"publishing"`
 	ExchangeDeclareArgs    amqp.Table      `json:"exchange_declare_args"`
-	ExchangeDeclareDurable bool            `json:"exchange_declare_durable"`
+	ExchangeDeclareDurable bool            `json:"exchange_declare_durable"` // true
 }
 
 type RoutingTypeReceiveData struct {
