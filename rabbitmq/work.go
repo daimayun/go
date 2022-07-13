@@ -1,6 +1,10 @@
 package rabbitmq
 
-import amqp "github.com/rabbitmq/amqp091-go"
+import (
+	"errors"
+	amqp "github.com/rabbitmq/amqp091-go"
+	"strings"
+)
 
 type WorkTypeSendData struct {
 	QueueName           string          `json:"queue_name"`
@@ -23,6 +27,10 @@ type WorkTypeReceiveData struct {
 }
 
 func (conn Connection) WorkTypeSend(data WorkTypeSendData) (err error) {
+	if strings.Trim(data.RoutingKey, " ") == "" {
+		err = errors.New("routing key cannot be empty")
+		return
+	}
 	var queueDeclareArgs amqp.Table = nil
 	if len(data.QueueDeclareArgs) > 0 {
 		queueDeclareArgs = data.QueueDeclareArgs
