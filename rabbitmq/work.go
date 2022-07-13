@@ -6,7 +6,7 @@ type WorkTypeSendData struct {
 	QueueName           string          `json:"queue_name"`
 	RoutingKey          string          `json:"routing_key"`
 	QueueDeclareArgs    amqp.Table      `json:"queue_declare_args"`
-	QueueDeclareDurable bool            `json:"queue_declare_durable"`
+	QueueDeclareDurable bool            `json:"queue_declare_durable"` // true
 	Publishing          amqp.Publishing `json:"publishing"`
 }
 
@@ -19,7 +19,7 @@ type WorkTypeReceiveData struct {
 	QosGlobal           bool       `json:"qos_global"`
 	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
 	ConsumeArgs         amqp.Table `json:"consume_args"`
-	QueueDeclareDurable bool       `json:"queue_declare_durable"`
+	QueueDeclareDurable bool       `json:"queue_declare_durable"` // true
 }
 
 func (conn Connection) WorkTypeSend(data WorkTypeSendData) (err error) {
