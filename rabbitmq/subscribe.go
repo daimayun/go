@@ -50,7 +50,7 @@ func (conn Connection) SubscribeTypeReceive(data SubscribeTypeReceiveData) (mess
 		Exchange:               data.Exchange,
 		Type:                   amqp.ExchangeFanout,
 		ExchangeDeclareDurable: true,
-		QueueDeclareDurable:    false,
+		QueueDeclareDurable:    data.QueueDeclareDurable,
 		ExchangeDeclareArgs:    exchangeDeclareArgs,
 		QueueDeclareArgs:       queueDeclareArgs,
 		QueueBindArgs:          queueBindArgs,

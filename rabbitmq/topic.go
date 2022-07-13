@@ -11,12 +11,15 @@ type TopicTypeSendData struct {
 }
 
 type TopicTypeReceiveData struct {
-	Exchange            string     `json:"exchange"`
-	RoutingKey          string     `json:"routing_key"`
-	AutoAck             bool       `json:"auto_ack"`
-	ExchangeDeclareArgs amqp.Table `json:"exchange_declare_args"`
-	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
-	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
+	Exchange               string     `json:"exchange"`
+	RoutingKey             string     `json:"routing_key"`
+	AutoAck                bool       `json:"auto_ack"`
+	ExchangeDeclareArgs    amqp.Table `json:"exchange_declare_args"`
+	QueueDeclareArgs       amqp.Table `json:"queue_declare_args"`
+	QueueBindArgs          amqp.Table `json:"queue_bind_args"`
+	QueueDeclareDurable    bool       `json:"queue_declare_durable"`
+	ExchangeDeclareDurable bool       `json:"exchange_declare_durable"`
+	Exclusive              bool       `json:"exclusive"`
 }
 
 func (conn Connection) TopicTypeSend(data TopicTypeSendData) (err error) {
@@ -52,7 +55,7 @@ func (conn Connection) TopicTypeReceive(data TopicTypeReceiveData) (messages <-c
 		RoutingKey:             data.RoutingKey,
 		Type:                   amqp.ExchangeTopic,
 		ExchangeDeclareDurable: true,
-		QueueDeclareDurable:    false,
+		QueueDeclareDurable:    data.QueueDeclareDurable,
 		Exclusive:              true,
 		ExchangeDeclareArgs:    exchangeDeclareArgs,
 		QueueDeclareArgs:       queueDeclareArgs,

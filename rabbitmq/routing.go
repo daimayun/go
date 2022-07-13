@@ -17,6 +17,7 @@ type RoutingTypeReceiveData struct {
 	ExchangeDeclareArgs amqp.Table `json:"exchange_declare_args"`
 	QueueDeclareArgs    amqp.Table `json:"queue_declare_args"`
 	QueueBindArgs       amqp.Table `json:"queue_bind_args"`
+	QueueDeclareDurable bool       `json:"queue_declare_durable"`
 }
 
 func (conn Connection) RoutingTypeSend(data RoutingTypeSendData) (err error) {
@@ -52,7 +53,7 @@ func (conn Connection) RoutingTypeReceive(data RoutingTypeReceiveData) (messages
 		RoutingKey:             data.RoutingKey,
 		Type:                   amqp.ExchangeDirect,
 		ExchangeDeclareDurable: true,
-		QueueDeclareDurable:    false,
+		QueueDeclareDurable:    data.QueueDeclareDurable,
 		Exclusive:              true,
 		ExchangeDeclareArgs:    exchangeDeclareArgs,
 		QueueDeclareArgs:       queueDeclareArgs,

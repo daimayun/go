@@ -57,7 +57,7 @@ func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages
 		Exchange:                  data.Exchange,
 		Type:                      ExchangeXDelayedMessage,
 		RoutingKey:                data.RoutingKey,
-		ExchangeDeclareAutoDelete: false,
+		ExchangeDeclareAutoDelete: data.ExchangeDeclareAutoDelete,
 		ExchangeDeclareDurable:    true,
 		QueueDeclareDurable:       true,
 		QueueDeclareAutoDelete:    true,
