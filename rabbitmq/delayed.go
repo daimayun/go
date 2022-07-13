@@ -20,9 +20,9 @@ type DelayedTypeReceiveData struct {
 	QueueDeclareArgs          amqp.Table `json:"queue_declare_args"`
 	QueueBindArgs             amqp.Table `json:"queue_bind_args"`
 	ExchangeDeclareAutoDelete bool       `json:"exchange_declare_auto_delete"`
-	ExchangeDeclareDurable    bool       `json:"exchange_declare_durable"`
-	QueueDeclareDurable       bool       `json:"queue_declare_durable"`
-	QueueDeclareAutoDelete    bool       `json:"queue_declare_auto_delete"`
+	ExchangeDeclareDurable    bool       `json:"exchange_declare_durable"`  // true
+	QueueDeclareDurable       bool       `json:"queue_declare_durable"`     // true
+	QueueDeclareAutoDelete    bool       `json:"queue_declare_auto_delete"` // true
 }
 
 func (conn Connection) DelayedTypeSend(data DelayedTypeSendData) (err error) {
@@ -58,9 +58,9 @@ func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages
 		Type:                      ExchangeXDelayedMessage,
 		RoutingKey:                data.RoutingKey,
 		ExchangeDeclareAutoDelete: data.ExchangeDeclareAutoDelete,
-		ExchangeDeclareDurable:    true,
-		QueueDeclareDurable:       true,
-		QueueDeclareAutoDelete:    true,
+		ExchangeDeclareDurable:    data.ExchangeDeclareDurable,
+		QueueDeclareDurable:       data.QueueDeclareDurable,
+		QueueDeclareAutoDelete:    data.QueueDeclareAutoDelete,
 		AutoAck:                   data.AutoAck,
 		ExchangeDeclareArgs:       exchangeDeclareArgs,
 		QueueDeclareArgs:          queueDeclareArgs,
