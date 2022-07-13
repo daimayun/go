@@ -4,8 +4,8 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-// PublishData 发布消息队列所提交数据
-type PublishData struct {
+// SendData 发送消息队列所提交数据
+type SendData struct {
 	Exchange               string          `json:"exchange"`
 	Type                   string          `json:"type"`
 	QueueName              string          `json:"queue_name"`
@@ -23,8 +23,8 @@ type PublishData struct {
 	QueueDeclareDurable    bool            `json:"queue_declare_durable"`
 }
 
-// Publish 发布消息队列
-func (conn Connection) Publish(data PublishData) (err error) {
+// Send 发送消息队列
+func (conn Connection) Send(data SendData) (err error) {
 	var ch *amqp.Channel
 	ch, err = conn.Conn.Channel()
 	if err != nil {
