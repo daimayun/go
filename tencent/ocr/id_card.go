@@ -54,19 +54,19 @@ func (c *client) IdCard(request IdCardRequestData) (response IdCardResponseData,
 	res = v20181119.NewIDCardOCRResponse()
 	err = c.Send(req, res)
 	if err == nil {
-		if res.Response.IdNum != nil && res.Response.Name != nil && res.Response.Sex != nil && res.Response.Nation != nil && res.Response.Birth != nil && res.Response.Address != nil {
+		if *res.Response.IdNum != "" && *res.Response.Name != "" && *res.Response.Sex != "" && *res.Response.Nation != "" && *res.Response.Birth != "" && *res.Response.Address != "" {
 			response = IdCardResponseData{
-				Name:    function.GetStringPointerValue(res.Response.Name),
-				Sex:     function.GetStringPointerValue(res.Response.Sex),
-				Nation:  function.GetStringPointerValue(res.Response.Nation),
-				Birth:   function.GetStringPointerValue(res.Response.Birth),
-				Address: function.GetStringPointerValue(res.Response.Address),
-				IdNum:   function.GetStringPointerValue(res.Response.IdNum),
+				Name:    *res.Response.Name,
+				Sex:     *res.Response.Sex,
+				Nation:  *res.Response.Nation,
+				Birth:   *res.Response.Birth,
+				Address: *res.Response.Address,
+				IdNum:   *res.Response.IdNum,
 			}
-		} else if res.Response.Authority != nil && res.Response.ValidDate != nil {
+		} else if *res.Response.Authority != "" && *res.Response.ValidDate != "" {
 			response = IdCardResponseData{
-				Authority: function.GetStringPointerValue(res.Response.Authority),
-				ValidDate: function.GetStringPointerValue(res.Response.ValidDate),
+				Authority: *res.Response.Authority,
+				ValidDate: *res.Response.ValidDate,
 			}
 		} else {
 			err = errors.New("ID card ocr fail")
