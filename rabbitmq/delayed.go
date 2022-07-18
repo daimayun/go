@@ -14,6 +14,7 @@ type DelayedTypeSendData struct {
 
 type DelayedTypeReceiveData struct {
 	Exchange                  string     `json:"exchange"`
+	QueueName                 string     `json:"queue_name"`
 	RoutingKey                string     `json:"routing_key"`
 	AutoAck                   bool       `json:"auto_ack"`
 	ExchangeDeclareArgs       amqp.Table `json:"exchange_declare_args"`
@@ -56,6 +57,7 @@ func (conn Connection) DelayedTypeReceive(data DelayedTypeReceiveData) (messages
 	return conn.Receive(ReceiveData{
 		Exchange:                  data.Exchange,
 		Type:                      ExchangeXDelayedMessage,
+		QueueName:                 data.QueueName,
 		RoutingKey:                data.RoutingKey,
 		ExchangeDeclareAutoDelete: data.ExchangeDeclareAutoDelete,
 		ExchangeDeclareDurable:    data.ExchangeDeclareDurable,
