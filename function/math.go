@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 )
 
 // InterceptDecimal 不四舍五入截取小数点 [n为保留的小数点数]
@@ -55,4 +56,18 @@ func UpIntegerToInt64(f float64) int64 {
 // DownIntegerToInt64 向下取整返回int64
 func DownIntegerToInt64(f float64) int64 {
 	return Float64ToInt64(DownInteger(f))
+}
+
+// CreateFraction 创建分数
+func CreateFraction(f64 float64) float64 {
+	var f float64 = 0
+	slice := strings.Split(Float64ToString(f64), ".")
+	if len(slice) == 2 {
+		str := strings.TrimRight(slice[1], "0")
+		strLen := len(str)
+		if strLen > 0 {
+			f = 1 / math.Pow10(strLen+1)
+		}
+	}
+	return f
 }
