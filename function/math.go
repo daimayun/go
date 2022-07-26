@@ -18,7 +18,7 @@ func InterceptDecimal(f float64, n int) float64 {
 
 // FloatRound 四舍五入 [n为保留的小数点位数] [不优先使用]
 func FloatRound(f float64, n int) (res float64, err error) {
-	res, err = strconv.ParseFloat(fmt.Sprintf("%."+strconv.Itoa(n)+"f", f), 64)
+	res, err = strconv.ParseFloat(fmt.Sprintf("%."+strconv.Itoa(n)+"f", f+CreateFraction(f)), 64)
 	return
 }
 
@@ -35,7 +35,7 @@ func InterceptDecimalToString(f float64, n int) string {
 
 // RoundToString 四舍五入后为字符串格式 [n为保留的小数点位数]
 func RoundToString(f float64, n int) string {
-	return strconv.FormatFloat(f, 'f', n, 64)
+	return strconv.FormatFloat(f+CreateFraction(f), 'f', n, 64)
 }
 
 // UpInteger 向上取整
