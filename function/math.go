@@ -2,10 +2,23 @@ package function
 
 import (
 	"fmt"
+	"github.com/shopspring/decimal"
 	"math"
 	"strconv"
 	"strings"
 )
+
+// Float64MulFloat64 float64 * float64
+func Float64MulFloat64(f1, f2 float64) (res float64, exact bool) {
+	res, exact = decimal.NewFromFloat(f1).Mul(decimal.NewFromFloat(f2)).Float64()
+	return
+}
+
+// Float64MulInt64 float64 * int64
+func Float64MulInt64(f float64, i int64) (res float64, exact bool) {
+	res, exact = decimal.NewFromFloat(f).Mul(decimal.NewFromInt(i)).Float64()
+	return
+}
 
 // InterceptDecimal 不四舍五入截取小数点 [n为保留的小数点数]
 func InterceptDecimal(f float64, n int) float64 {

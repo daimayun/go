@@ -17,6 +17,7 @@ require (
 	github.com/mozillazg/go-pinyin v0.19.0
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/rabbitmq/amqp091-go v1.3.4
+	github.com/shopspring/decimal v1.3.1
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.437
