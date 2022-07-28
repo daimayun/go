@@ -8,6 +8,14 @@ var (
 	TimeLayoutYMD    string = "2006-01-02"
 )
 
+func TimeNow() time.Time {
+	return time.Now()
+}
+
+func TimeNowUnix() int64 {
+	return TimeNow().Unix()
+}
+
 // TodayStartAndEndTime 今天00:00:00时间和今天23:59:59时间
 func TodayStartAndEndTime() (startTime, endTime time.Time) {
 	return DayStartAndEndTime()
@@ -35,7 +43,7 @@ func NowYearStartAndEndTime() (startTime, endTime time.Time) {
 
 // DayStartAndEndTime 该天00:00:00时间和该天23:59:59时间
 func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := time.Now()
+	t := TimeNow()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -46,7 +54,7 @@ func DayStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // WeekStartAndEndTime 该周一00:00:00时间和该周日23:59:59时间
 func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := time.Now()
+	t := TimeNow()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -67,7 +75,7 @@ func WeekStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // MonthStartAndEndTime 该月1号00:00:00时间和该月末23:59:59时间
 func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := time.Now()
+	t := TimeNow()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -78,7 +86,7 @@ func MonthStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // QuarterStartAndEndTime 该季度1号00:00:00时间和该季度末23:59:59时间
 func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := time.Now()
+	t := TimeNow()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -101,7 +109,7 @@ func QuarterStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
 
 // YearStartAndEndTime 该年1月1号00:00:00时间和该年12月31号23:59:59时间
 func YearStartAndEndTime(ts ...time.Time) (startTime, endTime time.Time) {
-	t := time.Now()
+	t := TimeNow()
 	if len(ts) > 0 {
 		t = ts[0]
 	}
@@ -116,7 +124,7 @@ func BeforeSecondTime(seconds ...int64) time.Time {
 	if len(seconds) > 0 {
 		second = seconds[0]
 	}
-	return time.Unix(time.Now().Unix()-second, 0)
+	return time.Unix(TimeNowUnix()-second, 0)
 }
 
 // AfterSecondTime N秒后的时间
@@ -125,7 +133,7 @@ func AfterSecondTime(seconds ...int64) time.Time {
 	if len(seconds) > 0 {
 		second = seconds[0]
 	}
-	return time.Unix(time.Now().Unix()+second, 0)
+	return time.Unix(TimeNowUnix()+second, 0)
 }
 
 // BeforeDayTime N天前的当前时间
@@ -134,7 +142,7 @@ func BeforeDayTime(days ...int) time.Time {
 	if len(days) > 0 {
 		day = days[0]
 	}
-	return time.Now().AddDate(0, 0, -day)
+	return TimeNow().AddDate(0, 0, -day)
 }
 
 // AfterDayTime N天后的当前时间
@@ -143,7 +151,7 @@ func AfterDayTime(days ...int) time.Time {
 	if len(days) > 0 {
 		day = days[0]
 	}
-	return time.Now().AddDate(0, 0, day)
+	return TimeNow().AddDate(0, 0, day)
 }
 
 // BeforeMonthTime N月前的当前时间
@@ -152,7 +160,7 @@ func BeforeMonthTime(months ...int) time.Time {
 	if len(months) > 0 {
 		month = months[0]
 	}
-	return time.Now().AddDate(0, -month, 0)
+	return TimeNow().AddDate(0, -month, 0)
 }
 
 // AfterMonthTime N月后的当前时间
@@ -161,7 +169,7 @@ func AfterMonthTime(months ...int) time.Time {
 	if len(months) > 0 {
 		month = months[0]
 	}
-	return time.Now().AddDate(0, month, 0)
+	return TimeNow().AddDate(0, month, 0)
 }
 
 // BeforeYearTime N年前的当前时间
@@ -170,7 +178,7 @@ func BeforeYearTime(years ...int) time.Time {
 	if len(years) > 0 {
 		year = years[0]
 	}
-	return time.Now().AddDate(-year, 0, 0)
+	return TimeNow().AddDate(-year, 0, 0)
 }
 
 // AfterYearTime N年后的当前时间
@@ -179,7 +187,7 @@ func AfterYearTime(years ...int) time.Time {
 	if len(years) > 0 {
 		year = years[0]
 	}
-	return time.Now().AddDate(year, 0, 0)
+	return TimeNow().AddDate(year, 0, 0)
 }
 
 //StringToTime 将字符串转为时间[2021-08-08 08:08:08]
