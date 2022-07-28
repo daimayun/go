@@ -8,8 +8,20 @@ var (
 	TimeLayoutYMD    string = "2006-01-02"
 )
 
+// TimeVariable 时间变量
+var TimeVariable int64
+
 func TimeNow() time.Time {
-	return time.Now()
+	var unix int64
+	now := time.Now()
+	if TimeVariable == 0 {
+		return now
+	} else if TimeVariable < 0 {
+		unix = now.Unix() - TimeVariable
+	} else {
+		unix = now.Unix() - TimeVariable
+	}
+	return TimestampToTime(unix)
 }
 
 func TimeNowUnix() int64 {
