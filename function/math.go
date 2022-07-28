@@ -8,6 +8,23 @@ import (
 	"strings"
 )
 
+// MoreFloat64Mul 多个Float64相乘
+func MoreFloat64Mul(fn ...float64) (res float64, exact bool) {
+	fnLength := len(fn)
+	if fnLength == 0 {
+		return
+	}
+	if fnLength == 1 {
+		return fn[0], true
+	}
+	v := decimal.NewFromFloat(fn[0])
+	for i := 1; i < fnLength; i++ {
+		v = v.Mul(decimal.NewFromFloat(fn[i]))
+	}
+	res, exact = v.Float64()
+	return
+}
+
 // Float64MulFloat64 float64 * float64
 func Float64MulFloat64(f1, f2 float64) (res float64, exact bool) {
 	res, exact = decimal.NewFromFloat(f1).Mul(decimal.NewFromFloat(f2)).Float64()
