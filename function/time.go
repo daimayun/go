@@ -11,17 +11,16 @@ var (
 // TimeVariable 时间变量[有可能是正负数]
 var TimeVariable int64
 
+// TimeNow 当前Time
 func TimeNow() time.Time {
-	var unix int64
 	now := time.Now()
 	if TimeVariable == 0 {
 		return now
-	} else {
-		unix = now.Unix() + TimeVariable
 	}
-	return TimestampToTime(unix)
+	return TimestampToTime(now.Unix() + TimeVariable)
 }
 
+// TimeNowUnix 当前时间戳
 func TimeNowUnix() int64 {
 	return TimeNow().Unix()
 }
