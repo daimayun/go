@@ -11,6 +11,26 @@ var (
 // TimeVariable 时间变量[有可能是正负数]
 var TimeVariable int64
 
+// NewTime 创建一个全局指定的 Time
+func NewTime(timeStr string, layouts ...string) (err error) {
+	var t time.Time
+	t, err = StringToTime(timeStr, layouts...)
+	if err != nil {
+		return
+	}
+	TimeVariable = 0
+	nt := time.Now()
+	if t.Unix() != nt.Unix() {
+		TimeVariable = t.Unix() - nt.Unix()
+	}
+	return
+}
+
+// CleanTime 清理指定的时间并校准为服务器的时间
+func CleanTime() {
+	TimeVariable = 0
+}
+
 // TimeNow 当前Time
 func TimeNow() time.Time {
 	now := time.Now()
