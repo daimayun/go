@@ -1,11 +1,16 @@
 package function
 
-import "time"
+import (
+	"errors"
+	"strconv"
+	"time"
+)
 
 var (
 	TimeLayoutYMDHIS string = "20060102150405"
 	TimeLayout       string = "2006-01-02 15:04:05"
 	TimeLayoutYMD    string = "2006-01-02"
+	TimeLayoutYM     string = "2006-01"
 )
 
 // TimeVariable 时间变量[有可能是正负数]
@@ -219,7 +224,7 @@ func AfterYearTime(years ...int) time.Time {
 	return TimeNow().AddDate(year, 0, 0)
 }
 
-//StringToTime 将字符串转为时间[2021-08-08 08:08:08]
+// StringToTime 将字符串转为时间[2021-08-08 08:08:08]
 func StringToTime(str string, layouts ...string) (time.Time, error) {
 	layout := TimeLayout
 	if len(layouts) > 0 {
@@ -231,4 +236,41 @@ func StringToTime(str string, layouts ...string) (time.Time, error) {
 // TimestampToTime 时间戳转时间
 func TimestampToTime(timestamp int64) time.Time {
 	return time.Unix(timestamp, 0)
+}
+
+// TimeByDay 根据天数/号返回时间
+func TimeByDay(day int8, hour, minute, second int8) (t time.Time, err error) {
+	if day <= 0 || day > 31 {
+		err = errors.New("日期天数不正确")
+		return
+	}
+	if hour < 0 || hour > 24 {
+		err = errors.New("日期小时不正确")
+		return
+	}
+	if minute < 0 || minute > 59 {
+		err = errors.New("日期分钟不正确")
+		return
+	}
+	if second < 0 || second > 59 {
+		err = errors.New("日期秒钟不正确")
+		return
+	}
+	d := strconv.Itoa(int(day))
+	if day < 10 {
+		d = "0" + d
+	}
+	h := strconv.Itoa(int(hour))
+	if hour < 10 {
+		h = "0" + h
+	}
+	i := strconv.Itoa(int(minute))
+	if minute < 10 {
+		i = "0" + i
+	}
+	s := strconv.Itoa(int(second))
+	if second < 10 {
+		s = "0" + s
+	}
+	return time.ParseInLocation(TimeLayout, TimeNow().Format(TimeLayoutYM)+"-"+d+" "+h+":"+i+":"+s, time.Local)
 }
