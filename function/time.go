@@ -238,7 +238,7 @@ func TimestampToTime(timestamp int64) time.Time {
 	return time.Unix(timestamp, 0)
 }
 
-// TimeByDay 根据天数/号返回时间
+// TimeByDay 根据天数/号返回当前月的时间
 func TimeByDay(day int8, hour, minute, second int8) (t time.Time, err error) {
 	if day <= 0 || day > 31 {
 		err = errors.New("日期天数不正确")
