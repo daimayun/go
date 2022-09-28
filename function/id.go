@@ -26,6 +26,10 @@ func IdCardDeadlineHandle(date string, layouts ...string) (starTime, endTime tim
 		err = errors.New("身份证有效期限格式不正确-1")
 		return
 	}
+	if strings.Contains(arr[1], "长期") {
+		endTime = AfterYearTime(100)
+		return
+	}
 	starTime, err = time.Parse(layout, arr[0])
 	if err != nil {
 		return
