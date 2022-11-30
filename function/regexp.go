@@ -76,6 +76,11 @@ func CheckWeChatOpenId(openId string) bool {
 	return regexp.MustCompile(`^[0-9A-Za-z_-]{28}$`).MatchString(openId)
 }
 
+// CheckWeChatUnionId 验证微信公众号和小程序的UnionID
+func CheckWeChatUnionId(unionId string) bool {
+	return regexp.MustCompile(`^[0-9A-Za-z_-]{30}$`).MatchString(unionId)
+}
+
 func byte2int(x byte) byte {
 	if x == 88 {
 		return 'X'
