@@ -194,6 +194,81 @@ func OrderNoStrDecode(str string) string {
 	return "20" + arr[y] + arr[m] + arr[d] + arr[h] + arr[i] + arr[s] + end
 }
 
+func RandStringToOrderNoPrefix() string {
+	arr := map[string]string{
+		"00": "7",
+		"01": "a",
+		"02": "b",
+		"03": "c",
+		"04": "d",
+		"05": "e",
+		"06": "f",
+		"07": "g",
+		"08": "h",
+		"09": "i",
+		"10": "j",
+		"11": "k",
+		"12": "l",
+		"13": "m",
+		"14": "n",
+		"15": "o",
+		"16": "p",
+		"17": "q",
+		"18": "r",
+		"19": "s",
+		"20": "t",
+		"21": "u",
+		"22": "v",
+		"23": "w",
+		"24": "x",
+		"25": "y",
+		"26": "z",
+		"27": "A",
+		"28": "B",
+		"29": "C",
+		"30": "D",
+		"31": "E",
+		"32": "F",
+		"33": "G",
+		"34": "H",
+		"35": "I",
+		"36": "J",
+		"37": "K",
+		"38": "L",
+		"39": "M",
+		"40": "N",
+		"41": "O",
+		"42": "P",
+		"43": "Q",
+		"44": "R",
+		"45": "S",
+		"46": "T",
+		"47": "U",
+		"48": "V",
+		"49": "W",
+		"50": "X",
+		"51": "Y",
+		"52": "Z",
+		"53": "0",
+		"54": "1",
+		"55": "2",
+		"56": "3",
+		"57": "4",
+		"58": "5",
+		"59": "6",
+	}
+	str := time.Now().Format("060102150405")
+	y := str[0:2]
+	m := str[2:4]
+	d := str[4:6]
+	h := str[6:8]
+	i := str[8:10]
+	s := str[10:12]
+	rand.Seed(time.Now().UnixNano())
+	ri := rand.Intn(90) + 10
+	return arr[y] + arr[m] + arr[d] + arr[h] + arr[i] + arr[s] + strconv.Itoa(ri)
+}
+
 //对长度不足n的数字前面补0
 func sup(i int64, n int) string {
 	m := fmt.Sprintf("%d", i)
