@@ -48,6 +48,9 @@ func GenerateOrderNo() string {
 }
 
 func OrderNoStrEncode(str string) string {
+	if len(str) != 24 {
+		return str
+	}
 	str = str[2:]
 	end := str[12:]
 	arr := map[string]string{
@@ -118,10 +121,31 @@ func OrderNoStrEncode(str string) string {
 	h := str[6:8]
 	i := str[8:10]
 	s := str[10:12]
+	if _, ok := arr[y]; !ok {
+		return str
+	}
+	if _, ok := arr[m]; !ok {
+		return str
+	}
+	if _, ok := arr[d]; !ok {
+		return str
+	}
+	if _, ok := arr[h]; !ok {
+		return str
+	}
+	if _, ok := arr[i]; !ok {
+		return str
+	}
+	if _, ok := arr[s]; !ok {
+		return str
+	}
 	return arr[y] + arr[m] + arr[d] + arr[h] + arr[i] + arr[s] + end
 }
 
 func OrderNoStrDecode(str string) string {
+	if len(str) != 24 {
+		return str
+	}
 	arr := map[string]string{
 		"7": "00",
 		"a": "01",
@@ -191,6 +215,24 @@ func OrderNoStrDecode(str string) string {
 	i := str[4:5]
 	s := str[5:6]
 	end := str[6:]
+	if _, ok := arr[y]; !ok {
+		return str
+	}
+	if _, ok := arr[m]; !ok {
+		return str
+	}
+	if _, ok := arr[d]; !ok {
+		return str
+	}
+	if _, ok := arr[h]; !ok {
+		return str
+	}
+	if _, ok := arr[i]; !ok {
+		return str
+	}
+	if _, ok := arr[s]; !ok {
+		return str
+	}
 	return "20" + arr[y] + arr[m] + arr[d] + arr[h] + arr[i] + arr[s] + end
 }
 
