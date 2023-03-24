@@ -143,7 +143,7 @@ func OrderNoStrEncode(str string) string {
 }
 
 func OrderNoStrDecode(str string) string {
-	if len(str) != 24 {
+	if len(str) != 16 {
 		return str
 	}
 	arr := map[string]string{
