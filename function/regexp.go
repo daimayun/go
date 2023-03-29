@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+// CheckCompanyCodeRule 校验统一社会信用代码
+func CheckCompanyCodeRule(companyCode string) bool {
+	return regexp.MustCompile(`^[0-9A-Za-z]{18}$`).MatchString(companyCode)
+}
+
 // IsChinese 是否全部为中文
 func IsChinese(str string) bool {
 	return regexp.MustCompile("^[\u4e00-\u9fa5]+$").MatchString(str)
