@@ -189,7 +189,7 @@ func AfterDayTime(days ...int) time.Time {
 }
 
 // BeforeMonthTime N月前的当前时间
-func BeforeMonthTime(months ...int) time.Time {
+func beforeMonthTime(months ...int) time.Time {
 	month := 1
 	if len(months) > 0 {
 		month = months[0]
@@ -198,12 +198,40 @@ func BeforeMonthTime(months ...int) time.Time {
 }
 
 // AfterMonthTime N月后的当前时间
-func AfterMonthTime(months ...int) time.Time {
+func afterMonthTime(months ...int) time.Time {
 	month := 1
 	if len(months) > 0 {
 		month = months[0]
 	}
 	return TimeNow().AddDate(0, month, 0)
+}
+
+// BeforeMonthTime N月前的当前时间
+func BeforeMonthTime(months ...int) time.Time {
+	month := 1
+	if len(months) > 0 {
+		month = months[0]
+	}
+	days := 0
+	day := TimeNow().Day()
+	if day > 28 {
+		days = 28 - day
+	}
+	return TimeNow().AddDate(0, -month, days)
+}
+
+// AfterMonthTime N月后的当前时间
+func AfterMonthTime(months ...int) time.Time {
+	month := 1
+	if len(months) > 0 {
+		month = months[0]
+	}
+	days := 0
+	day := TimeNow().Day()
+	if day > 28 {
+		days = 28 - day
+	}
+	return TimeNow().AddDate(0, month, days)
 }
 
 // BeforeYearTime N年前的当前时间
