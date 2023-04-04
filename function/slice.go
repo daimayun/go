@@ -2,6 +2,7 @@ package function
 
 import (
 	"math/rand"
+	"sort"
 	"time"
 )
 
@@ -46,12 +47,8 @@ func SliceShuffle(slice *[]string) {
 
 // SliceSort 切片排序[倒序]
 func SliceSort(arr []int64) []int64 {
-	for i := 0; i < len(arr)-1; i++ {
-		for j := 0; j < len(arr)-1-i; j++ {
-			if arr[j] < arr[j+1] {
-				arr[j], arr[j+1] = arr[j+1], arr[j]
-			}
-		}
-	}
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[i] > arr[j]
+	})
 	return arr
 }
