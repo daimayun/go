@@ -11,6 +11,11 @@ func CheckCompanyCodeRule(companyCode string) bool {
 	return regexp.MustCompile(`^[0-9A-Za-z]{18}$`).MatchString(companyCode)
 }
 
+// CheckUrlRule 校验URL
+func CheckUrlRule(url string) bool {
+	return regexp.MustCompile(`(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?`).MatchString(url)
+}
+
 // IsChinese 是否全部为中文
 func IsChinese(str string) bool {
 	return regexp.MustCompile("^[\u4e00-\u9fa5]+$").MatchString(str)
