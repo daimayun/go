@@ -49,7 +49,27 @@ var defaultSpellDigitalFormat SpellDigitalFormat = map[string]string{
 	".": "点",
 }
 
-//读小数或者整数
+// RmbSpellDigitalFormat 人民币大写拼读格式
+var RmbSpellDigitalFormat SpellDigitalFormat = map[string]string{
+	"0": "零",
+	"1": "壹",
+	"2": "贰",
+	"3": "叁",
+	"4": "肆",
+	"5": "伍",
+	"6": "陆",
+	"7": "柒",
+	"8": "捌",
+	"9": "玖",
+	"s": "拾",
+	"b": "佰",
+	"q": "仟",
+	"w": "万",
+	"y": "亿",
+	".": "点",
+}
+
+// 读小数或者整数
 func spellReadFloatAndInt(s string, format SpellDigitalFormat) (str string, err error) {
 	arr := strings.Split(s, ".")
 	la := len(arr)
