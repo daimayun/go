@@ -79,3 +79,42 @@ func TestYuanToInt64Fen(t *testing.T) {
 		t.Error("YuanToInt64Fen() error.")
 	}
 }
+
+func TestFenToYuanToString(t *testing.T) {
+	if yuan := FenToYuanToString(1); yuan != "0.01" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(301); yuan != "3.01" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(9); yuan != "0.09" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(10091); yuan != "100.91" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(12345678900); yuan != "123456789" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(163); yuan != "1.63" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(492); yuan != "4.92" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(9999999); yuan != "99999.99" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(9000099997899); yuan != "90000999978.99" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(100); yuan != "1" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(10); yuan != "0.1" {
+		t.Error("FenToYuanToString() error.")
+	}
+	if yuan := FenToYuanToString(314); yuan != "3.14" {
+		t.Error("FenToYuanToString() error.")
+	}
+}

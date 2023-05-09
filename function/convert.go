@@ -18,3 +18,11 @@ func YuanToInt64Fen(yuan float64) (fen int64, err error) {
 	fen, err = StringToInt64(InterceptDecimalToString(yuan, 0))
 	return
 }
+
+// FenToYuanToString 人民币分转元字符串类型
+func FenToYuanToString(f int64) string {
+	if f == 0 {
+		return "0"
+	}
+	return Float64ToString(float64(f) / 100)
+}
