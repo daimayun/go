@@ -188,6 +188,15 @@ func AfterDayTime(days ...int) time.Time {
 	return TimeNow().AddDate(0, 0, day)
 }
 
+// AfterDayTimePlus N天后的当前时间
+func AfterDayTimePlus(days int, ts ...time.Time) time.Time {
+	t := TimeNow()
+	if len(ts) > 0 {
+		t = ts[0]
+	}
+	return t.AddDate(0, 0, days)
+}
+
 // BeforeMonthTime N月前的当前时间
 func beforeMonthTime(months ...int) time.Time {
 	month := 1
