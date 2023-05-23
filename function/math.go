@@ -37,7 +37,7 @@ func Float64MulInt64(f float64, i int64) (res float64, exact bool) {
 	return
 }
 
-// InterceptDecimal 不四舍五入截取小数点 [n为保留的小数点数]
+// InterceptDecimal 不四舍五入截取小数点 [n为保留的小数点数位数]
 func InterceptDecimal(f float64, n int) float64 {
 	d := float64(1)
 	if n > 0 {
@@ -58,7 +58,7 @@ func RoundFloat(f float64, n int) (res float64, err error) {
 	return
 }
 
-// InterceptDecimalToString 不四舍五入截取小数点后为字符串格式 [n为保留的小数点数]
+// InterceptDecimalToString 不四舍五入截取小数点后为字符串格式 [n为保留的小数点数位数]
 func InterceptDecimalToString(f float64, n int) string {
 	return Float64ToString(InterceptDecimal(f, n))
 }
@@ -88,7 +88,7 @@ func DownIntegerToInt64(f float64) int64 {
 	return Float64ToInt64(DownInteger(f))
 }
 
-// CreateFraction 创建分数[n为保留的小数点]
+// CreateFraction 创建分数[n为保留的小数点位数]
 func CreateFraction(f64 float64, n int) float64 {
 	var f float64 = 0
 	slice := strings.Split(Float64ToString(f64), ".")
@@ -100,4 +100,14 @@ func CreateFraction(f64 float64, n int) float64 {
 		}
 	}
 	return f
+}
+
+// Ceil 向下取值/整[n为保留的小数点位数]
+func Ceil(f64 float64, n ...int) float64 {
+	var nums int
+	if len(n) > 0 {
+		nums = n[0]
+	}
+	p := math.Pow10(nums)
+	return math.Ceil(f64*p) / p
 }
