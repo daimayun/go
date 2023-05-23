@@ -70,7 +70,7 @@ func RoundToString(f float64, n int) string {
 
 // UpInteger 向上取整
 func UpInteger(f float64) float64 {
-	return math.Ceil(f)
+	return Ceil(f)
 }
 
 // DownInteger 向下取整
